@@ -1,0 +1,103 @@
+"""Master ingestion script: download → scrape → chunk → embed → verify.
+
+Run:
+    python -m ingestion.build_corpus
+    python -m ingestion.build_corpus --force   # re-download everything
+"""
+from __future__ import annotations
+
+import argparse
+import sys
+from pathlib import Path
+
+
+def main(force: bool = False) -> None:
+    print("=" * 60)
+    print("AI Moot Court — Corpus Builder")
+    print("=" * 60)
+
+    # Step 1: Download statute PDFs
+    print("\n[1/4] Downloading statute PDFs...")
+    from ingestion.download_statutes import download_all, STATUTE_SOURCES
+
+    downloaded = download_all(force=force)
+    print(f"      → {len(downloaded)}/{len(STATUTE_SOURCES)} statutes ready")
+
+    # Step 2: Scrape precedents
+    print("\n[2/4] Scraping landmark cases from Indian Kanoon...")
+    from ingestion.scrape_kanoon import scrape_all, LANDMARK_CASES
+
+    n_cases = scrape_all(force=force)
+    print(f"      → {n_cases}/{len(LANDMARK_CASES)} precedents saved")
+
+    # Step 3: Chunk everything
+    print("\n[3/4] Chunking statutes and precedents...")
+    from ingestion.chunker import chunk_statute_pdf, chunk_precedent_file
+    from ingestion.download_statutes import STATUTE_SOURCES
+
+    all_chunks = []
+
+    # Chunk statute files (PDF or TXT)
+    from ingestion.chunker import chunk_statute_txt
+    statutes_dir = Path(__file__).parent.parent / "corpus" / "statutes"
+    for entry in STATUTE_SOURCES:
+        statute_path = statutes_dir / entry["filename"]
+        if not statute_path.exists():
+            print(f"  [skip] {entry['filename']} not found")
+            continue
+        if statute_path.suffix == ".pdf":
+            chunks = chunk_statute_pdf(
+                pdf_path=statute_path,
+                source_act=entry["name"],
+                code_regime=entry["code_regime"],
+                year=entry["year"],
+            )
+        else:
+            chunks = chunk_statute_txt(
+                txt_path=statute_path,
+                source_act=entry["name"],
+                code_regime=entry["code_regime"],
+                year=entry["year"],
+            )
+        all_chunks.extend(chunks)
+        print(f"  {entry['name']}: {len(chunks)} chunks")
+
+    # Chunk precedent text files
+    precedents_dir = Path(__file__).parent.parent / "corpus" / "precedents"
+    precedent_files = list(precedents_dir.glob("*.txt"))
+    for txt_path in precedent_files:
+        chunks = chunk_precedent_file(txt_path)
+        all_chunks.extend(chunks)
+
+    print(f"  Precedents ({len(precedent_files)} files): {sum(1 for c in all_chunks if c.metadata.get('code_regime') == 'PRECEDENT')} chunks")
+    print(f"      → Total chunks: {len(all_chunks)}")
+
+    # Step 4: Embed and upsert
+    print("\n[4/4] Embedding and upserting to Chroma...")
+    from ingestion.embedder import upsert_chunks
+
+    n_upserted = upsert_chunks(all_chunks, verbose=True)
+    print(f"      → {n_upserted} chunks upserted to Chroma")
+
+    # Verification
+    print("\n[verify] Running a test query...")
+    from rag.retriever import retrieve
+
+    test_chunks = retrieve("theft punishment", code_regime="BNS", top_k=3)
+    if test_chunks:
+        print(f"  ✓ Retrieved {len(test_chunks)} chunks for 'theft punishment'")
+        for c in test_chunks[:2]:
+            print(f"    — {c.source_act}: {c.section_id}: {c.section_title[:60]}")
+    else:
+        print("  ✗ No chunks retrieved — check embedding and Chroma setup")
+
+    print("\n" + "=" * 60)
+    print(f"Corpus build complete: {n_upserted} total chunks in Chroma")
+    print("=" * 60)
+
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="Build the AI Moot Court legal corpus")
+    parser.add_argument("--force", action="store_true", help="Re-download all files")
+    args = parser.parse_args()
+    main(force=args.force)
