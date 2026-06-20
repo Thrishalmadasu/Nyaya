@@ -1,0 +1,15 @@
+langchain>=0.3
+langgraph>=0.2
+langchain-groq
+langchain-community
+langchain-core
+chromadb>=0.5
+sentence-transformers>=3.0
+tavily-python
+langsmith
+pydantic>=2.0
+pymupdf
+requests
+beautifulsoup4
+python-dotenv
+rich

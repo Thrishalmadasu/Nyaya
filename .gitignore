@@ -1,0 +1,13 @@
+.env
+__pycache__/
+*.pyc
+*.pyo
+chroma_db/
+corpus/statutes/*.pdf
+.DS_Store
+*.egg-info/
+dist/
+build/
+.venv/
+venv/
+langsmith_traces/
