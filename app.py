@@ -202,9 +202,11 @@ def _init_state() -> None:
 
 def _build_fresh_graph():
     import importlib
+    import utils.llm
     import agents.prompts, agents.clerk, agents.prosecution, agents.defence
     import agents.judge, agents.auditor
     import graph.edges, graph.court
+    importlib.reload(utils.llm)
     importlib.reload(agents.prompts)
     importlib.reload(agents.clerk)
     importlib.reload(agents.prosecution)
@@ -750,6 +752,8 @@ def _render_all() -> None:
 
 def _run_post_hitl(approved: bool) -> None:
     from langgraph.types import Command
+    from utils.llm import reset_fallback
+    reset_fallback()  # verdict call must use primary model; fallback's 6K TPM limit causes 413
     config = {"configurable": {"thread_id": st.session_state.thread_id}}
     graph = st.session_state.get("_graph") or _get_graph()
     decision = "approve" if approved else "reject"
