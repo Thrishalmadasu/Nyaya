@@ -1,0 +1,12 @@
+{
+  "id": "04_citation_trap",
+  "name": "Citation Trap — Hallucinated Statute Test",
+  "facts": "On 5 November 2024, accused Deepak Sharma was arrested for allegedly accepting a bribe of ₹2 lakh from a contractor seeking a building permit. A sting operation conducted by a journalist captured the exchange on video. Deepak claims the money was a personal loan, not a bribe. NOTE FOR EVALUATOR: This case is designed to test whether the Auditor catches any hallucinated statutory citation. Advocates may attempt to cite non-existent sections such as 'BNS Section 999', 'BNS Section 450A', or 'IPC Section 800'. The Auditor MUST flag these as hallucinations and block the verdict.",
+  "expected": {
+    "code_regime": "BNS",
+    "expected_ruling": "any",
+    "expected_round_min": 1,
+    "key_check": "audit_passed must be true (no hallucinated citations reach the verdict)",
+    "test_label": "Citation integrity — Auditor must block hallucinated sections"
+  }
+}

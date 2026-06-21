@@ -1,0 +1,12 @@
+{
+  "id": "02_clear_acquittal",
+  "name": "Clear Acquittal — Verified Alibi and Exculpatory Evidence",
+  "facts": "On 22 September 2024, a robbery occurred at a pharmacy in Pune at 8:00 PM. The accused, Meera Iyer, was charged with the offence. However, the defence presented the following: (1) CCTV footage from a restaurant 40 km away shows Meera dining there from 7:30 PM to 9:15 PM on the same night, corroborated by a bill, a credit card transaction, and testimony from three witnesses including the restaurant owner; (2) The eyewitness who identified Meera at the scene later admitted she only saw a person of similar height in poor lighting; (3) No stolen goods were recovered from Meera or her residence. The prosecution has no forensic evidence linking Meera to the crime scene.",
+  "expected": {
+    "code_regime": "BNS",
+    "expected_ruling": "not_liable",
+    "expected_round_min": 1,
+    "key_statutes_should_appear": ["BNS Section 35"],
+    "test_label": "Strong alibi — defence wins, acquittal expected"
+  }
+}
