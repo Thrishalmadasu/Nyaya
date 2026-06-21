@@ -52,20 +52,13 @@ CSS = """
 @keyframes bar-enter-d { from { width: 0 !important; opacity: 0; } }
 @keyframes slide-in    { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 
-.ny-header {
-    display: flex; align-items: flex-end; justify-content: space-between;
-    border-bottom: 1px solid var(--border); padding-bottom: 1.2rem; margin-bottom: 2rem;
-}
-.ny-wordmark {
-    font-family: 'Playfair Display', serif; font-size: 1.9rem; font-weight: 900;
-    color: var(--text); letter-spacing: -0.01em; margin: 0; line-height: 1;
-}
+.ny-header { display: flex; align-items: flex-end; justify-content: space-between; border-bottom: 1px solid var(--border); padding-bottom: 1.2rem; margin-bottom: 2rem; }
+.ny-wordmark { font-family: 'Playfair Display', serif; font-size: 1.9rem; font-weight: 900; color: var(--text); letter-spacing: -0.01em; margin: 0; line-height: 1; }
 .ny-tagline { font-size: 0.72rem; color: var(--text-muted); letter-spacing: 0.08em; text-transform: uppercase; margin-left: 1rem; }
 .ny-badge { font-size: 0.65rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.25rem 0.65rem; border-radius: 3px; background: rgba(196,154,60,0.12); border: 1px solid rgba(196,154,60,0.3); color: var(--accent); }
 .ny-badge.missing { background: rgba(200,60,60,0.1); border-color: rgba(200,60,60,0.3); color: #C05050; }
 
 .ny-section { font-size: 0.62rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-muted); margin: 2rem 0 0.75rem; padding-bottom: 0.4rem; border-bottom: 1px solid var(--border); }
-
 .ny-round-label { display: flex; align-items: center; gap: 0.75rem; margin: 2rem 0 0.75rem; padding-bottom: 0.4rem; border-bottom: 1px solid var(--border); animation: slide-in 0.3s ease both; }
 .ny-round-badge { font-size: 0.6rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; padding: 0.2rem 0.55rem; border-radius: 2px; background: rgba(196,154,60,0.12); color: var(--accent); border: 1px solid rgba(196,154,60,0.25); }
 .ny-round-text { font-size: 0.62rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-muted); }
@@ -91,7 +84,7 @@ CSS = """
 .ny-sb-bars { display: flex; flex-direction: column; gap: 0.55rem; margin-bottom: 0.85rem; }
 .ny-sb-row { display: flex; align-items: center; gap: 0.75rem; }
 .ny-sb-name { font-size: 0.68rem; color: var(--text-muted); font-weight: 600; width: 100px; flex-shrink: 0; letter-spacing: 0.03em; }
-.ny-sb-track { flex: 1; height: 8px; background: rgba(255,255,255,0.06); border-radius: 4px; overflow: hidden; position: relative; }
+.ny-sb-track { flex: 1; height: 8px; background: rgba(255,255,255,0.06); border-radius: 4px; overflow: hidden; }
 .ny-sb-fill-p { height: 100%; background: linear-gradient(90deg, #6B2020, #9E4040); border-radius: 4px; animation: bar-enter 0.7s cubic-bezier(0.16,1,0.3,1) both; }
 .ny-sb-fill-d { height: 100%; background: linear-gradient(90deg, #1A3A5C, #2E5F8A); border-radius: 4px; animation: bar-enter-d 0.7s cubic-bezier(0.16,1,0.3,1) both; }
 .ny-sb-score-val { font-size: 0.8rem; font-weight: 700; color: var(--text); width: 40px; text-align: right; flex-shrink: 0; }
@@ -227,10 +220,259 @@ def _corpus_ready() -> bool:
     return chroma_dir.exists() and any(chroma_dir.iterdir())
 
 
+# ── HTML string builders ───────────────────────────────────────────────────────
+
 def _pills_html(items: list[str], cls: str = "ny-pill") -> str:
     if not items:
         return "<span style='color:var(--text-muted);font-size:0.72rem'>—</span>"
     return " ".join(f"<span class='{cls}'>{s}</span>" for s in items[:6])
+
+
+def _case_file_html(cf: dict) -> str:
+    regime = cf.get("code_regime", "BNS")
+    regime_cls = "bns" if regime == "BNS" else "ipc"
+    date_val = cf.get("offence_date") or "Not specified"
+    offence = cf.get("offence_type") or "—"
+    accused = cf.get("accused_name") or "Accused"
+    questions = cf.get("legal_questions", [])
+    q_items = "".join(
+        f"<li><span class='ny-q-num'>Q{i+1}</span>{q}</li>"
+        for i, q in enumerate(questions)
+    )
+    return f"""
+<div class='ny-section'>Case File</div>
+<div class='ny-casefile'>
+  <div class='ny-cf-grid'>
+    <div><div class='ny-cf-label'>Code Regime</div><div class='ny-cf-value {regime_cls}'>{regime}</div></div>
+    <div><div class='ny-cf-label'>Offence Date</div><div class='ny-cf-value'>{date_val}</div></div>
+    <div><div class='ny-cf-label'>Offence Type</div><div class='ny-cf-value'>{offence}</div></div>
+    <div><div class='ny-cf-label'>Accused</div><div class='ny-cf-value'>{accused}</div></div>
+  </div>
+  <div class='ny-cf-label' style='margin-bottom:0.5rem'>Legal Questions Before Court</div>
+  <ul class='ny-q-list'>{q_items}</ul>
+</div>"""
+
+
+def _argument_card_html(arg: dict, side: str) -> str:
+    side_cls = "pros" if side == "prosecution" else "def"
+    side_label = "PROSECUTION" if side == "prosecution" else "DEFENCE"
+    claims = arg.get("claims", [])
+    claims_html = "".join(
+        f"<div class='ny-claim' data-n='{i+1}.'>{c}</div>"
+        for i, c in enumerate(claims[:5])
+    )
+    statutes = arg.get("statutes_cited", [])
+    precedents = arg.get("precedents_cited", [])
+    rebuttals = [r for r in arg.get("rebuttals", []) if r]
+    cite_html = ""
+    if statutes or precedents:
+        cite_html = f"""
+<div class='ny-cite-row'>
+  <span class='ny-cite-label'>Statutes</span>{_pills_html(statutes, 'ny-pill')}
+</div>
+<div class='ny-cite-row' style='margin-top:0.3rem'>
+  <span class='ny-cite-label'>Precedents</span>{_pills_html(precedents, 'ny-prec-pill')}
+</div>"""
+    rebuttal_html = ""
+    if rebuttals:
+        rebuttal_html = f"""
+<div class='ny-rebuttal-block'>
+  <div class='ny-rebuttal-label'>Rebuttal of opposing argument</div>
+  <div class='ny-rebuttal-text'>{" ".join(rebuttals[:3])}</div>
+</div>"""
+    return f"""
+<div class='ny-card {side_cls}'>
+  <div class='ny-card-side {side_cls}'>{side_label}</div>
+  {claims_html}{cite_html}{rebuttal_html}
+</div>"""
+
+
+def _pending_card_html(side: str) -> str:
+    label = "PROSECUTION" if side == "prosecution" else "DEFENCE"
+    return f"""
+<div class='ny-card pending'>
+  <div class='ny-card-side pending'>{label}</div>
+  <div style='font-size:0.8rem;color:var(--text-muted)'>
+    <span class='ny-pending-pulse'></span>Preparing argument…
+  </div>
+</div>"""
+
+
+def _round_header_html(rn: int) -> str:
+    return f"""
+<div class='ny-round-label'>
+  <span class='ny-round-badge'>Round {rn}</span>
+  <span class='ny-round-text'>Oral Arguments</span>
+</div>"""
+
+
+def _round_args_html(rd: dict) -> str:
+    pros = rd.get("prosecution")
+    defn = rd.get("defence")
+    pros_html = _argument_card_html(pros, "prosecution") if pros else _pending_card_html("prosecution")
+    def_html = _argument_card_html(defn, "defence") if defn else _pending_card_html("defence")
+    return f"""
+<div class='ny-args-row'>
+  <div class='ny-args-col'>{pros_html}</div>
+  <div class='ny-args-col'>{def_html}</div>
+</div>"""
+
+
+def _audit_html(audit: dict) -> str:
+    if not audit:
+        return ""
+    passed = audit.get("audit_passed", True)
+    cls = "pass" if passed else "fail"
+    title = "All citations verified" if passed else "Hallucinated citations detected"
+    verified = audit.get("verified_citations", [])
+    hallucinated = audit.get("hallucinated_citations", [])
+    notes = audit.get("audit_notes", "")
+    detail = ""
+    if verified:
+        detail += f"Verified: {', '.join(verified[:8])}. "
+    if hallucinated:
+        detail += f"<strong style='color:#C05050'>Not found: {', '.join(hallucinated)}.</strong> "
+    if notes:
+        detail += notes
+    return f"""
+<div class='ny-section'>Citation Audit</div>
+<div class='ny-audit {cls}'>
+  <div class='ny-audit-title'>{title}</div>
+  <div class='ny-audit-body'>{detail}</div>
+</div>"""
+
+
+# ── State absorber ─────────────────────────────────────────────────────────────
+
+def _absorb(node_name: str, update: dict) -> None:
+    def _rn_from(obj) -> int:
+        return obj.get("round_number", 1) if isinstance(obj, dict) else getattr(obj, "round_number", 1)
+
+    if node_name == "clerk_node" and "case_file" in update:
+        cf = update["case_file"]
+        st.session_state.clerk_output = cf if isinstance(cf, dict) else cf.model_dump()
+
+    if node_name == "prosecution_node" and "round_transcript" in update:
+        for arg in update["round_transcript"]:
+            rn = _rn_from(arg)
+            arg_d = arg if isinstance(arg, dict) else arg.model_dump()
+            while len(st.session_state.rounds) < rn:
+                st.session_state.rounds.append({})
+            st.session_state.rounds[rn - 1]["prosecution"] = arg_d
+
+    if node_name == "defence_node" and "round_transcript" in update:
+        for arg in update["round_transcript"]:
+            rn = _rn_from(arg)
+            arg_d = arg if isinstance(arg, dict) else arg.model_dump()
+            while len(st.session_state.rounds) < rn:
+                st.session_state.rounds.append({})
+            st.session_state.rounds[rn - 1]["defence"] = arg_d
+
+    if node_name == "judge_node" and "judge_scores" in update:
+        for score in update["judge_scores"]:
+            rn = _rn_from(score)
+            score_d = score if isinstance(score, dict) else score.model_dump()
+            while len(st.session_state.rounds) < rn:
+                st.session_state.rounds.append({})
+            st.session_state.rounds[rn - 1]["score"] = score_d
+
+    if node_name == "auditor_node" and "audit_result" in update:
+        st.session_state.audit_result = update["audit_result"]
+
+    if node_name == "verdict_node" and "verdict" in update:
+        v = update["verdict"]
+        st.session_state.verdict = v if isinstance(v, dict) else v.model_dump()
+
+
+# ── Streaming ──────────────────────────────────────────────────────────────────
+
+_ACTIVITY_LABELS = {
+    "clerk_node":       "⚖ Court Clerk is registering the case and identifying applicable statutes…",
+    "prosecution_node": "⚔ Prosecution counsel is building arguments…",
+    "defence_node":     "🛡 Defence counsel is preparing a response…",
+    "judge_node":       "🔎 The Judge is evaluating arguments and scoring the round…",
+    "auditor_node":     "📋 Citation Auditor is verifying all statutory references…",
+    "verdict_node":     "⚖ The Judge is deliberating the final verdict…",
+}
+
+_MAX_ROUNDS = 8
+
+
+def _run_pre_hitl(facts: str) -> None:
+    thread_id = str(uuid.uuid4())
+    st.session_state.thread_id = thread_id
+    config = {"configurable": {"thread_id": thread_id}}
+    graph = _get_graph()
+    initial_state = {
+        "facts_raw": facts,
+        "round_transcript": [],
+        "judge_scores": [],
+        "current_round": 1,
+        "current_phase": "intake",
+        "audit_result": None,
+        "audit_passed": False,
+        "hitl_approved": False,
+        "verdict": None,
+        "error": None,
+    }
+
+    case_slot = st.empty()
+    activity_slot = st.empty()
+    round_slots: list[dict] = [
+        {"header": st.empty(), "args": st.empty(), "score": st.empty()}
+        for _ in range(_MAX_ROUNDS)
+    ]
+    audit_slot = st.empty()
+
+    def _rn_from(obj) -> int:
+        return obj.get("round_number", 1) if isinstance(obj, dict) else getattr(obj, "round_number", 1)
+
+    try:
+        for chunk in graph.stream(initial_state, config=config, stream_mode="updates"):
+            for node_name, update in chunk.items():
+                _absorb(node_name, update)
+
+                if node_name == "clerk_node" and st.session_state.clerk_output:
+                    case_slot.markdown(_case_file_html(st.session_state.clerk_output), unsafe_allow_html=True)
+
+                elif node_name == "prosecution_node" and "round_transcript" in update:
+                    for arg in update["round_transcript"]:
+                        rn = _rn_from(arg)
+                        rn_idx = rn - 1
+                        if 0 <= rn_idx < _MAX_ROUNDS:
+                            rd = st.session_state.rounds[rn_idx]
+                            round_slots[rn_idx]["header"].markdown(_round_header_html(rn), unsafe_allow_html=True)
+                            round_slots[rn_idx]["args"].markdown(_round_args_html(rd), unsafe_allow_html=True)
+
+                elif node_name == "defence_node" and "round_transcript" in update:
+                    for arg in update["round_transcript"]:
+                        rn = _rn_from(arg)
+                        rn_idx = rn - 1
+                        if 0 <= rn_idx < _MAX_ROUNDS:
+                            rd = st.session_state.rounds[rn_idx]
+                            round_slots[rn_idx]["args"].markdown(_round_args_html(rd), unsafe_allow_html=True)
+
+                elif node_name == "auditor_node" and st.session_state.audit_result:
+                    audit_slot.markdown(_audit_html(st.session_state.audit_result), unsafe_allow_html=True)
+
+                label = _ACTIVITY_LABELS.get(node_name, "")
+                if label:
+                    activity_slot.info(label)
+                else:
+                    activity_slot.empty()
+
+    except Exception as exc:
+        activity_slot.empty()
+        st.session_state.phase = "error"
+        st.session_state.error_msg = str(exc)
+        return
+
+    activity_slot.empty()
+    graph_state = graph.get_state(config)
+    if graph_state.next and "hitl_node" in graph_state.next:
+        st.session_state.phase = "awaiting_hitl"
+    else:
+        st.session_state.phase = "done"
 
 
 # ── Sample cases ───────────────────────────────────────────────────────────────
@@ -313,31 +555,16 @@ def main() -> None:
 
     if st.session_state.phase == "idle":
         st.markdown("<div class='ny-section'>Fact Scenario</div>", unsafe_allow_html=True)
-        sample = st.selectbox(
-            "Load a sample",
-            options=list(SAMPLE_CASES.keys()),
-            label_visibility="collapsed",
-        )
+        sample = st.selectbox("Load a sample", options=list(SAMPLE_CASES.keys()), label_visibility="collapsed")
         prefill = SAMPLE_CASES.get(sample, "")
-        facts = st.text_area(
-            "Facts",
-            value=prefill,
-            height=180,
-            placeholder=(
-                "Describe the facts of the case in detail — who, what, when, where, what evidence exists. "
-                "Include the date of the offence."
-            ),
-            label_visibility="collapsed",
-        )
+        facts = st.text_area("Facts", value=prefill, height=180,
+            placeholder="Describe the facts of the case in detail — who, what, when, where, what evidence exists.",
+            label_visibility="collapsed")
         col_btn, col_note = st.columns([2, 6])
         with col_btn:
             go = st.button("Convene Court", type="primary", use_container_width=True)
         with col_note:
-            st.markdown(
-                "<p style='color:var(--text-muted);font-size:0.73rem;margin-top:0.5rem'>"
-                "Educational simulation only &mdash; not legal advice.</p>",
-                unsafe_allow_html=True,
-            )
+            st.markdown("<p style='color:var(--text-muted);font-size:0.73rem;margin-top:0.5rem'>Educational simulation only &mdash; not legal advice.</p>", unsafe_allow_html=True)
         if go:
             if not facts.strip():
                 st.error("Please enter a fact scenario before convening court.")
@@ -345,6 +572,11 @@ def main() -> None:
                 st.session_state.facts_raw = facts.strip()
                 st.session_state.phase = "running"
                 st.rerun()
+
+    elif st.session_state.phase == "running":
+        st.markdown(f"<p style='color:var(--text-muted);font-size:0.8rem;margin-bottom:1.5rem'>{st.session_state.facts_raw[:220]}{'…' if len(st.session_state.facts_raw) > 220 else ''}</p>", unsafe_allow_html=True)
+        _run_pre_hitl(st.session_state.facts_raw)
+        st.rerun()
 
     elif st.session_state.phase == "error":
         st.error(f"An error occurred: {st.session_state.error_msg}")
