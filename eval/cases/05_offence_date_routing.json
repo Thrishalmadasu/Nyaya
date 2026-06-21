@@ -1,0 +1,12 @@
+{
+  "id": "05_offence_date_routing",
+  "name": "Code Regime Routing — Pre-July 2024 Offence under IPC",
+  "facts": "On 14 January 2024, accused Priya Nair was alleged to have caused the death of her husband, Vikram Nair, by administering poison. The incident occurred at their residence in Chennai. A post-mortem confirmed the cause of death as organophosphate poisoning. Priya claims Vikram accidentally consumed pesticide while working in their garden. Witnesses report a history of domestic disputes. A toxicology report confirms the poison was present in the food that Priya had prepared. The case was registered in January 2024, before the Bharatiya Nyaya Sanhita came into force on 1 July 2024.",
+  "expected": {
+    "code_regime": "IPC",
+    "expected_ruling": "any",
+    "expected_round_min": 1,
+    "key_statutes_should_appear": ["IPC Section 302", "IPC Section 304"],
+    "test_label": "Pre-July 2024 offence MUST route to IPC, not BNS"
+  }
+}
