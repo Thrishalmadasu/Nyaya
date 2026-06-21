@@ -590,6 +590,79 @@ def _run_pre_hitl(facts: str) -> None:
 
 
 
+def _progress_html() -> str:
+    n_rounds = len(st.session_state.rounds)
+    phase = st.session_state.phase
+    done_phases = {"awaiting_hitl", "post_hitl_approved", "post_hitl_rejected", "done"}
+    steps = [("Intake", "clerk")]
+    for i in range(1, n_rounds + 1):
+        steps.append((f"Round {i}", f"r{i}"))
+    steps += [("Audit", "audit"), ("HITL Gate", "hitl"), ("Verdict", "verdict")]
+    items = []
+    for label, key in steps:
+        if phase == "running":
+            cls = "ny-prog-done" if key == "clerk" and st.session_state.clerk_output else "ny-prog-pending"
+        elif phase in done_phases and key == "verdict":
+            cls = "ny-prog-done" if phase == "done" else "ny-prog-active"
+        elif phase in done_phases and key == "hitl":
+            cls = "ny-prog-done" if phase != "awaiting_hitl" else "ny-prog-active"
+        else:
+            cls = "ny-prog-done"
+        items.append(f"<div class='ny-prog-step {cls}'>{label}</div>")
+    return "<div class='ny-progress'>" + "".join(items) + "</div>"
+
+
+def _conclusion_html() -> str:
+    rounds = st.session_state.rounds
+    verdict = st.session_state.verdict or {}
+    scored = [rd for rd in rounds if rd.get("score")]
+    if not scored:
+        return ""
+    p_avg = sum(rd["score"].get("prosecution_strength", 5) for rd in scored) / len(scored)
+    d_avg = sum(rd["score"].get("defence_strength", 5) for rd in scored) / len(scored)
+    ruling = verdict.get("ruling", "inconclusive")
+    ruling_display = ruling.upper().replace("_", " ")
+    if p_avg > d_avg + 0.5:
+        balance = "Prosecution outperformed Defence across rounds."
+        adv = "pros"
+    elif d_avg > p_avg + 0.5:
+        balance = "Defence outperformed Prosecution across rounds."
+        adv = "def"
+    else:
+        balance = "Both sides performed at a similar level."
+        adv = "even"
+    turning = None
+    for i, rd in enumerate(scored):
+        sc = rd["score"]
+        if sc.get("prosecution_strength", 5) != sc.get("defence_strength", 5):
+            turning = i + 1
+            break
+    turn_str = f" The divergence first appeared in Round {turning}." if turning else ""
+    return f"""
+<div class='ny-section'>Trial Summary</div>
+<div class='ny-conclusion'>
+  <div class='ny-conclusion-row'>
+    <div class='ny-conclusion-stat'>
+      <div class='ny-conclusion-label'>Final Ruling</div>
+      <div class='ny-conclusion-value {ruling}'>{ruling_display}</div>
+    </div>
+    <div class='ny-conclusion-stat'>
+      <div class='ny-conclusion-label'>Prosecution Avg</div>
+      <div class='ny-conclusion-value'>{p_avg:.1f}/10</div>
+    </div>
+    <div class='ny-conclusion-stat'>
+      <div class='ny-conclusion-label'>Defence Avg</div>
+      <div class='ny-conclusion-value'>{d_avg:.1f}/10</div>
+    </div>
+    <div class='ny-conclusion-stat'>
+      <div class='ny-conclusion-label'>Rounds</div>
+      <div class='ny-conclusion-value'>{len(scored)}</div>
+    </div>
+  </div>
+  <div class='ny-conclusion-note'>{balance}{turn_str}</div>
+</div>"""
+
+
 def _verdict_html(verdict: dict, rounds: list) -> str:
     ruling = verdict.get("ruling", "inconclusive").lower().replace(" ", "_")
     display = ruling.upper().replace("_", " ")
@@ -783,6 +856,7 @@ def main() -> None:
 
     elif st.session_state.phase == "awaiting_hitl":
         st.markdown(f"<p style=\'color:var(--text-muted);font-size:0.8rem;margin-bottom:0.25rem\'>{st.session_state.facts_raw[:220]}{\'…\' if len(st.session_state.facts_raw) > 220 else \'\'}</p>", unsafe_allow_html=True)
+        st.markdown(_progress_html(), unsafe_allow_html=True)
         _render_all()
         audit = st.session_state.audit_result or {}
         hallucinated = audit.get("hallucinated_citations", [])
@@ -811,9 +885,11 @@ def main() -> None:
         st.rerun()
 
     elif st.session_state.phase == "done":
+        st.markdown(_progress_html(), unsafe_allow_html=True)
         _render_all()
         if st.session_state.verdict:
             st.markdown(_verdict_html(st.session_state.verdict, st.session_state.rounds), unsafe_allow_html=True)
+            st.markdown(_conclusion_html(), unsafe_allow_html=True)
         st.markdown("<br>", unsafe_allow_html=True)
         if st.button("Start New Case"):
             _reset()
