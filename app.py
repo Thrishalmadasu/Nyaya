@@ -589,6 +589,95 @@ def _run_pre_hitl(facts: str) -> None:
         st.session_state.phase = "done"
 
 
+
+def _verdict_html(verdict: dict, rounds: list) -> str:
+    ruling = verdict.get("ruling", "inconclusive").lower().replace(" ", "_")
+    display = ruling.upper().replace("_", " ")
+    confidence = verdict.get("confidence", 5)
+    reasoning = verdict.get("reasoning", "")
+    statutes = verdict.get("statutes_relied_on", [])
+    precedents = verdict.get("precedents_relied_on", [])
+    dissent = verdict.get("dissent_notes", "")
+    disclaimer = verdict.get("disclaimer", "AI-generated educational simulation. Not legal advice.")
+    scored = [rd for rd in rounds if rd.get("score")]
+    p_avg = sum(rd["score"].get("prosecution_strength", 5) for rd in scored) / len(scored) if scored else 5
+    d_avg = sum(rd["score"].get("defence_strength", 5) for rd in scored) / len(scored) if scored else 5
+    n_rounds = len(scored)
+    cite_html = ""
+    if statutes:
+        cite_html += f"<div class=\'ny-verdict-cites\'><strong>Statutes relied on:</strong> {\'·\'.join(statutes[:6])}</div>"
+    if precedents:
+        cite_html += f"<div class=\'ny-verdict-cites\'><strong>Precedents:</strong> {\'·\'.join(precedents[:5])}</div>"
+    dissent_html = ""
+    if dissent:
+        dissent_html = f"<div class=\'ny-verdict-cites\' style=\'margin-top:0.6rem;color:var(--text-muted);font-style:italic\'>{dissent}</div>"
+    return f"""
+<div class=\'ny-section\'>Final Verdict · {n_rounds} Round{"s" if n_rounds != 1 else ""}</div>
+<div class=\'ny-verdict-wrap\'>
+  <div class=\'ny-verdict-panel {ruling}\'>
+    <div class=\'ny-verdict-ruling\'>{display}</div>
+    <div class=\'ny-conf-wrap\'>
+      <span class=\'ny-conf-label\'>Judge\'s Confidence</span>
+      <div class=\'ny-conf-track\'><div class=\'ny-conf-fill\' style=\'width:{confidence*10}%\'></div></div>
+      <span class=\'ny-conf-value\'>{confidence}/10</span>
+      <span class=\'ny-conf-desc\'>{_conf_description(confidence)}</span>
+    </div>
+  </div>
+  <div class=\'ny-verdict-body\'>
+    <div class=\'ny-verdict-score-row\'>
+      <div class=\'ny-verdict-score-item\'>
+        <div class=\'ny-verdict-score-side pros\'>Prosecution — {n_rounds}-Round Average</div>
+        <div class=\'ny-verdict-score-bar\'><div class=\'ny-verdict-score-bar-fill-p\' style=\'width:{p_avg*10:.0f}%\'></div></div>
+        <div class=\'ny-verdict-score-num\'>{p_avg:.1f} / 10</div>
+      </div>
+      <div class=\'ny-verdict-score-item\'>
+        <div class=\'ny-verdict-score-side def\'>Defence — {n_rounds}-Round Average</div>
+        <div class=\'ny-verdict-score-bar\'><div class=\'ny-verdict-score-bar-fill-d\' style=\'width:{d_avg*10:.0f}%\'></div></div>
+        <div class=\'ny-verdict-score-num\'>{d_avg:.1f} / 10</div>
+      </div>
+    </div>
+    <div class=\'ny-verdict-reasoning\'>{reasoning}</div>
+    {cite_html}
+    {dissent_html}
+    <div class=\'ny-verdict-disclaimer\'>{disclaimer}</div>
+  </div>
+</div>"""
+
+
+def _render_all() -> None:
+    if st.session_state.clerk_output:
+        st.markdown(_case_file_html(st.session_state.clerk_output), unsafe_allow_html=True)
+    sb_html = _scoreboard_html()
+    if sb_html:
+        st.markdown(sb_html, unsafe_allow_html=True)
+    for i, rd in enumerate(st.session_state.rounds):
+        st.markdown(_round_header_html(i + 1), unsafe_allow_html=True)
+        st.markdown(_round_args_html(rd), unsafe_allow_html=True)
+        if rd.get("score"):
+            st.markdown(_judge_score_html(rd["score"]), unsafe_allow_html=True)
+    if st.session_state.audit_result:
+        st.markdown(_audit_html(st.session_state.audit_result), unsafe_allow_html=True)
+
+
+def _run_post_hitl(approved: bool) -> None:
+    from langgraph.types import Command
+    config = {"configurable": {"thread_id": st.session_state.thread_id}}
+    graph = st.session_state.get("_graph") or _get_graph()
+    decision = "approve" if approved else "reject"
+    activity = st.empty()
+    activity.info("Deliberating the final verdict…" if approved else "Sending back for re-deliberation…")
+    try:
+        for chunk in graph.stream(Command(resume=decision), config=config, stream_mode="updates"):
+            for node_name, update in chunk.items():
+                _absorb(node_name, update)
+    except Exception as exc:
+        activity.empty()
+        st.session_state.phase = "error"
+        st.session_state.error_msg = str(exc)
+        return
+    activity.empty()
+    st.session_state.phase = "done"
+
 # ── Sample cases ───────────────────────────────────────────────────────────────
 
 SAMPLE_CASES = {
@@ -691,6 +780,44 @@ def main() -> None:
         st.markdown(f"<p style='color:var(--text-muted);font-size:0.8rem;margin-bottom:1.5rem'>{st.session_state.facts_raw[:220]}{'…' if len(st.session_state.facts_raw) > 220 else ''}</p>", unsafe_allow_html=True)
         _run_pre_hitl(st.session_state.facts_raw)
         st.rerun()
+
+    elif st.session_state.phase == "awaiting_hitl":
+        st.markdown(f"<p style=\'color:var(--text-muted);font-size:0.8rem;margin-bottom:0.25rem\'>{st.session_state.facts_raw[:220]}{\'…\' if len(st.session_state.facts_raw) > 220 else \'\'}</p>", unsafe_allow_html=True)
+        _render_all()
+        audit = st.session_state.audit_result or {}
+        hallucinated = audit.get("hallucinated_citations", [])
+        caution = ""
+        if hallucinated:
+            caution = (f"<br><strong style=\'color:#C05050\'>Caution:</strong> The following citations were not verified: {\', \'.join(hallucinated)}")
+        st.markdown(f"""
+<div class=\'ny-section\'>Verdict Gate</div>
+<div class=\'ny-hitl\'>
+  <div class=\'ny-hitl-title\'>Approve to Receive Final Verdict</div>
+  <div class=\'ny-hitl-body\'>The trial is complete. Review the transcript above, then approve to receive the final ruling — or reject to send back for re-deliberation.{caution}</div>
+</div>""", unsafe_allow_html=True)
+        c1, c2, _ = st.columns([2, 2, 4])
+        with c1:
+            if st.button("⚖ Receive Verdict", type="primary", use_container_width=True):
+                st.session_state.phase = "post_hitl_approved"
+                st.rerun()
+        with c2:
+            if st.button("↩ Re-deliberate", use_container_width=True):
+                st.session_state.phase = "post_hitl_rejected"
+                st.rerun()
+
+    elif st.session_state.phase in ("post_hitl_approved", "post_hitl_rejected"):
+        _render_all()
+        _run_post_hitl(st.session_state.phase == "post_hitl_approved")
+        st.rerun()
+
+    elif st.session_state.phase == "done":
+        _render_all()
+        if st.session_state.verdict:
+            st.markdown(_verdict_html(st.session_state.verdict, st.session_state.rounds), unsafe_allow_html=True)
+        st.markdown("<br>", unsafe_allow_html=True)
+        if st.button("Start New Case"):
+            _reset()
+            st.rerun()
 
     elif st.session_state.phase == "error":
         st.error(f"An error occurred: {st.session_state.error_msg}")
