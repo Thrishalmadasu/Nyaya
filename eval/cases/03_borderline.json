@@ -1,0 +1,12 @@
+{
+  "id": "03_borderline",
+  "name": "Borderline — Circumstantial Evidence Only, No Witnesses",
+  "facts": "On 10 October 2024, a body was found in a flat in Mumbai. The deceased, Anil Verma, had died of blunt force trauma. The accused, his business partner Suresh Patel, was found near the building at 11:30 PM by a security guard. Suresh had motive — a ₹50 lakh insurance policy on the deceased naming Suresh as beneficiary, and a disputed partnership deed. Forensic evidence shows traces of the accused's fingerprints on a glass near the scene. However, the fingerprints are not on the weapon. The weapon (a metal rod) was found in a nearby drain with no recoverable fingerprints. No witnesses saw Suresh enter or leave the flat. Suresh claims he was nearby because he received an anonymous call saying Anil was in trouble.",
+  "expected": {
+    "code_regime": "BNS",
+    "expected_ruling": "inconclusive",
+    "expected_round_min": 2,
+    "key_statutes_should_appear": ["BNS Section 101", "BNS Section 103"],
+    "test_label": "Circumstantial case — judge should request multiple rounds"
+  }
+}
