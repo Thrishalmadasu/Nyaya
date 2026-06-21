@@ -1,0 +1,328 @@
+CASE: KS Puttaswamy v Union of India — Privacy (2017)
+SOURCE: https://indiankanoon.org/doc/91938676/
+
+[Cites
+294
+, Cited by
+384
+]
+Supreme Court of India
+Justice K.S.Puttaswamy(Retd) And Anr. vs Union Of India And Ors. on 24 August, 2017
+Equivalent citations: AIR 2017 SUPREME COURT 4161, (2017) 6 BOM CR 78, AIR 2017 SC (CIV) 2714, (2017) 3 KER LJ 17, 2017 (10) SCC 1, (2017) 124 ALL LR 877, (2017) 10 SCALE 1, (2017) 4 CURCC 87, (2017) 6 MAD LJ 267, (2017) 5 ALLMR 686 (SC), (2018) 1 RECCIVR 398, 2017 (178) AIC (SOC) 1 (SC), 242 (2017) DLT 9 (CN)(SC), 2017 (3) KCCR SN 255 (SC), 2017 (4) KLT SN 1 (KER)
+Author:
+D Y Chandrachud
+Bench:
+S Abdul Nazeer
+,
+Sanjay Kishan Kaul
+,
+D Y Chandrachud
+,
+Abhay Manohar Sapre
+,
+Rohinton Fali Nariman
+,
+R K Agrawal
+,
+S A Bobde
+,
+J Chelameswar
+,
+Jagdish Singh Khehar
+REPORTABLE
+
+
+
+
+                          IN THE SUPREME COURT OF INDIA
+                            CIVIL ORIGINAL JURISDICTION
+
+
+                          WRIT PETITION (CIVIL) NO 494 OF 2012
+
+
+
+         JUSTICE K S PUTTASWAMY (RETD.),
+         AND ANR.                                                ..Petitioners
+
+                                        VERSUS
+
+
+         UNION OF INDIA AND ORS.                                 ..Respondents
+         WITH
+
+         T.C. (CIVIL) NO 151 OF 2013
+
+         T.C. (CIVIL) NO 152 OF 2013
+
+         W.P.(CIVIL) NO 833 OF 2013
+
+         W.P.(CIVIL) NO 829 OF 2013
+
+         W.P.(CIVIL) NO 932 OF 2013
+
+         CONMT. PET. (CIVIL) NO 144 OF 2014 IN W.P.(C) NO. 494/2012
+
+         T.P.(CIVIL) NO 313 OF 2014
+
+         T.P.(CIVIL) NO 312 OF 2014
+
+         S.L.P(CRL.) NO.2524/2014
+
+         W.P.(CIVIL) NO.37/2015
+Signature Not Verified
+
+Digitally signed by
+PARVEEN KUMAR
+Date: 2017.08.24
+         W.P.(CIVIL) NO.220/2015
+12:36:27 IST
+Reason:
+
+
+
+
+                                            1
+CONMT. PET. (C)NO.674/2015 IN W.P.(C) NO.829/2013
+
+T.P.(CIVIL)NO.921/2015
+
+CONMT.PET.(C)NO.470/2015 IN W.P.(C) NO.494/2012
+
+CONMT.PET.(C)NO.444/2016 IN W.P.(C) NO.494/2012
+
+CONMT.PET.(C)NO.608/2016 IN W.P.(C) NO.494/2012
+
+W.P.(CIVIL) NO.797/2016
+
+CONMT.PET.(C)NO.844/2017 IN W.P.(C) NO.494/2012
+
+W.P. (C) NO. 342/ 2017
+
+AND WITH W.P.(C) NO.000372/2017
+
+
+
+                                  JUDGMENT
+Dr D Y CHANDRACHUD, J
+
+This judgment has been divided into sections to facilitate analysis. They are :
+A     The reference
+B     Decision in M P Sharma
+C     Decision in Kharak Singh
+D     Gopalan doctrine: fundamental rights as isolated silos
+E     Cooper and Maneka: Interrelationship between rights
+F     Origins of privacy
+G     Natural and inalienable rights
+H     Evolution of the privacy doctrine in India
+I     The Indian Constitution
+
+          •   Preamble
+          •   Jurisprudence on dignity
+2
+•   Fundamental Rights cases
+            •   No waiver of Fundamental Rights
+            •   Privacy as intrinsic to freedom and liberty
+            •   Discordant Notes    :       (i)        ADM Jabalpur
+                                            (ii)       Suresh Koushal
+
+J   India’s commitments under International law
+K   Comparative law on privacy
+    (i)         UK decisions
+    (ii)        US Supreme Court decisions
+    (iii)       Constitutional right to privacy in South Africa
+    (iv)        Constitutional right to privacy in Canada
+    (v)         Privacy under the European Convention on Human Rights and
+                the European Charter
+    (vi)        Decisions of the Inter-American Court of Human Rights
+
+
+L   Criticisms of the privacy doctrine
+    a           Thomson’s Reductionism
+    b           Posner’s Economic critique
+    c           Bork’s critique
+    d           Feminist critique
+M   Constituent Assembly and privacy: limits of originalist interpretation
+N   Is the statutory protection to privacy reason to deny a constitutional right?
+O   Not an elitist construct
+P   Not just a common law right
+Q   Substantive Due Process
+R   Essential nature of privacy
+S   Informational privacy
+T   Conclusions
+3
+PART A
+
+
+A      The reference
+
+1      Nine judges of this Court assembled to determine whether privacy is a
+
+constitutionally protected value. The issue reaches out to the foundation of a
+
+constitutional culture based on the protection of human rights and enables this Court
+
+to revisit the basic principles on which our Constitution has been founded and their
+
+consequences for a way of life it seeks to protect. This case presents challenges for
+
+constitutional interpretation. If privacy is to be construed as a protected constitutional
+
+value, it would redefine in significant ways our concepts of liberty and the entitlements
+
+that flow out of its protection.
+2      Privacy, in its simplest sense, allows each human being to be left alone in a
+
+core which is inviolable. Yet the autonomy of the individual is conditioned by her
+
+relationships with the rest of society. Those relationships may and do often pose
+
+questions to autonomy and free choice. The overarching presence of state and non-
+
+state entities regulates aspects of social existence which bear upon the freedom of
+
+the individual. The preservation of constitutional liberty is, so to speak, work in
+
+progress. Challenges have to be addressed to existing problems. Equally, new
+
+challenges have to be dealt with in terms of a constitutional understanding of where
+
+liberty places an individual in the context of a social order. The emergence of new
+
+challenges is exemplified by this case, where the debate on privacy is being analysed
+
+in the context of a global information based society. In an age where information
+
+technology governs virtually every aspect of our lives, the task before the Court is to
+4
+PART A
+
+
+impart constitutional meaning to individual liberty in an interconnected world. While
+
+we revisit the question whether our constitution protects privacy as an elemental
+
+principle, the Court has to be sensitive to the needs of and the opportunities and
+
+dangers posed to liberty in a digital world.
+3      A Bench of three judges of this Court, while considering the constitutional
+
+challenge to the Aadhaar card scheme of the Union government noted in its order
+
+dated 11 August 2015 that the norms for and compilation of demographic biometric
+
+data by government was questioned on the ground that it violates the right to privacy.
+
+The Attorney General for India urged that the existence of a fundamental right of
+
+privacy is in doubt in view of two decisions : the first – M P Sharma v Satish Chandra,
+
+District Magistrate, Delhi1 (“M P Sharma”) was rendered by a Bench of eight
+
+judges and the second, in Kharak Singh v State of Uttar Pradesh2 (“Kharak
+
+Singh”) was rendered by a Bench of six judges. Each of these decisions, in the
+
+submission of the Attorney General, contained observations that the Indian
+
+Constitution does not specifically protect the right to privacy.
+On the other hand, the
+
+submission of the petitioners was that M P Sharma and Kharak Singh were founded
+
+on principles expounded in
+A K Gopalan v State of Madras3 (“Gopalan”
+).
+Gopalan,
+
+which construed each provision contained in the Chapter on fundamental rights as
+
+embodying a distinct protection, was held not to be good law by an eleven-judge
+1
+(1954) SCR 1077
+2
+(1964) 1 SCR 332
+3
+AIR 1950 SC 27
+5
+PART A
+
+
+Bench in Rustom Cavasji Cooper v Union of India4 (“Cooper”). Hence the
+
+petitioners submitted that the basis of the two earlier decisions is not valid. Moreover,
+
+it was also urged that in the seven-judge Bench decision in Maneka Gandhi v Union
+
+of India5 (“Maneka”), the minority judgment of Justice Subba Rao in Kharak Singh
+
+was specifically approved of and the decision of the majority was overruled.
+
+
+
+4      While addressing these challenges, the Bench of three judges of this Court took
+
+note of several decisions of this Court in which the right to privacy has been held to
+
+be a constitutionally protected fundamental right.
+Those decisions include :
+Gobind
+
+v State of Madhya Pradesh6 (“Gobind”
+),
+R Rajagopal v State of Tamil Nadu7
+
+(“Rajagopal”
+) and People’s Union for Civil Liberties v Union of India8 (“PUCL”).
+
+These subsequent decisions which affirmed the existence of a constitutionally
+
+protected right of privacy, were rendered by Benches of a strength smaller than those
+
+in M P Sharma and Kharak Singh. Faced with this predicament and having due
+
+regard to the far-reaching questions of importance involving interpretation of the
+
+Constitution, it was felt that institutional integrity and judicial discipline would require
+
+a reference to a larger Bench. Hence the Bench of three learned judges observed in
+
+its order dated 11 August 2015:
+“12. We are of the opinion that the cases on hand raise far reaching
+               questions of importance involving interpretation of the Constitution.
+4
+(1970) 1 SCC 248
+5
+(1978) 1 SCC 248
+6
+(1975) 2 SCC 148
+7
+(1994) 6 SCC 632
+8
+(1997) 1 SCC 301
+6
+PART A
+
+
+             What is at stake is the amplitude of the fundamental rights including
+             that precious and inalienable right under
+Article 21.
+If the
+             observations made in
+M.P. Sharma
+(supra) and Kharak Singh
+             (supra) are to be read literally and accepted as the law of this
+             country, the fundamental rights guaranteed under the Constitution
+             of India and more particularly right to liberty under
+Article 21
+would
+             be denuded of vigour and vitality. At the same time, we are also of
+             the opinion that the institutional integrity and judicial discipline
+             require that pronouncement made by larger Benches of this Court
+             cannot be ignored by the smaller Benches without appropriately
+             explaining the reasons for not following the pronouncements made
+             by such larger Benches. With due respect to all the learned Judges
+             who rendered the subsequent judgments - where right to privacy is
+             asserted or referred to their Lordships concern for the liberty of
+             human beings, we are of the humble opinion that there appears to
+             be certain amount o
