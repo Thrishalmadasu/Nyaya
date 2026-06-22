@@ -98,26 +98,6 @@ Decision rules:
 - "proceed_to_verdict" — use ONLY when: both sides have made their strongest possible case (both
    scoring 8+), OR the max round cap has been reached (you will be told).
 
-WIN PROBABILITY — assess case strength independently of argument quality:
-After scoring argument quality, step back and assess win_probability (0–100) purely from
-the OBJECTIVE FACTS and LAW. Ignore how well the lawyers argued. Ask only:
-"If this case went to a real judge today, how likely is conviction on the evidence?"
-
-Work through this checklist before setting the number:
-1. What does prosecution ACTUALLY have? (CCTV, DNA, confession, eyewitnesses, forensics)
-2. What does defence ACTUALLY have? (verified alibi with records, exculpatory forensics,
-   contradictions in prosecution evidence, proven mistaken identity)
-3. Are there decisive facts that make one side's position nearly untenable?
-   — Confirmed alibi supported by multiple objective records (flight, hotel, witnesses) → 10–20
-   — Photo-ID only, no forensics, no corroborating evidence → 25–35
-   — Circumstantial chain with no direct evidence → 40–55
-   — CCTV of incident + partial forensics → 55–70
-   — CCTV of incident + DNA + multiple eyewitnesses → 80–92
-   — Confession + forensics + witnesses, no credible defence → 90+
-
-Do NOT anchor to 50. If the facts clearly favour one side, reflect that decisively.
-A lawyer arguing well does NOT change the underlying facts of the case.
-
 This is a moot court simulation for educational purposes.
 """
 

@@ -69,15 +69,11 @@ def judge_node(state: GraphState) -> dict:
         '  "defence_strength": 5,\n'
         '  "weak_side": "balanced",\n'
         '  "uncited_statutes": ["statute that should have been cited but wasn\'t"],\n'
-        '  "decision": "another_round",\n'
-        '  "win_probability": 50\n'
+        '  "decision": "another_round"\n'
         "}\n"
         "\nREPLACE prosecution_strength=5 and defence_strength=5 with your actual scores "
         "derived from the reasoning above. The two sides MUST receive different scores unless "
-        "you can explain in reasoning why both argued at exactly the same level.\n"
-        "REPLACE win_probability=50 with your case-strength estimate (0-100): the % chance "
-        "prosecution prevails at verdict based on the FACTS and LAW — not argument quality. "
-        "Set 90+ only if the prosecution case is objectively overwhelming; 10- only if acquittal is near-certain."
+        "you can explain in reasoning why both argued at exactly the same level."
     )
 
     messages = [
@@ -85,11 +81,9 @@ def judge_node(state: GraphState) -> dict:
         HumanMessage(
             content=(
                 f"Score Round {current_round} of the moot court.\n\n"
-                f"=== CASE FACTS (read carefully before scoring) ===\n"
-                f"{case_file.facts[:1200]}\n"
+                f"Case: {case_file.facts[:600]}\n"
                 f"Legal questions: {case_file.legal_questions}\n"
-                f"Code regime: {case_file.code_regime}\n"
-                f"=== END FACTS ===\n\n"
+                f"Code regime: {case_file.code_regime}\n\n"
                 f"{prior_scores_text}\n"
                 f"--- Round {current_round} arguments to evaluate ---\n"
                 f"{_format_transcript(round_transcript)}\n"
@@ -97,10 +91,6 @@ def judge_node(state: GraphState) -> dict:
                 f"Round {current_round} of {_MAX_ROUNDS} maximum. "
                 f"Rounds remaining after this: {rounds_remaining}.\n"
                 f"{'FINAL ROUND — you MUST set decision to proceed_to_verdict.' if rounds_remaining == 0 else 'Rounds remain — default to another_round unless both sides scored 8+.'}\n\n"
-                f"IMPORTANT for win_probability: re-read the case facts above and assess case "
-                f"strength from the objective evidence, NOT from how well the lawyers argued. "
-                f"A verified alibi, exculpatory forensics, or a collapsed prosecution theory "
-                f"should push the probability far below 50, regardless of argument quality scores.\n\n"
                 f"Return ONLY a valid JSON object:\n{_schema}"
             )
         ),
@@ -112,6 +102,16 @@ def judge_node(state: GraphState) -> dict:
     # Hard cap — never trust the LLM to self-terminate on the final round.
     if current_round >= _MAX_ROUNDS:
         score.decision = "proceed_to_verdict"
+
+    # Compute win_probability deterministically from cumulative score differentials.
+    # Start at 50 (neutral) and add 5 percentage points per score-point advantage
+    # for every round played so far (including this one). This ensures the probability
+    # actually moves each round instead of being re-anchored by the LLM every time.
+    all_rounds_so_far = all_scores + [score.model_dump()]
+    running_wp = 50
+    for s in all_rounds_so_far:
+        running_wp += (s.get("prosecution_strength", 5) - s.get("defence_strength", 5)) * 5
+    score.win_probability = max(5, min(95, round(running_wp)))
 
     # Early exit — case is decisively one-sided, further rounds won't change the outcome.
     if score.win_probability >= 80 or score.win_probability <= 20:
