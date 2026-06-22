@@ -85,9 +85,11 @@ def judge_node(state: GraphState) -> dict:
         HumanMessage(
             content=(
                 f"Score Round {current_round} of the moot court.\n\n"
-                f"Case: {case_file.facts[:600]}\n"
+                f"=== CASE FACTS (read carefully before scoring) ===\n"
+                f"{case_file.facts[:1200]}\n"
                 f"Legal questions: {case_file.legal_questions}\n"
                 f"Code regime: {case_file.code_regime}\n"
+                f"=== END FACTS ===\n\n"
                 f"{prior_scores_text}\n"
                 f"--- Round {current_round} arguments to evaluate ---\n"
                 f"{_format_transcript(round_transcript)}\n"
@@ -95,6 +97,10 @@ def judge_node(state: GraphState) -> dict:
                 f"Round {current_round} of {_MAX_ROUNDS} maximum. "
                 f"Rounds remaining after this: {rounds_remaining}.\n"
                 f"{'FINAL ROUND — you MUST set decision to proceed_to_verdict.' if rounds_remaining == 0 else 'Rounds remain — default to another_round unless both sides scored 8+.'}\n\n"
+                f"IMPORTANT for win_probability: re-read the case facts above and assess case "
+                f"strength from the objective evidence, NOT from how well the lawyers argued. "
+                f"A verified alibi, exculpatory forensics, or a collapsed prosecution theory "
+                f"should push the probability far below 50, regardless of argument quality scores.\n\n"
                 f"Return ONLY a valid JSON object:\n{_schema}"
             )
         ),
@@ -107,8 +113,8 @@ def judge_node(state: GraphState) -> dict:
     if current_round >= _MAX_ROUNDS:
         score.decision = "proceed_to_verdict"
 
-    # Early exit — case is overwhelmingly one-sided, no point continuing rounds.
-    if score.win_probability >= 90 or score.win_probability <= 10:
+    # Early exit — case is decisively one-sided, further rounds won't change the outcome.
+    if score.win_probability >= 80 or score.win_probability <= 20:
         score.decision = "proceed_to_verdict"
 
     next_round = current_round + 1 if score.decision == "another_round" else current_round

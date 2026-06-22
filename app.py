@@ -421,7 +421,7 @@ def _judge_score_html(score: dict) -> str:
     wp = score.get("win_probability", 50)
     d_wp = 100 - wp
     decision = score.get("decision", "proceed_to_verdict")
-    is_early = decision == "proceed_to_verdict" and (wp >= 90 or wp <= 10)
+    is_early = decision == "proceed_to_verdict" and (wp >= 80 or wp <= 20)
     if decision == "another_round":
         badge_cls, badge_text = "loop", "Another round ordered"
     elif is_early:

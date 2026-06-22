@@ -78,23 +78,26 @@ class _RateLimitAwareChain:
         global _using_fallback
         from groq import RateLimitError
 
-        try:
-            return self._chain.invoke(messages, **kwargs)
-        except RateLimitError as exc:
-            if _using_fallback:
-                # Already on fallback — nothing left to try
-                raise
+        # Retry schedule: (seconds to wait before attempt, switch to fallback?)
+        schedule = [(0, False), (20, True), (60, False)]
+        last_exc: Exception | None = None
 
-            log.warning(
-                "Rate limit on primary model (%s); switching to fallback (%s) for this session.",
-                _PRIMARY_MODEL, _FALLBACK_MODEL,
-            )
-            _using_fallback = True
-            self._chain = self._build()
+        for wait, switch in schedule:
+            if wait:
+                log.warning("Rate limit hit — waiting %ds before retry.", wait)
+                time.sleep(wait)
+            if switch and not _using_fallback:
+                log.warning(
+                    "Switching to fallback model (%s) for this session.", _FALLBACK_MODEL
+                )
+                _using_fallback = True
+                self._chain = self._build()
+            try:
+                return self._chain.invoke(messages, **kwargs)
+            except RateLimitError as exc:
+                last_exc = exc
 
-            # Brief pause to let any per-minute window breathe
-            time.sleep(2)
-            return self._chain.invoke(messages, **kwargs)
+        raise last_exc  # type: ignore[misc]
 
 
 def reset_fallback() -> None:

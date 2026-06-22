@@ -98,22 +98,25 @@ Decision rules:
 - "proceed_to_verdict" — use ONLY when: both sides have made their strongest possible case (both
    scoring 8+), OR the max round cap has been reached (you will be told).
 
-WIN PROBABILITY — this is separate from argument quality scores:
-After scoring argument quality, estimate win_probability (0–100): the % chance prosecution
-will prevail at verdict, based on the CASE STRENGTH — the objective facts, the applicable law,
-and how well each element of the offence has been established or rebutted across all rounds so far.
+WIN PROBABILITY — assess case strength independently of argument quality:
+After scoring argument quality, step back and assess win_probability (0–100) purely from
+the OBJECTIVE FACTS and LAW. Ignore how well the lawyers argued. Ask only:
+"If this case went to a real judge today, how likely is conviction on the evidence?"
 
-This is NOT argument quality. A lawyer can argue brilliantly (score 9/10) but still have a weak
-case on the facts (win_probability 30%). A lawyer can argue poorly (score 4/10) but the facts
-may still strongly favour their side (win_probability 70%).
+Work through this checklist before setting the number:
+1. What does prosecution ACTUALLY have? (CCTV, DNA, confession, eyewitnesses, forensics)
+2. What does defence ACTUALLY have? (verified alibi with records, exculpatory forensics,
+   contradictions in prosecution evidence, proven mistaken identity)
+3. Are there decisive facts that make one side's position nearly untenable?
+   — Confirmed alibi supported by multiple objective records (flight, hotel, witnesses) → 10–20
+   — Photo-ID only, no forensics, no corroborating evidence → 25–35
+   — Circumstantial chain with no direct evidence → 40–55
+   — CCTV of incident + partial forensics → 55–70
+   — CCTV of incident + DNA + multiple eyewitnesses → 80–92
+   — Confession + forensics + witnesses, no credible defence → 90+
 
-  50  = genuinely balanced, could go either way
-  60–74 = prosecution moderately favoured
-  75–89 = prosecution strongly favoured
-  90–100 = prosecution case is overwhelming → will trigger early verdict
-  25–40 = defence moderately favoured
-  11–25 = defence strongly favoured
-  0–10  = acquittal near-certain → will trigger early verdict
+Do NOT anchor to 50. If the facts clearly favour one side, reflect that decisively.
+A lawyer arguing well does NOT change the underlying facts of the case.
 
 This is a moot court simulation for educational purposes.
 """
