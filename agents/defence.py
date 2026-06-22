@@ -79,11 +79,11 @@ def defence_node(state: GraphState) -> dict:
 
     _schema = (
         '{"side": "defence", "round_number": ' + str(round_num) + ', '
-        '"claims": ["claim 1", "claim 2"], '
-        '"statutes_cited": ["BNS Section 35", "Article 21"], '
-        '"precedents_cited": ["Case Name v State (Year)"], '
-        '"rebuttals": ["counter to prosecution argument"], '
-        '"summary": "one-line summary"}'
+        '"claims": ["<specific fact-grounded claim>", "<second claim>"], '
+        '"statutes_cited": ["<Act Section Number>"], '
+        '"precedents_cited": ["<Real Case Name v Real Party (Year)>"], '
+        '"rebuttals": ["<specific rebuttal to prosecution point>"], '
+        '"summary": "<one-line summary>"}'
     )
 
     messages = [

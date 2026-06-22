@@ -106,6 +106,25 @@ class Argument(BaseModel):
                                 flat.append(item.get("precedent") or item.get("case") or str(item))
                         data["precedents_cited"] = flat
                     break
+        # Strip placeholder values the LLM copies from the schema example
+        _placeholder_prec = {"Case Name v State (Year)", "case name v state (year)"}
+        _placeholder_claim = {"claim 1", "claim 2"}
+        _placeholder_stat = {"BNS Section 303", "Article 21"}
+        if "precedents_cited" in data and isinstance(data["precedents_cited"], list):
+            data["precedents_cited"] = [
+                p for p in data["precedents_cited"]
+                if p.strip().lower() not in {x.lower() for x in _placeholder_prec}
+            ]
+        if "claims" in data and isinstance(data["claims"], list):
+            data["claims"] = [
+                c for c in data["claims"]
+                if c.strip().lower() not in {x.lower() for x in _placeholder_claim}
+            ]
+        if "statutes_cited" in data and isinstance(data["statutes_cited"], list):
+            data["statutes_cited"] = [
+                s for s in data["statutes_cited"]
+                if s.strip() not in _placeholder_stat
+            ]
         # Normalise rebuttals
         if "rebuttals" not in data:
             for alt in ("rebuttal", "counter_arguments", "rebuttals_list"):
