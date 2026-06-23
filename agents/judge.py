@@ -107,9 +107,15 @@ def judge_node(state: GraphState) -> dict:
     # Start at 50 (neutral) and add 5 percentage points per score-point advantage
     # for every round played so far (including this one). This ensures the probability
     # actually moves each round instead of being re-anchored by the LLM every time.
-    all_rounds_so_far = all_scores + [score.model_dump()]
+    # De-duplicate by round before summing: when this is a re-deliberation of an
+    # already-scored round (HITL rejection routes back here), the new score must
+    # REPLACE the round's prior contribution, not add to it — otherwise every
+    # rejection counts the round's margin twice and inflates win_probability.
+    by_round: dict = {}
+    for s in all_scores + [score.model_dump()]:
+        by_round[s.get("round_number")] = s
     running_wp = 50
-    for s in all_rounds_so_far:
+    for s in by_round.values():
         running_wp += (s.get("prosecution_strength", 5) - s.get("defence_strength", 5)) * 5
     score.win_probability = max(5, min(95, round(running_wp)))
 

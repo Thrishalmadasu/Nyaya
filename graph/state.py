@@ -227,6 +227,32 @@ class Verdict(BaseModel):
         return data
 
 
+def _upsert_scores_by_round(existing: list[dict], new: list[dict]) -> list[dict]:
+    """Merge judge scores, replacing any prior score for the same round.
+
+    The default operator.add reducer appends a duplicate row every time the
+    Judge re-deliberates a round it has already scored — which is exactly what
+    happens when a human rejects the draft verdict at the HITL gate and routing
+    sends the graph back to judge_node. Those duplicates then inflate
+    win_probability and the verdict's strength averages on every rejection.
+
+    Upsert keeps one score per round (last-write-wins), so a re-deliberation
+    REPLACES the round's score instead of stacking on top of it. For the normal
+    forward path every round has a distinct round_number, so this behaves
+    identically to operator.add.
+    """
+    merged = list(existing or [])
+    for score in (new or []):
+        rn = score.get("round_number")
+        for i, prev in enumerate(merged):
+            if prev.get("round_number") == rn:
+                merged[i] = score
+                break
+        else:
+            merged.append(score)
+    return merged
+
+
 class GraphState(TypedDict):
     # Raw facts from user — consumed by Clerk
     facts_raw: str
@@ -234,8 +260,8 @@ class GraphState(TypedDict):
     case_file: CaseFile
     # Grows each round — list of Argument objects (serialised as dicts for TypedDict)
     round_transcript: Annotated[list[dict], operator.add]
-    # Judge scores — one per round
-    judge_scores: Annotated[list[dict], operator.add]
+    # Judge scores — one per round (upsert: re-deliberating a round replaces it)
+    judge_scores: Annotated[list[dict], _upsert_scores_by_round]
     # Counters and phase tracking
     current_round: int
     current_phase: str  # "intake" | "argue" | "judge" | "audit" | "hitl" | "done"
