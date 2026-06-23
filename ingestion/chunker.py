@@ -169,10 +169,29 @@ def chunk_statute_txt(
     return _chunk_statute(text, source_act, code_regime, year, is_constitution=is_const)
 
 
+def _parse_precedent_header(text: str, fallback_name: str) -> tuple[str, int]:
+    """Read the ``CASE:`` header line for the authoritative title and year.
+
+    Files are written as ``CASE: <Title> (<Year>)`` by the scraper. Trusting the
+    header (not the filename) means a mislabelled file can't masquerade as the
+    case its filename claims — the embedded metadata reflects the actual content.
+    """
+    case_name = fallback_name
+    year = 0
+    m = re.search(r"(?im)^CASE:\s*(.+)$", text)
+    if m:
+        case_name = m.group(1).strip()
+    ym = re.search(r"\((\d{4})\)", case_name)
+    if ym:
+        year = int(ym.group(1))
+    return case_name, year
+
+
 def chunk_precedent_file(txt_path: Path) -> list[TextChunk]:
     """Chunk a precedent text file into ~1000-char overlapping chunks."""
     text = txt_path.read_text(encoding="utf-8", errors="ignore")
-    case_name = txt_path.stem.replace("_", " ").title()
+    fallback_name = txt_path.stem.replace("_", " ").title()
+    case_name, year = _parse_precedent_header(text, fallback_name)
 
     chunks: list[TextChunk] = []
     chunk_size = 1000
@@ -190,7 +209,7 @@ def chunk_precedent_file(txt_path: Path) -> list[TextChunk]:
                     "section_id": f"Para {i // (chunk_size - overlap) + 1}",
                     "section_title": case_name,
                     "code_regime": "PRECEDENT",
-                    "year": 0,
+                    "year": year,
                 },
             )
         )

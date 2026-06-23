@@ -1,0 +1,776 @@
+CASE: Tofan Singh v State of Tamil Nadu (2020)
+SOURCE: https://indiankanoon.org/doc/143202244/
+
+[Cites
+360
+, Cited by
+1439
+]
+Supreme Court of India
+Tofan Singh vs The State Of Tamil Nadu on 29 October, 2020
+Equivalent citations: AIR 2020 SUPREME COURT 5592, AIRONLINE 2020 SC 798
+Author:
+R.F. Nariman
+Bench:
+Indira Banerjee
+,
+R.F. Nariman
+REPORTABLE
+
+                                IN THE SUPREME COURT OF INDIA
+
+                              CRIMINAL APPELLATE JURISDICTION
+
+                                CRIMINAL APPEAL NO.152 OF 2013
+
+      TOFAN SINGH                                                …Appellant
+
+
+                                             Versus
+
+      STATE OF TAMIL NADU                                        …Respondent
+
+                                             WITH
+                               CRIMINAL APPEAL NO. 1750 OF 2009
+                               CRIMINAL APPEAL NO. 2214 OF 2009
+                               CRIMINAL APPEAL NO. 827 OF 2010
+                               CRIMINAL APPEAL NO. 835 OF 2011
+                               CRIMINAL APPEAL NO. 836 OF 2011
+                               CRIMINAL APPEAL NO. 344 OF 2013
+                               CRIMINAL APPEAL NO. 1826 OF 2013
+                               CRIMINAL APPEAL NO. 433 OF 2014
+                         SPECIAL LEAVE PETITION (CRL.) NO. 6338 OF 2015
+                               CRIMINAL APPEAL NO. 77 OF 2015
+                               CRIMINAL APPEAL NO. 90 OF 2017
+                               CRIMINAL APPEAL NO. 91 OF 2017
+                         SPECIAL LEAVE PETITION (CRL.) NO. 1202 OF 2017
+
+                                         JUDGMENT
+R.F. Nariman, J.
+1. These Appeals and Special Leave Petitions arise by virtue of a
+Signature Not Verified
+reference order of a Division Bench of this Court reported as
+Tofan
+Digitally signed by R
+Natarajan
+Date: 2020.10.29
+18:54:11 IST
+Reason:
+Singh v. State of Tamil Nadu
+(2013) 16 SCC 31. The facts in that
+1
+appeal have been set out in that judgment in some detail, and need not
+
+  be repeated by us. After hearing arguments from both sides, the Court
+
+  recorded that the Appellant in Criminal Appeal No.152 of 2013 had
+
+  challenged his conviction primarily on three grounds, as follows:
+“24.1. The conviction is based solely on the purported
+       confessional statement recorded under Section 67 of the
+       NDPS Act which has no evidentiary value inasmuch as:
+(a) The statement was given to and recorded by an officer
+       who is to be treated as “police officer” and is thus, hit by
+Section 25
+of the Evidence Act.
+(b) No such confessional statement could be recorded
+       under
+Section 67
+of the NDPS Act. This provision
+       empowers to call for information and not to record such
+       confessional statements. Thus, the statement recorded
+       under this provision is akin to the statement under
+Section
+       161
+CrPC.
+(c) In any case, the said statement having been retracted,
+       it could not have been the basis of conviction and could
+       be used only to corroborate other evidence.”
+2. Under the caption “Evidentiary value of statement under
+section 67
+of
+
+  the Narcotic Drugs and Psychotropic Substances, Act, 1985 (“
+NDPS
+
+  Act
+”)”, the Court noted the decisions of
+Raj Kumar Karwal v. Union of
+
+  India
+(1990) 2 SCC 409 and Kanhaiyalal v. Union of India (2008) 4
+
+  SCC 668, as also certain other judgments, most notably
+Abdul Rashid
+
+  v. State of Bihar
+(
+2001) 9 SCC 578 and Noor Aga v. State of Punjab
+(2008) 16 SCC 417, and thereafter came to the conclusion that the
+NDPS Act
+, being a penal statute, is in contradistinction to the
+Customs
+
+  Act, 1962
+and the
+Central Excise Act, 1944
+, whose dominant object is
+2
+to protect the revenue of the State, and that therefore, judgments
+
+rendered in the context of those Acts may not be apposite when
+
+considering the
+NDPS Act
+– see paragraph 33.
+After then considering a
+
+number of other judgments, the referral order states that a re-look into
+
+the ratio of
+Raj Kumar Karwal
+(supra) and Kanhaiyalal (supra) would
+
+be necessary, and has referred the matter to a larger Bench thus:
+“41. For the aforesaid reasons, we are of the view that the
+     matter needs to be referred to a larger Bench for
+     reconsideration of the issue as to whether the officer
+     investigating the matter under the
+NDPS Act
+would qualify
+     as police officer or not.
+42. In this context, the other related issue viz. whether the
+     statement recorded by the investigating officer under
+Section 67
+of the Act can be treated as confessional
+     statement or not, even if the officer is not treated as police
+     officer also needs to be referred to the larger Bench,
+     inasmuch as it is intermixed with a facet of the 1st issue
+     as to whether such a statement is to be treated as
+     statement under Section 161 of the Code or it partakes
+     the character of statement under Section 164 of the Code.
+43. As far as this second related issue is concerned we
+     would also like to point out that Mr Jain argued that the
+     provisions of
+Section 67
+of the Act cannot be interpreted
+     in the manner in which the provisions of
+Section 108
+of
+     the Customs Act or
+Section 14
+of the Excise Act had been
+     interpreted by a number of judgments and there is a
+     qualitative difference between the two sets of provisions.
+Insofar as
+Section 108
+of the Customs Act is concerned, it
+     gives power to the custom officer to summon persons “to
+     give evidence” and produce documents. Identical power is
+     conferred upon the Central Excise Officer under
+Section
+     14
+of the Act. However, the wording to
+Section 67
+of the
+     NDPS Act is altogether different. This difference has been
+     pointed out by the Andhra Pradesh High Court in
+Shahid
+     Khan v. Director of Revenue Intelligence
+[2001 Cri LJ
+     3183 (AP)].”
+3
+3. Shri Sushil Kumar Jain, learned Senior Advocate appearing for the
+
+  Appellants in Criminal Appeal Nos. 152 of 2013; 836 of 2011; 433 of
+
+  2014; 77 of 2015 and 1202 of 2017, outlined six issues before us, which
+
+  really boil down to two issues, namely:
+“1. Whether an officer “empowered under Section 42 of
+       the NDPS Act” and/or “the officer empowered under
+       Section 53 of the NDPS Act” are “Police Officers” and
+       therefore statements recorded by such officers would be
+       hit by Section 25 of the Evidence Act; and
+2. What is the extent, nature, purpose and scope of the
+       power conferred under
+Section 67
+of the NDPS Act
+       available to and exercisable by an officer under
+section 42
+thereof, and whether power under
+Section 67
+is a power
+       to record confession capable of being used as substantive
+       evidence to convict an accused?”
+4. Shri Jain took us through the provisions of the
+NDPS Act
+which,
+
+  according to him, is a special Act, and a complete code on the subject it
+
+  covers. He referred to how the
+NDPS Act
+sometimes overrides the
+Code of Criminal Procedure
+, 1973 (“
+CrPC
+”); sometimes says that it is
+
+  applicable; and sometimes states that it is made applicable with
+
+  necessary modifications. According to Shri Jain,
+section 41(2)
+and
+section 42
+of the NDPS Act refer to a ‘First Information Report’ being
+
+  lodged by the officers referred to therein. As the source of information is
+
+  required to be kept a secret under
+section 68
+of the NDPS Act, the
+
+  officer receiving information under these provisions is therefore treated
+
+  as an informant. The tasks assigned to officers under
+section 42
+of the
+
+  NDPS Act are four in number, namely, entry, search, seizure or arrest.
+4
+As opposed to this,
+section 53
+of the NDPS Act invests the designated
+
+officers with all the powers of an ‘officer-in-charge of a police station’ for
+
+the process of investigation, which would then begin after information
+
+collected by a
+section 42
+officer is handed over to the officer designated
+
+under
+section 53
+, and end with a final report being submitted under
+section 173
+of the CrPC to the Special Court under
+section 36A(1)(d)
+of
+
+the NDPS Act.
+According to the learned Senior Advocate,
+section 67
+is
+
+to be read only with
+section 42
+, and is a power to call for information so
+
+that the “reason to believe” mentioned in
+section 42
+can then be made
+
+out, without proceeding further under the
+NDPS Act
+. Thus, “reason to
+
+believe”, which is at a higher threshold than “reason to suspect” – which
+
+phrase has been used in
+section 49
+of the NDPS Act – is a condition
+
+precedent to the officer thereafter moving forward. Shri Jain argued that
+
+the reason to believe must be formed before the officer acts, and that
+
+therefore,
+section 67
+operates at a stage antecedent to the exercise of
+
+the powers of the officer designated under
+section 42
+. He then went on
+
+to argue that these provisions must be construed strictly in favour of the
+
+subject, inasmuch as they impinge upon the fundamental right to
+
+privacy, recently recognised by this Court in
+K.S. Puttaswamy and Anr.
+
+v. Union of India and Ors.
+(2017) 10 SCC 1. He also argued that the
+NDPS Act
+therefore incorporates a legislative balance between powers
+
+of investigation and the obligation to uphold privacy rights of the
+5
+individual. He then went on to argue that the “information” under
+section
+
+67
+of the NDPS Act cannot be equated with “evidence”, which is only
+
+evidence before a court, as per the definition of “evidence” under the
+Indian Evidence Act, 1872
+(“
+Evidence Act
+”). He cited judgments to
+
+show that even witness statements made under
+section 164
+of the
+
+CrPC are not substantive evidence. He then contrasted
+section 67
+of
+
+the NDPS Act with the power of officers under revenue acts to record
+
+evidence, such as
+section 108
+of the Customs Act 1962, and
+section 14
+of the Central Excise Act 1944. He then went on to state that as none of
+
+the safeguards contained in
+sections 161-164
+of the CrPC are
+
+contained in the
+NDPS Act
+when the person is examined under
+section
+
+67
+, obviously statements made to officers under
+section 67
+cannot
+
+amount to substantive evidence on the basis of which conviction can
+
+then take place. An important argument was that it would be highly
+
+incongruous if an officer of the police department, empowered under
+section 42
+and exercising the same powers under
+section 67
+, records a
+
+confessional statement which would be hit by
+section 25
+of the
+
+Evidence Act, whereas officers exercising the same powers under the
+NDPS Act
+, who are not regular policemen, would be able to record
+
+confessional statements, and bypass all constitutional and statutory
+
+safeguards. Shri Jain contended that as the provisions of the
+NDPS Act
+are extremely stringent, they must be strictly construed, and safeguards
+6
+provided must be scrupulously followed. According to him, arbitrary
+
+power conferred under
+section 67
+upon an officer above the rank of
+
+peon, sepoy or constable, but denied to a senior officer under
+section
+
+53
+, would be ex facie contrary to
+Article 14
+of the Constitution. On the
+
+other hand,
+section 53
+statutorily confers powers on the named officer
+
+of an officer-in-charge of a police station for the investigation of the
+
+offences under the
+NDPS Act
+. This, according to the learned counsel,
+
+would contain the entire gamut of powers contained in
+sections 160-173
+of the CrPC, including the power to then file a charge-sheet before the
+
+Special Court under
+section 36A(1)(d)
+of the NDPS Act. The learned
+
+counsel argued that
+section 53A
+of the NDPS Act shows that
+
+confessional statements that are made under
+section 161
+of the CrPC,
+
+which are otherwise hit by
+section 162
+of the CrPC, are made relevant
+
+only in the two contingencies mentioned under
+section 53A
+of the NDPS
+
+Act, being exceptions to the general rule stated in
+section 162
+of the
+
+CrPC. He contended, therefore, that
+section 67
+of the NDPS Act cannot
+
+be used to bypass
+section 53A
+therein and render it otiose. He stressed
+
+the fact that all offences under the
+NDPS Act
+are cognizable offences,
+
+unlike under revenue statutes like the
+Customs Act, 1962
+and
+Central
+
+Excise Act, 1944
+, and then argued that the “complaint” that is referred
+
+to in
+section 36A(1)(d)
+of the NDPS Act has only reference to a
+
+complaint filed under
+section 59(3)
+therein. He also pointed out the
+7
+anomalies of granting to the concerned officer under
+section 53
+all the
+
+powers of the officer-in-charge of a police station, which, unless it ends
+
+up in the form of a final report, would leave things hanging. Thus, if the
+
+concerned officer finds that there is no sufficient evidence, and that the
+
+accused should be released,
+section 169
+of the CrPC would apply. In
+
+the absence of
+section 169
+of the CrPC, as has been contended by the
+
+other side, there is no procedure for discharge of the accused if
+
+evidence against him is found to be wanting. In a without-prejudice
+
+argument that complaints under the
+NDPS Act
+can be made outside of
+section 59(3)
+, Shri Jain stressed the fact that there is in reality and
+
+substance no difference between the “complaint” under the
+NDPS Act
+and the charge-sheet under the
+CrPC
+, as investigation has already
+
+been carried out even before the complaint under the
+NDPS Act
+is
+
+made.
+He therefore argued that both
+Raj Kumar Karwal
+(supra) and
+
+Kanhaiyalal (supra) require to be overruled by us, as they erroneously
+
+applied earlier judgments which concerned themselves with revenue
+
+statutes, and not penal statutes like the
+NDPS Act
+. He then referred us
+
+to
+Article 20(3)
+of the Constitution, and
+section 25
+of the Evidence Act,
+
+and cited a plethora of case law to drive home the point that in this
+
+country, as coercive methods are used against persons during the
+
+course of investigation, all confessions made to a police officer, whether
+
+made during the course of investigation or even before, cannot be relied
+8
+upon as evidence in a trial. He then referred to several judgments of
+
+  this Court to state that the expression “police officer” is not defined, and
+
+  the functional test therefore must apply, namely, that a person who is
+
+  given the same functions as a police officer under the
+CrPC
+, particularly
+
+  in the course of investigating an offence under the Act, must be
+
+  regarded as a police officer for the purpose of
+section 25
+of the
+
+  Evidence Act.
+In the course of his submissions, he referred to a number
+
+  of judgments of this Court, and most particularly, the judgments of
+State
+
+  of Punjab v. Barkat Ram
+(1962) 3 SCR 338;
+Raja Ram Jaiswal v.
+
+  State of Bihar
+(1964) 2 SCR 752;
+Badku Joti Savant v. State of
+
+  Mysore
+(1966) 3 SCR 698;
+Romesh Chandra Mehta v. State of West
+
+  Bengal
+(1969) 2 SCR 461;
+Illias v. Collector of Customs, Madras
+(1969) 2 SCR 613; and
+Balkishan A. Devidayal v. State of
+
+  Maharashtra
+(1980) 4 SCC 600. He also provided a useful chart of the
+
+  difference in the provisions contained in the
+NDPS Act and the Railway
+
+  Property (Unlawful Possession) Act, 1966
+, the Sea Customs Act, 1878,
+
+  the
+Central Excise Act, 1944
+, and the
+Customs Act, 1962
+.
+5. Shri Puneet Jain supplemented these arguments with reference to a
+
+  recent judgment of a Constitution Bench of this Court in
+Mukesh Singh
+
+  v. State (Narcotic Branch of Delhi
+) 2020 SCC OnLine SC 700, and
+
+  stated that as some discordant notes are to be found in that judgment, it
+
+  may be referred to a larger Bench. In any case, he argued that the
+9
+comments made in that judgment about investigation starting from the
+section 42
+stage itself were only in the context of the complainant and
+
+ the investigator being the same, in which case, if prejudice was caused,
+
+ the trial may be vitiated in terms of the judgment.
+6. Shri Anand Grover, learned Senior Advocate, appearing for the
+
+ Appellant in Criminal Appeal No. 90 of 2017, followed in the wake of the
+
+ two Jains, père et fils. The learned Senior Advocate stressed the
+
+ various provisions of the
+NDPS Act
+which showed that it was extremely
+
+ stringent, in that it had minimum sentences for even possession of what
+
+ is regarded as a “commercial quantity” of a drug or psychotropic
+
+ substance, being a minimum sentence of rigorous imprisonment of 10
+
+ years, going up to 20 years. This, coupled with various presumptions
+
+ raised against the accused, and stringent bail conditions, all made the
+NDPS Act
+a very stringent measure of legislation, which, the more
+
+ stringent it is, must contain necessary safeguards against arbitrary
+
+ search, seizure and arrest, or else it would fall foul of the fundamental
+
+ rights chapter of the Constitution. He argued that the
+NDPS Act
+was
+
+ penal in nature, and contained regulatory provisions as well, but given
+
+ the fact that we are concerned only with the penal provisions, could be
+
+ distinguished from the revenue statutes whose dominant object is the
+
+ collection of revenue, and not the punishment of crime. He stressed the
+
+ fact that the “enquiry” under
+section 67
+of the NDPS Act is not a judicial
+10
+enquiry, but only a preliminary fact-finding exercise before a “reason to
+
+believe” is formed under
+section 42
+, which could then lead to
+
+investigation of an offence under the Act. He also referred to
+section 50
+of the NDPS Act, and stated that given a higher protection as to
+
+conditions under which a search of person may be conducted, it would
+
+be inconceivable to then conclude that under
+section 67
+, confessional
+
+statements can be recorded without more, subject to no safeguards
+
+whatsoever, on which convictions can then be based. He relied strongly
+
+on
+State of Punjab v. Baldev Singh
+(1999) 6 SCC 172 and its
+
+aftermath
+Vijaysinh Chandubha Jadeja v. State of Gujarat
+(2011) 1
+
+SCC 609 to argue that even after sub-sections (5) and (6) were added
+
+to
+section 50
+of the NDPS Act, they did not dilute what was contained in
+section 50(1)
+-(4), and could only be used in emergent and urgent
+
+situations.
+He referred to statutes like the
+Terrorist and Disruptive
+
+Activities (Prevention) Act, 1987
+(“TADA”), and stated that where under
+
+certain limited circumstances exceptions were made to
+section 25
+of the
+
+Evidence Act, they were hedged in with a number of safeguards, as
+
+were
+laid down by
+this Court in
+Kartar Singh v. State of Punjab
+(1994)
+
+3 SCC 569. According to him, therefore, “police officer” needs to be
+
+construed functionally to include special police officers under the
+NDPS
+
+Act
+, in the context of confessions made, with reference to
+section 25
+of
+11
+the
+Evidence Act
+.
+He joined Shri Jain in asking for an overruling of
+Raj
+
+   Kumar Karwal
+(supra) and Kanhaiyalal (supra).
+7. Shri S. Nagamuthu, learned Senior Advocate appearing on behalf of the
+
+  Appellant in Criminal Appeal No. 1826 of 2013, referred to
+sections 41
+to
+43
+of the NDPS Act, and emphasised the fact that no powers to
+
+  “investigate” any offences are vested in the officers mentioned in these
+
+  sections. He then referred to
+section 36
+of the CrPC, and said that the
+
+  scheme followed in the
+NDPS Act
+could be assimilated to
+section 36
+, in
+
+  that, police officers superior in rank to an officer in charge of a police
+
+  station may exercise the same powers, throughout the local area to
+
+  which they are appointed, as may be exercised by such officer within
+
+  the limits of his station. He emphasised the fact that
+section 25
+of the
+
+  Evidence Act only applies to confessions made against the maker, as
+
+  against statements recorded under
+section 161
+of the CrPC, which are
+
+  completely barred from being received in evidence under
+section 162
+of
+
+  the CrPC, save and except for purposes of contradiction. He argued
+
+  that a confessional statement made to a
+section 41
+or
+section 42
+officer
+
+  was also hit by
+section 25
+of the Evidence Act. He added that the
+
+  special procedure in
+section 36A
+of the NDPS Act applies only qua
+
+  offences punishable for a term of more than three years, and where
+
+  offences under the Act are punishable for terms up to three years, they
+
+  are to be tried by a Magistrate under the
+CrPC
+. Obviously, officers
+12
+under
+section 53
+of the NDPS Act would inve

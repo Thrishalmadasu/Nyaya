@@ -118,6 +118,25 @@ LLM at ingest. **To extend:** add a `(triggers, synonyms)` row to
   ("BNS Section 302", where 302 exists only in IPC) still validates. Tightening
   this to be regime-aware is tracked as future work.
 
+## Precedent retrieval (`rag/retriever.py` + `rag/precedent_search.py`)
+
+- Landmark judgments are embedded with `code_regime="PRECEDENT"` and retrieved
+  by `retrieve_precedents(query, top_k=3)`, which filters strictly to that
+  regime so case paragraphs never compete with statute sections in a normal
+  `retrieve()` call.
+- Advocates call `get_precedents(query)` in `rag/precedent_search.py`, which is
+  **local-first**: it returns embedded-corpus matches when available and only
+  falls back to **Tavily** internet search when the corpus yields nothing (or no
+  `TAVILY_API_KEY` is set). Each result carries a `source` of `corpus` or
+  `tavily`. Failures are logged (not silently swallowed) and the user query is
+  sanitised before being placed in the Tavily `site:` filter.
+- **Corpus integrity:** precedent metadata (`section_title`, `year`) is parsed
+  from each file's `CASE:` header — never the filename — so a mislabelled file
+  cannot masquerade as the case its name claims. The scraper validates scraped
+  content against the expected party surnames + year before saving, and
+  `check_corpus_health()` (run during `build_corpus`) flags any missing or
+  mismatched case.
+
 ## Rebuild & verify
 
 ```bash

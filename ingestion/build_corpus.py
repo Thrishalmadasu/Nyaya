@@ -25,10 +25,21 @@ def main(force: bool = False) -> None:
 
     # Step 2: Scrape precedents
     print("\n[2/4] Scraping landmark cases from Indian Kanoon...")
-    from ingestion.scrape_kanoon import scrape_all, LANDMARK_CASES
+    from ingestion.scrape_kanoon import scrape_all, LANDMARK_CASES, check_corpus_health
 
-    n_cases = scrape_all(force=force)
-    print(f"      → {n_cases}/{len(LANDMARK_CASES)} precedents saved")
+    summary = scrape_all(force=force)
+    on_disk = len(summary["scraped"]) + len(summary["skipped"])
+    print(f"      → {on_disk}/{summary['total']} precedents present "
+          f"({len(summary['scraped'])} new, {len(summary['rejected'])} rejected, "
+          f"{len(summary['missing'])} missing)")
+
+    # Health check: loudly flag any configured case that is absent or whose
+    # on-disk header doesn't match — so a corrupt/stale corpus can't pass silently.
+    problems = check_corpus_health()
+    if problems:
+        print(f"  ⚠ CORPUS HEALTH: {len(problems)} precedent issue(s) — these cases will NOT be trustworthy:")
+        for slug, reason in problems:
+            print(f"      • {slug}: {reason}")
 
     # Step 3: Chunk everything
     print("\n[3/4] Chunking statutes and precedents...")

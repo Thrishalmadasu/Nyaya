@@ -100,6 +100,46 @@ def retrieve(
     return chunks
 
 
+def retrieve_precedents(query: str, top_k: int = 3) -> list[Chunk]:
+    """Query the Chroma collection for embedded precedent chunks.
+
+    Mirrors ``retrieve()`` but filters strictly to ``code_regime="PRECEDENT"``
+    so landmark-case paragraphs surface for advocate arguments without
+    competing against statute sections. Returns an empty list if the corpus
+    holds no precedents (callers can then fall back to internet search).
+    """
+    collection = _get_collection()
+    if collection.count() == 0:
+        return []
+
+    results = collection.query(
+        query_texts=[query],
+        n_results=min(top_k, max(1, collection.count())),
+        where={"code_regime": "PRECEDENT"},
+        include=["documents", "metadatas", "distances"],
+    )
+
+    chunks: list[Chunk] = []
+    docs = results.get("documents", [[]])[0]
+    metas = results.get("metadatas", [[]])[0]
+    distances = results.get("distances", [[]])[0]
+
+    for doc, meta, dist in zip(docs, metas, distances):
+        chunks.append(
+            Chunk(
+                text=doc,
+                source_act=meta.get("source_act", "Precedent"),
+                section_id=meta.get("section_id", ""),
+                section_title=meta.get("section_title", ""),
+                code_regime=meta.get("code_regime", "PRECEDENT"),
+                year=str(meta.get("year", "")),
+                score=1.0 - dist,
+            )
+        )
+
+    return chunks
+
+
 def section_exists(citation: str) -> bool:
     """Deterministically check if a citation exists in the corpus by metadata lookup.
 

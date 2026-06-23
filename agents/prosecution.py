@@ -18,7 +18,7 @@ _CONSTITUTIONAL_TERMS = (
 
 def _retrieve_context(case_file, query_extra: str = "") -> str:
     from rag.retriever import retrieve
-    from rag.precedent_search import search_precedents
+    from rag.precedent_search import get_precedents
 
     regime = case_file.code_regime
     # Query the statute index with the offence itself. Role/era words like
@@ -40,7 +40,9 @@ def _retrieve_context(case_file, query_extra: str = "") -> str:
         f"[{c.source_act} — {c.section_id}]\n{c.text[:400]}" for c in chunks
     ) or "No statutes retrieved."
 
-    precedents = search_precedents(f"Indian criminal law {case_file.offence_type} liability")
+    # Neutral, offence-based query — both advocates retrieve the same precedents;
+    # the adversarial framing comes from the prompts, not a biased search term.
+    precedents = get_precedents(f"{case_file.offence_type} {base_query}".strip())
     prec_text = "\n".join(
         f"- {p.get('title', 'Unknown')}: {p.get('content', '')[:100]}"
         for p in precedents[:2]
