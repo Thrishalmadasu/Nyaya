@@ -188,6 +188,18 @@ CSS = """
 .ny-verdict-cites { font-size: 0.78rem; color: var(--text-muted); margin-bottom: 0.4rem; line-height: 1.6; }
 .ny-verdict-disclaimer { font-size: 0.72rem; color: var(--text-muted); font-style: italic; margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--border); }
 
+/* Trial summary — closing stat panel */
+.ny-conclusion { background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 1.4rem 1.5rem 1.3rem; margin-bottom: 1rem; animation: slide-in 0.35s ease both; }
+.ny-conclusion-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.85rem; }
+.ny-conclusion-stat { background: var(--surface-2); border: 1px solid var(--border); border-radius: 5px; padding: 1rem 0.85rem; text-align: center; }
+.ny-conclusion-label { font-size: 0.56rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.55rem; }
+.ny-conclusion-value { font-family: 'Playfair Display', serif; font-size: 1.75rem; font-weight: 900; color: var(--text); line-height: 1.05; letter-spacing: -0.01em; }
+.ny-conclusion-value.liable       { font-size: 1.15rem; letter-spacing: 0.01em; color: #D46060; }
+.ny-conclusion-value.not_liable   { font-size: 1.15rem; letter-spacing: 0.01em; color: #4CAF80; }
+.ny-conclusion-value.inconclusive { font-size: 1.15rem; letter-spacing: 0.01em; color: var(--accent); }
+.ny-conclusion-note { font-size: 0.8rem; color: var(--text-muted); line-height: 1.65; margin-top: 1.1rem; padding-top: 1rem; border-top: 1px solid var(--border); text-align: center; }
+@media (max-width: 640px) { .ny-conclusion-row { grid-template-columns: repeat(2, 1fr); } }
+
 div[data-testid="stButton"] button { border-radius: 4px; font-size: 0.8rem; letter-spacing: 0.05em; font-weight: 600; transition: all 0.15s ease; }
 div[data-testid="stTextArea"] textarea { background: var(--surface) !important; border-color: var(--border) !important; color: var(--text) !important; font-size: 0.87rem; line-height: 1.7; border-radius: 5px; }
 div[data-testid="stSelectbox"] > div { background: var(--surface) !important; border-color: var(--border) !important; border-radius: 5px; }
