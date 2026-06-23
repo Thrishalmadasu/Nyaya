@@ -41,10 +41,10 @@ Fact Scenario
                                      │ (Citation    │       citation check
                                      │  Validator)  │
                                      └──────────────┘
-                                            │ citations clean
+                                            │ audit result (pass OR fail)
                                             ▼
                                      ┌──────────────┐
-                                     │ Human Review │ (HITL interrupt)
+                                     │ Human Review │ (HITL interrupt) ──► reject ──► back to Judge
                                      └──────────────┘
                                             │ approved
                                             ▼
@@ -207,6 +207,8 @@ python -m eval.evaluate
 ---
 
 ## Individual Contributions
+
+> See [`CONTRIBUTIONS.md`](CONTRIBUTIONS.md) for the full per-file ownership matrix.
 
 See **[CONTRIBUTIONS.md](CONTRIBUTIONS.md)** for the authoritative, file-level breakdown of each member's work. Summary:
 
