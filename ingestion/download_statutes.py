@@ -39,13 +39,11 @@ STATUTE_SOURCES = [
         "year": 2023,
     },
     {
+        # Indian Kanoon full text (see BNS note above) — parses into 531 sections.
         "name": "BNSS 2023",
-        "filename": "bnss_2023.pdf",
-        "type": "pdf",
-        "urls": [
-            "https://egazette.gov.in/WriteReadData/2023/250987.pdf",
-            "https://egazette.gov.in/WriteReadData/2023/251000.pdf",
-        ],
+        "filename": "bnss_2023.txt",
+        "type": "html",
+        "urls": ["https://indiankanoon.org/doc/91117739/"],
         "code_regime": "BNS",
         "year": 2023,
     },
