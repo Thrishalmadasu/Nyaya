@@ -1,6 +1,7 @@
 """Nyāya — Adversarial Legal Reasoning · Streamlit application."""
 from __future__ import annotations
 
+import os
 import sys
 import uuid
 from pathlib import Path
@@ -757,18 +758,27 @@ def _run_post_hitl(approved: bool) -> None:
     graph = st.session_state.get("_graph") or _get_graph()
     decision = "approve" if approved else "reject"
     activity = st.empty()
-    activity.info("Deliberating the final verdict…" if approved else "Sending back for re-deliberation…")
+    activity.info("Deliberating the final verdict…" if approved else "Hearing another round of argument…")
     try:
         for chunk in graph.stream(Command(resume=decision), config=config, stream_mode="updates"):
             for node_name, update in chunk.items():
                 _absorb(node_name, update)
+                label = _ACTIVITY_LABELS.get(node_name, "")
+                if label:
+                    activity.info(label)
     except Exception as exc:
         activity.empty()
         st.session_state.phase = "error"
         st.session_state.error_msg = str(exc)
         return
     activity.empty()
-    st.session_state.phase = "done"
+    # On "hear another round" the graph runs a fresh round and re-suspends before
+    # the gate — return to the review screen, not the (verdict-less) done screen.
+    graph_state = graph.get_state(config)
+    if graph_state.next and "hitl_node" in graph_state.next:
+        st.session_state.phase = "awaiting_hitl"
+    else:
+        st.session_state.phase = "done"
 
 # ── Sample cases ───────────────────────────────────────────────────────────────
 
@@ -972,21 +982,42 @@ def main() -> None:
         if hallucinated:
             hallucinated_str = ", ".join(hallucinated)
             caution = f"<br><strong style='color:#C05050'>Caution:</strong> The following citations were not verified: {hallucinated_str}"
+
+        max_rounds = int(os.getenv("MOOT_COURT_MAX_ROUNDS", "5"))
+        rounds_done = len([r for r in st.session_state.rounds if r.get("score")])
+        can_argue_more = rounds_done < max_rounds
+        round_word = "round" if rounds_done == 1 else "rounds"
         st.markdown(f"""
 <div class=\'ny-section\'>Verdict Gate</div>
 <div class=\'ny-hitl\'>
-  <div class=\'ny-hitl-title\'>Approve to Receive Final Verdict</div>
-  <div class=\'ny-hitl-body\'>The trial is complete. Review the transcript above, then approve to receive the final ruling — or reject to send back for re-deliberation.{caution}</div>
+  <div class=\'ny-hitl-title\'>Rule now, or hear more argument?</div>
+  <div class=\'ny-hitl-body\'>{rounds_done} {round_word} argued so far. You can deliver the verdict now, or send both advocates back to argue another round before the judge rules.{caution}</div>
 </div>""", unsafe_allow_html=True)
         c1, c2, _ = st.columns([2, 2, 4])
         with c1:
-            if st.button("⚖ Receive Verdict", type="primary", use_container_width=True):
+            if st.button("⚖ Deliver Verdict", type="primary", use_container_width=True):
                 st.session_state.phase = "post_hitl_approved"
                 st.rerun()
         with c2:
-            if st.button("↩ Re-deliberate", use_container_width=True):
+            another = st.button(
+                "↩ Hear Another Round",
+                use_container_width=True,
+                disabled=not can_argue_more,
+                help=(
+                    "Both advocates argue one more round, then you return here to decide again."
+                    if can_argue_more
+                    else f"The {max_rounds}-round limit has been reached — you can only deliver the verdict."
+                ),
+            )
+            if another:
                 st.session_state.phase = "post_hitl_rejected"
                 st.rerun()
+        if not can_argue_more:
+            st.markdown(
+                f"<p style='color:var(--text-muted);font-size:0.72rem;margin-top:0.4rem'>"
+                f"Maximum of {max_rounds} rounds reached — the trial can only proceed to verdict.</p>",
+                unsafe_allow_html=True,
+            )
 
     elif st.session_state.phase in ("post_hitl_approved", "post_hitl_rejected"):
         _render_all()
