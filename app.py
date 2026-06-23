@@ -64,6 +64,17 @@ CSS = """
 .ny-round-badge { font-size: 0.6rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; padding: 0.2rem 0.55rem; border-radius: 2px; background: rgba(196,154,60,0.12); color: var(--accent); border: 1px solid rgba(196,154,60,0.25); }
 .ny-round-text { font-size: 0.62rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-muted); }
 
+.ny-progress { display: flex; align-items: center; flex-wrap: wrap; gap: 0.45rem; margin: 1.25rem 0 1.75rem; }
+.ny-prog-step { display: inline-flex; align-items: center; font-size: 0.58rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.32rem 0.7rem; border-radius: 3px; border: 1px solid var(--border); background: var(--surface); color: var(--text-muted); white-space: nowrap; transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease; }
+.ny-prog-step:not(:last-child) { margin-right: 0.45rem; position: relative; }
+.ny-prog-step:not(:last-child)::after { content: ""; position: absolute; right: -0.45rem; width: 0.45rem; height: 1px; background: var(--border); }
+.ny-prog-done { color: var(--accent); border-color: rgba(196,154,60,0.30); background: rgba(196,154,60,0.08); }
+.ny-prog-done::before { content: "✓"; margin-right: 0.4rem; font-size: 0.6rem; }
+.ny-prog-active { color: var(--ground); border-color: var(--accent); background: var(--accent); box-shadow: 0 0 0 3px rgba(196,154,60,0.15); }
+.ny-prog-active::before { content: ""; display: inline-block; width: 5px; height: 5px; border-radius: 50%; background: var(--ground); margin-right: 0.45rem; animation: prog-pulse 1.2s ease-in-out infinite; }
+.ny-prog-pending { color: var(--text-muted); border-color: var(--border); background: var(--surface); opacity: 0.5; }
+@keyframes prog-pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.25; } }
+
 .ny-casefile { background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 1.2rem 1.5rem; margin-bottom: 1rem; animation: slide-in 0.35s ease both; }
 .ny-cf-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border); }
 .ny-cf-label { font-size: 0.6rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.25rem; }
@@ -540,6 +551,7 @@ def _run_pre_hitl(facts: str) -> None:
         "error": None,
     }
 
+    progress_slot = st.empty()
     case_slot = st.empty()
     scoreboard_slot = st.empty()
     activity_slot = st.empty()
@@ -548,6 +560,7 @@ def _run_pre_hitl(facts: str) -> None:
         for _ in range(_MAX_ROUNDS)
     ]
     audit_slot = st.empty()
+    progress_slot.markdown(_progress_html(), unsafe_allow_html=True)
 
     def _rn_from(obj) -> int:
         return obj.get("round_number", 1) if isinstance(obj, dict) else getattr(obj, "round_number", 1)
@@ -556,6 +569,7 @@ def _run_pre_hitl(facts: str) -> None:
         for chunk in graph.stream(initial_state, config=config, stream_mode="updates"):
             for node_name, update in chunk.items():
                 _absorb(node_name, update)
+                progress_slot.markdown(_progress_html(), unsafe_allow_html=True)
 
                 if node_name == "clerk_node" and st.session_state.clerk_output:
                     case_slot.markdown(_case_file_html(st.session_state.clerk_output), unsafe_allow_html=True)
@@ -615,23 +629,38 @@ def _run_pre_hitl(facts: str) -> None:
 
 
 def _progress_html() -> str:
-    n_rounds = len(st.session_state.rounds)
+    """Horizontal stepper reflecting live trial state (works during the run, at
+    the gate, and when done) — each step is derived from session_state, not just
+    the phase, so it updates as nodes stream in."""
+    rounds = st.session_state.rounds
     phase = st.session_state.phase
-    done_phases = {"awaiting_hitl", "post_hitl_approved", "post_hitl_rejected", "done"}
+    clerk_done = bool(st.session_state.clerk_output)
+    audit_done = bool(st.session_state.audit_result)
+    past_gate = phase in {"post_hitl_approved", "post_hitl_rejected", "done"}
+
     steps = [("Intake", "clerk")]
-    for i in range(1, n_rounds + 1):
+    for i in range(1, len(rounds) + 1):
         steps.append((f"Round {i}", f"r{i}"))
     steps += [("Audit", "audit"), ("HITL Gate", "hitl"), ("Verdict", "verdict")]
+
     items = []
     for label, key in steps:
-        if phase == "running":
-            cls = "ny-prog-done" if key == "clerk" and st.session_state.clerk_output else "ny-prog-pending"
-        elif phase in done_phases and key == "verdict":
-            cls = "ny-prog-done" if phase == "done" else "ny-prog-active"
-        elif phase in done_phases and key == "hitl":
-            cls = "ny-prog-done" if phase != "awaiting_hitl" else "ny-prog-active"
-        else:
-            cls = "ny-prog-done"
+        if key == "clerk":
+            cls = "ny-prog-done" if clerk_done else "ny-prog-active"
+        elif key.startswith("r"):
+            rd = rounds[int(key[1:]) - 1]
+            if rd.get("score"):
+                cls = "ny-prog-done"
+            elif rd.get("prosecution") or rd.get("defence"):
+                cls = "ny-prog-active"
+            else:
+                cls = "ny-prog-pending"
+        elif key == "audit":
+            cls = "ny-prog-done" if audit_done else "ny-prog-pending"
+        elif key == "hitl":
+            cls = "ny-prog-active" if phase == "awaiting_hitl" else ("ny-prog-done" if past_gate else "ny-prog-pending")
+        else:  # verdict
+            cls = "ny-prog-done" if phase == "done" else ("ny-prog-active" if phase == "post_hitl_approved" else "ny-prog-pending")
         items.append(f"<div class='ny-prog-step {cls}'>{label}</div>")
     return "<div class='ny-progress'>" + "".join(items) + "</div>"
 
