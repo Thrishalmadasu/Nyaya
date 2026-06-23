@@ -1,8 +1,9 @@
 """Download Indian statute text from accessible government and legal sources.
 
 Strategy per statute:
-- BNS 2023: egazette.gov.in (confirmed accessible)
-- BNSS 2023 / BSA 2023: egazette fallback, then skip with instructions
+- BNS 2023 / BNSS 2023 / BSA 2023: Indian Kanoon full-text pages (clean English).
+  The egazette.gov.in PDFs are bilingual Hindi/English two-column scans that
+  PyMuPDF cannot section-split, so they are no longer used.
 - IPC 1860 / CrPC 1973 / Constitution: Indian Kanoon full-text pages (confirmed accessible)
 """
 from __future__ import annotations
@@ -48,13 +49,11 @@ STATUTE_SOURCES = [
         "year": 2023,
     },
     {
+        # Indian Kanoon full text (see BNS note above) — parses into 170 sections.
         "name": "BSA 2023",
-        "filename": "bsa_2023.pdf",
-        "type": "pdf",
-        "urls": [
-            "https://egazette.gov.in/WriteReadData/2023/250985.pdf",
-            "https://egazette.gov.in/WriteReadData/2023/250984.pdf",
-        ],
+        "filename": "bsa_2023.txt",
+        "type": "html",
+        "urls": ["https://indiankanoon.org/doc/70224818/"],
         "code_regime": "BNS",
         "year": 2023,
     },
