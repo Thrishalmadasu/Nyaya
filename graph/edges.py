@@ -61,12 +61,17 @@ def auditor_routing(
     return "hitl_node"
 
 
-def hitl_routing(state: GraphState) -> Literal["verdict_node", "judge_node"]:
+def hitl_routing(state: GraphState) -> Literal["verdict_node", "prosecution_node"]:
     """Route after human review.
 
     Human approved → finalise verdict.
-    Human rejected → ask the Judge to re-deliberate.
+    Human rejected ("hear another round") → send the advocates back to argue a
+    fresh round (prosecution → defence → judge), then return to the gate. We
+    route to prosecution rather than back to the Judge so the trial gains a
+    genuinely new round of argument instead of re-scoring the round just shown
+    — re-scoring appended a duplicate score for the same round and double-counted
+    its strength differential in the win-probability calculation.
     """
     if state.get("hitl_approved", False):
         return "verdict_node"
-    return "judge_node"
+    return "prosecution_node"

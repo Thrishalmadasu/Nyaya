@@ -10,6 +10,7 @@ then automatically switches to the fallback model for the rest of the session.
 from __future__ import annotations
 
 import os
+import re
 import time
 import logging
 from typing import Any, Type
@@ -29,13 +30,36 @@ _using_fallback: bool = False
 log = logging.getLogger(__name__)
 
 
+# Longest we will wait on the primary model before switching to the
+# higher-limit fallback. Per-minute token limits reset within seconds, so short
+# waits are honoured on the 70B primary to keep argument/verdict quality high;
+# only a long wait (daily-quota exhaustion) is worth the downgrade.
+_MAX_PRIMARY_WAIT = 25.0
+
+
 def _make_groq(model: str):
     from langchain_groq import ChatGroq
     return ChatGroq(
         model=model,
         api_key=os.getenv("GROQ_API_KEY"),
         temperature=0.3,
+        max_retries=0,  # retries/back-off are handled in _RateLimitAwareChain
     )
+
+
+def _retry_after_seconds(exc: Exception) -> float | None:
+    """Groq's actual back-off hint: the Retry-After header, else the
+    'try again in 7.5s' phrase in the error body. None if neither is present."""
+    response = getattr(exc, "response", None)
+    if response is not None:
+        header = response.headers.get("retry-after")
+        if header:
+            try:
+                return float(header)
+            except ValueError:
+                pass
+    match = re.search(r"try again in ([\d.]+)\s*s", str(exc))
+    return float(match.group(1)) if match else None
 
 
 def get_llm():
@@ -78,24 +102,31 @@ class _RateLimitAwareChain:
         global _using_fallback
         from groq import RateLimitError
 
-        # Retry schedule: (seconds to wait before attempt, switch to fallback?)
-        schedule = [(0, False), (20, True), (60, False)]
         last_exc: Exception | None = None
-
-        for wait, switch in schedule:
-            if wait:
-                log.warning("Rate limit hit — waiting %ds before retry.", wait)
-                time.sleep(wait)
-            if switch and not _using_fallback:
-                log.warning(
-                    "Switching to fallback model (%s) for this session.", _FALLBACK_MODEL
-                )
-                _using_fallback = True
-                self._chain = self._build()
+        for attempt in range(4):
             try:
                 return self._chain.invoke(messages, **kwargs)
             except RateLimitError as exc:
                 last_exc = exc
+                wait = _retry_after_seconds(exc)
+                if wait is None:
+                    wait = 4.0 * (attempt + 1)  # no hint — gentle linear back-off
+
+                if wait > _MAX_PRIMARY_WAIT and not _using_fallback:
+                    # A long wait means the primary's daily quota is spent.
+                    # Switch to the higher-limit fallback and retry at once
+                    # rather than stall the demo for a minute or more.
+                    log.warning(
+                        "Primary rate-limited for ~%.0fs — switching to fallback model (%s).",
+                        wait, _FALLBACK_MODEL,
+                    )
+                    _using_fallback = True
+                    self._chain = self._build()
+                    continue
+
+                wait = min(wait, _MAX_PRIMARY_WAIT)
+                log.warning("Rate limit — waiting %.1fs (Groq retry-after) before retry.", wait)
+                time.sleep(wait + 0.3)
 
         raise last_exc  # type: ignore[misc]
 

@@ -27,13 +27,19 @@ def _hitl_node(state: GraphState) -> dict:
         f"Audit passed: {state.get('audit_passed')}\n"
         f"Audit notes: {audit.get('audit_notes', '') if audit else ''}\n"
         f"Hallucinated citations: {audit.get('hallucinated_citations', []) if audit else []}\n\n"
-        "Type 'approve' to accept the verdict, or 'reject' to send back for re-deliberation.\n"
+        "Type 'approve' to accept the verdict, or 'reject' to hear another round of argument.\n"
     )
 
     decision = interrupt({"prompt": prompt_text, "verdict_draft": verdict_draft})
 
     approved = str(decision).strip().lower() == "approve"
-    return {"hitl_approved": approved, "current_phase": "hitl"}
+    result: dict = {"hitl_approved": approved, "current_phase": "hitl"}
+    if not approved:
+        # "Hear another round": advance the round counter so the advocates argue
+        # a fresh round before the gate reappears, rather than re-scoring the
+        # round already shown.
+        result["current_round"] = state.get("current_round", 1) + 1
+    return result
 
 
 def build_graph(checkpointer=None) -> StateGraph:
@@ -88,7 +94,7 @@ def build_graph(checkpointer=None) -> StateGraph:
         hitl_routing,
         {
             "verdict_node": "verdict_node",
-            "judge_node": "judge_node",
+            "prosecution_node": "prosecution_node",
         },
     )
 
