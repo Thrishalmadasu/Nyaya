@@ -10,7 +10,7 @@
 
 **Pain point:** Single-prompt LLMs give one-sided, ungrounded answers and routinely hallucinate Indian statute numbers — which is dangerous in a legal context. There is no accessible tool that (a) argues both sides rigorously, (b) grounds every claim in real statutory text, (c) applies the correct code regime (BNS vs IPC based on offence date), and (d) delivers a judge-adjudicated verdict with a citation-integrity guarantee.
 
-**Solution:** A multi-agent moot court: two opposing advocate agents debate across up to 5 rounds, each retrieving real statute sections from a local RAG corpus. An independent Judge agent scores each round (1–10 per side), maintains a deterministic running **win probability**, and controls the loop — proceeding to verdict early when the case becomes decisively one-sided. A Citation Auditor blocks any verdict containing hallucinated sections. A human legal reviewer approves before the verdict is finalised.
+**Solution:** A multi-agent moot court: two opposing advocate agents debate across up to 5 rounds, each retrieving real statute sections from a local RAG corpus. An independent Judge agent scores each round (1–10 per side), maintains a deterministic running **win probability**, and controls the loop — proceeding to verdict early when the case becomes decisively one-sided. A Citation Auditor deterministically validates every cited section against the corpus and surfaces any hallucinated citations to the human reviewer, who must approve before the verdict is finalised.
 
 ---
 
@@ -59,7 +59,7 @@ Fact Scenario
 |--------|---------|---------|
 | Code regime | Clerk extracts offence date | BNS (≥ Jul 2024) or IPC (< Jul 2024) |
 | Judge routing | After each round | `another_round` (loop) or `proceed_to_verdict` — forced to proceed when win probability reaches ≥ 80 / ≤ 20, or at the `MAX_ROUNDS` cap |
-| Auditor routing | After citation audit | `re-argue` (hallucinations found) or `hitl` (clean) |
+| Auditor routing | After citation audit | Always routes to `hitl`, attaching the audit result (verified + hallucinated citations) for the human reviewer to act on |
 
 ---
 
@@ -191,7 +191,7 @@ python -m eval.evaluate
 
 - **Mandatory disclaimer** on every `Verdict` object — cannot be suppressed
 - **HITL gate** — LangGraph `interrupt()` suspends graph; human must type `approve` before verdict is finalised
-- **Citation validator** — deterministic Chroma metadata lookup, not LLM — cannot hallucinate
+- **Citation validator** — deterministic Chroma metadata lookup, not LLM — cannot hallucinate; every cited section is checked against the corpus and any hallucinations are flagged to the human reviewer at the HITL gate before approval
 - **Max rounds cap** — controlled by `MOOT_COURT_MAX_ROUNDS` env var (default 5)
 - **Refusal** — Clerk system prompt rejects personal legal advice requests framed as "my case"
 
@@ -208,11 +208,13 @@ python -m eval.evaluate
 
 ## Individual Contributions
 
-| Contributor | Responsibilities |
-|-------------|-----------------|
-| **Suraj Guduru** | LangGraph graph architecture (`graph/state.py`, `graph/edges.py`, `graph/court.py`), Judge agent, CLI entry point, integration and evaluation harness |
-| **Venkatesh** | RAG ingestion pipeline (`ingestion/download_statutes.py`, `chunker.py`, `embedder.py`, `build_corpus.py`), `rag/retriever.py`, `tools/statute_tool.py`, `tools/citation_validator.py` |
-| **Thrishal** | Precedent scraping (`ingestion/scrape_kanoon.py`), `rag/precedent_search.py`, `tools/precedent_tool.py`, all agent system prompts (`agents/prompts.py`), Clerk/Prosecution/Defence/Auditor agent nodes, evaluation case scenarios |
+See **[CONTRIBUTIONS.md](CONTRIBUTIONS.md)** for the authoritative, file-level breakdown of each member's work. Summary:
+
+| Contributor | Primary areas |
+|-------------|---------------|
+| **Suraj Guduru** | Data models & graph assembly (`graph/state.py`, `graph/court.py`), Judge agent & verdict (`agents/judge.py`), LLM factory (`utils/llm.py`), `rag/retriever.py`, HITL/verdict UI, eval runner |
+| **Sai Venkatesh Alampally** | RAG ingestion pipeline (`ingestion/*`), statute corpus, Prosecution & Auditor agents, citation/statute tools, scoreboard UI |
+| **Thrishal Madasu** | Edge routing (`graph/edges.py`), all system prompts (`agents/prompts.py`), Clerk & Defence agents, precedent search & corpus, CLI, case-display UI, README |
 
 ---
 
