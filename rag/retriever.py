@@ -54,15 +54,23 @@ def retrieve(
     query: str,
     code_regime: str | None = None,
     top_k: int = 8,
+    include_constitution: bool = False,
 ) -> list[Chunk]:
-    """Query the Chroma collection and return the top-k relevant chunks."""
+    """Query the Chroma collection and return the top-k relevant chunks.
+
+    By default the filter is restricted to the active ``code_regime`` only.
+    Constitutional articles are pulled in only when ``include_constitution`` is
+    set — otherwise they compete in (and pollute) every ordinary-crime query,
+    e.g. Article 20 surfacing for a murder case.
+    """
     collection = _get_collection()
 
     where: dict | None = None
     if code_regime:
-        # Include both BNS and IPC chunks (IPC may still be relevant for context)
-        # but prefer the active regime
-        where = {"code_regime": {"$in": [code_regime, "CONST"]}}
+        regimes = [code_regime]
+        if include_constitution and code_regime != "CONST":
+            regimes.append("CONST")
+        where = {"code_regime": {"$in": regimes}} if len(regimes) > 1 else {"code_regime": code_regime}
 
     results = collection.query(
         query_texts=[query],
