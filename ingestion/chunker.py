@@ -24,6 +24,26 @@ _SECTION_PATTERNS = [
 # Pattern for Constitution articles
 _ARTICLE_PATTERN = re.compile(r"(?m)^(\d+[A-Z]?)\.\s+[A-Z]")
 
+# A single section's body is embedded as one chunk when it fits the window,
+# otherwise split into overlapping windows so the tail is never dropped.
+_SECTION_WINDOW = 1500
+_SECTION_OVERLAP = 200
+
+
+def _window_text(text: str, size: int, overlap: int) -> list[str]:
+    """Split text into overlapping windows. Returns [text] if it already fits."""
+    if len(text) <= size:
+        return [text]
+    step = max(1, size - overlap)
+    windows = []
+    for start in range(0, len(text), step):
+        piece = text[start : start + size].strip()
+        if piece:
+            windows.append(piece)
+        if start + size >= len(text):
+            break
+    return windows
+
 
 def _extract_pdf_text(path: Path) -> str:
     doc = fitz.open(str(path))
@@ -66,20 +86,26 @@ def _chunk_statute(
         first_line = section_body.split("\n")[0][:120].strip()
         section_title = re.sub(r"[—\-]+$", "", first_line).strip()
 
-        chunk_text = f"{section_id}. {section_body[:1500]}"
-
-        chunks.append(
-            TextChunk(
-                text=chunk_text,
-                metadata={
-                    "source_act": source_act,
-                    "section_id": section_id,
-                    "section_title": section_title,
-                    "code_regime": code_regime,
-                    "year": year,
-                },
+        # Long sections are split into overlapping sub-chunks rather than
+        # truncated at 1500 chars. Every sub-chunk keeps the same section_id and
+        # section_title (so citation lookup by section_id is unaffected) and
+        # records its 1-based part index.
+        windows = _window_text(section_body, _SECTION_WINDOW, _SECTION_OVERLAP)
+        for part_idx, part_body in enumerate(windows, start=1):
+            chunk_text = f"{section_id}. {part_body}"
+            chunks.append(
+                TextChunk(
+                    text=chunk_text,
+                    metadata={
+                        "source_act": source_act,
+                        "section_id": section_id,
+                        "section_title": section_title,
+                        "code_regime": code_regime,
+                        "year": year,
+                        "part": str(part_idx),
+                    },
+                )
             )
-        )
         i += 2
 
     # Fallback: if few sections found, also chunk by sliding window over paragraphs
