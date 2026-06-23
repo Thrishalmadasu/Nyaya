@@ -1,8 +1,9 @@
 """Download Indian statute text from accessible government and legal sources.
 
 Strategy per statute:
-- BNS 2023: egazette.gov.in (confirmed accessible)
-- BNSS 2023 / BSA 2023: egazette fallback, then skip with instructions
+- BNS 2023 / BNSS 2023 / BSA 2023: Indian Kanoon full-text pages (clean English).
+  The egazette.gov.in PDFs are bilingual Hindi/English two-column scans that
+  PyMuPDF cannot section-split, so they are no longer used.
 - IPC 1860 / CrPC 1973 / Constitution: Indian Kanoon full-text pages (confirmed accessible)
 """
 from __future__ import annotations
@@ -27,34 +28,32 @@ HEADERS = {
 # type: "html" → fetch Indian Kanoon page, extract judgments div, save as .txt
 STATUTE_SOURCES = [
     {
+        # Sourced from Indian Kanoon (clean English full text), not the egazette
+        # PDF: the official gazette is a bilingual Hindi/English two-column scan
+        # that PyMuPDF cannot section-split, so it fell back to meaningless "Para"
+        # chunks. The Indian Kanoon HTML parses into all 358 real sections.
         "name": "BNS 2023",
-        "filename": "bns_2023.pdf",
-        "type": "pdf",
-        "urls": [
-            "https://egazette.gov.in/WriteReadData/2023/250986.pdf",
-        ],
+        "filename": "bns_2023.txt",
+        "type": "html",
+        "urls": ["https://indiankanoon.org/doc/149679501/"],
         "code_regime": "BNS",
         "year": 2023,
     },
     {
+        # Indian Kanoon full text (see BNS note above) — parses into 531 sections.
         "name": "BNSS 2023",
-        "filename": "bnss_2023.pdf",
-        "type": "pdf",
-        "urls": [
-            "https://egazette.gov.in/WriteReadData/2023/250987.pdf",
-            "https://egazette.gov.in/WriteReadData/2023/251000.pdf",
-        ],
+        "filename": "bnss_2023.txt",
+        "type": "html",
+        "urls": ["https://indiankanoon.org/doc/91117739/"],
         "code_regime": "BNS",
         "year": 2023,
     },
     {
+        # Indian Kanoon full text (see BNS note above) — parses into 170 sections.
         "name": "BSA 2023",
-        "filename": "bsa_2023.pdf",
-        "type": "pdf",
-        "urls": [
-            "https://egazette.gov.in/WriteReadData/2023/250985.pdf",
-            "https://egazette.gov.in/WriteReadData/2023/250984.pdf",
-        ],
+        "filename": "bsa_2023.txt",
+        "type": "html",
+        "urls": ["https://indiankanoon.org/doc/70224818/"],
         "code_regime": "BNS",
         "year": 2023,
     },

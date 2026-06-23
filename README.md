@@ -138,7 +138,9 @@ cp .env.example .env
 ```bash
 python -m ingestion.build_corpus
 ```
-This downloads statute PDFs, scrapes landmark precedents, chunks them, and embeds into ChromaDB. Expect ~15–30 min on first run.
+This downloads the statute texts (clean English full text from Indian Kanoon), scrapes landmark precedents, chunks them section-by-section, and embeds into ChromaDB. Expect ~15–30 min on first run. After it finishes, verify with `python -m tools.inspect_corpus`.
+
+See **[docs/RAG.md](docs/RAG.md)** for the full ingestion pipeline, chunking strategy, metadata schema, and retrieval behaviour.
 
 ### 4. Run a case
 ```bash

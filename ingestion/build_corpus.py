@@ -74,7 +74,16 @@ def main(force: bool = False) -> None:
 
     # Step 4: Embed and upsert
     print("\n[4/4] Embedding and upserting to Chroma...")
-    from ingestion.embedder import upsert_chunks
+    from ingestion.embedder import upsert_chunks, delete_acts
+
+    # Clear existing chunks for every act we just re-chunked, so a rebuild is a
+    # true replacement. Chunk IDs derive from (source_act, section_id, text), so
+    # without this an act re-parsed into different sections would stack new
+    # chunks on top of the stale ones (e.g. clean BNS added beside old Para-junk).
+    acts_to_refresh = sorted({c.metadata.get("source_act") for c in all_chunks if c.metadata.get("source_act")})
+    if acts_to_refresh:
+        print(f"      clearing existing chunks for: {', '.join(acts_to_refresh)}")
+        delete_acts(acts_to_refresh, verbose=True)
 
     n_upserted = upsert_chunks(all_chunks, verbose=True)
     print(f"      → {n_upserted} chunks upserted to Chroma")
