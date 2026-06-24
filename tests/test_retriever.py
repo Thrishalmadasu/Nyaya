@@ -46,6 +46,23 @@ class RetrievalScopeTests(unittest.TestCase):
         self.assertTrue(section_exists("BNS Section 103"))
         self.assertFalse(section_exists("BNS Section 99999"))
 
+    def test_section_exists_is_act_aware(self):
+        # Regression: a section number can exist in one act but not another.
+        # "Section 378" is theft in the IPC and a procedural section in the
+        # BNSS, but is NOT a section of the BNS at all (BNS theft is s.303).
+        # The auditor must verify a citation against the act it actually names,
+        # not against any act that happens to have that number.
+        from rag.retriever import section_exists
+        self.assertTrue(section_exists("IPC Section 378"))    # real IPC theft
+        self.assertFalse(section_exists("BNS Section 378"))   # not a BNS section
+        self.assertTrue(section_exists("BNS Section 303"))    # real BNS theft
+
+    def test_section_exists_bare_citation_uses_expected_regime(self):
+        # A citation with no code word is resolved against the case's regime.
+        from rag.retriever import section_exists
+        self.assertFalse(section_exists("Section 378", expected_regime="BNS"))
+        self.assertTrue(section_exists("Section 378", expected_regime="IPC"))
+
 
 if __name__ == "__main__":
     unittest.main()
