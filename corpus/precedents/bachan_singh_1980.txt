@@ -1,106 +1,250 @@
 CASE: Bachan Singh v State of Punjab (1980)
-SOURCE: https://indiankanoon.org/doc/1090918/
+SOURCE: https://indiankanoon.org/doc/307021/
 
 [Cites
-1
+84
 , Cited by
-0
+395
 ]
-Kerala High Court
-Iqbal vs The Regional Transport Officer on 11 March, 2010
-Author:
-K.Surendra Mohan
+Supreme Court of India
+Bachan Singh vs State Of Punjab on 9 May, 1980
+Equivalent citations: AIR1980SC898, 1980CRILJ636, 1982(1)SCALE713, (1980)2SCC684, [1983]1SCR145, AIR 1980 SUPREME COURT 898, 1980 MADLJ(CRI) 827, (1980) 2 SCJ 475, 1980 SCC(CRI) 580, 1980 (2) SCC 684
 Bench:
-K.Surendra Mohan
-IN THE HIGH COURT OF KERALA AT ERNAKULAM
+Y.V. Chandrachud
+,
+A.C. Gupta
+,
+N.L. Untwalia
+,
+P.N. Bhagwati
+,
+R.S. Sarkaria
+JUDGMENT
+  
 
-WP(C).No. 7032 of 2010(D)
+(for himself and on behalf of Chandrachud, C. I. and A.C. Gupta and N. L. Untwalia, JJ.) (Majority view)
+ 
 
-
-1. IQBAL, KARIVELITHUNDIYIL HOUSE,
-                      ...  Petitioner
-2. SUDHEER K.S., KAITHAKATTU HOUSE,
-
-                        Vs
-
-
-
-1. THE REGIONAL TRANSPORT OFFICER,
-                       ...       Respondent
-
-                For Petitioner  :SRI.O.D.SIVADAS
-
-                For Respondent  : No Appearance
-
-The Hon'ble MR. Justice K.SURENDRA MOHAN
-
- Dated :11/03/2010
-
- O R D E R
-                K.SURENDRA MOHAN, J.
-             -------------------------------------------
-                 W.P.(C) No.7032 of 2010
-             -------------------------------------------
-         Dated this the 11th day of March, 2010
-
-                          JUDGMENT
-The first petitioner had purchased a goods vehicle and
-
-submitted an application for converting the same into a
-
-Generator Van.       The first petitioner wanted to fix a
-
-generator set therein, for being used as part of Cinema
-
-Out door Units.       The vehicle has subsequently been
-
-purchased by the second petitioner. The alteration of the
-
-vehicle was not permitted on the ground that the same
-
-was against the provisions of
-Section 52
-of the Motor
-
-Vehicles Act.
-2. I have disposed of other Writ Petitions where
-
-similar issues had arisen for determination as per my
-
-judgments    in    W.P.(c)      No.2738/2010          and W.P.(C)
-
-No.3108/2010. As per the said judgments, I have found
-
-that alteration of a passenger vehicle by fitting a
-
-generator set does not amount to alteration of the basic
-
-feature of the vehicle since no alteration is made to the
-wpc No.7032/2010            2
-chassis. The vehicle in the present case is a goods vehicle.
-
-   Therefore, the dictum in the said case applies with
-
-   stronger force in this case also because there is not even a
-
-   conversion of the vehicle from a passenger vehicle to
-
-   goods vehicle. Therefore, this Writ Petition is only to be
-
-   allowed.
-3. Accordingly, Ext.P1 order is set aside.        The
-
-   respondent shall grant permission for alteration of the
-
-   goods vehicle bearing Reg.No.KL-7/F 6123 as a generator
-
-   van as sought for by the petitioner within a period of three
-
-   weeks from the date of receipt of a copy of this judgment.
-K.SURENDRA MOHAN,
-                                         JUDGE
+1. This reference to the Constitution Bench raises a question in regard to the constitutional validity of death penalty for murder provided in Section 302, Penal Code, and the sentencing procedure embodied in Sub-section (3) of
+Section 354
+of the CrPC, 1973. 
 
 
+ 
 
+2. The reference has arisen in these circumstances : Bachan Singh, appellant in Criminal Appeal No. 273 of 1979, was tried and convicted and sentenced to death under
+Section 302
+, Indian Penal Code for the murders of Desa Singh, Durga Bai and Veeran Bai by the Sessions Judge. The High Court confirmed his death sentence and dismissed his appeal.
+ 
 
-   css/
+3. Bachan Singh's appeal by special leave, came up for hearing before a Bench of this Court (consisting of Sarkaria and Kailasam, JJ.). The only question for consideration in the appeal was, whether the facts found by the courts below would be "special reasons" for awarding, the death sentence as required under
+Section 354(3)
+of the CrPC, 1973.
+ 
+
+4. Shri H. K. Puri, appearing as amicus curiae on behalf of the appellant, Bachan Singh, in Criminal Appeal No. 273 of 1979, contended that in view of the ratio of Rajendra Prasad v. State of U. P. (1979) 3 SCR 646, the courts below were not competent to impose the extreme penalty of death on the appellant It was submitted that neither the circumstance that the appellant was previously convicted for murder and committed these murders after he had served out the life sentence in the earlier case, nor the fact that these three murders were extremely heinous and inhuman, constitutes a "special reason" for imposing the death sentence within the meaning of
+Section 354(3)
+of the CrPC, 1974. Reliance for this argument was placed on Rajendra Prasad (ibid) which, according to the counsel, was on facts very similar, if not identical, to that case.
+ 
+
+5. Kailasam, J. was of opinion that the majority view in Rajendra Prasad taken by V.R. Krishna Iyer, J., who spoke for himself and D.A. Desai, J., was contrary to the judgment of the Constitution Bench in Jagmohan Singh v. State of Uttar Pradesh , inter alia, on these aspects:
+ 
+ 
+
+(i) In Rajendra Prasad, V.R. Krishna Iyer, J. observed:
+ The main focus of our judgment is on this poignant gap in 'human rights jurisprudence' within the limits of the Penal Code, impregnated by the Constitution. To put it pithily, a world order voicing the worth of the human person, a cultural legacy charged with compassion, an interpretative liberation from colonial callousness to life and liberty, a concern for social justice as setting the rights of individual justice, interest With the inherited text of the Penal Code to yield the goals desiderated by the Preamble and
+Articles 14
+, 19
+and
+21.
+6. According to Kailasam, J., the challenge to the award of the death sentence as violative of
+Articles 14
+, 19
+and
+21
+, was repelled by the Constitution Bench in Jagmohan's case:
+ 
+ 
+
+(ii) In Jagmohan's case, the Constitution Bench held:
+ 
+ 
+
+The impossibility of laying down standard (in the matter of sentencing) is at the very core of criminal law as administered in India which invests the Judges with a very wide discretion in the matter of fixing the degree of punishment and that this discretion in the matter of sentence is liable to be corrected by superior courts.... The exercise of judicial discretion on well recognised principles is, in the final analysis, the safest possible safeguard for the accused.
+ 
+
+In Rajendra Prasad, the majority decision characterised the above observations in Jagmohan as "incidental observations without concentration on the sentencing criteria", and said that they are not the ratio of the decision, adding "Judgments are not Bible for every line to be venerated.
+ 
+
+(iii) In Rajendra Prasad, the plurality observed:
+ 
+ 
+
+It is constitutionally permissible to swing a criminal out of corporal existence only if the security of State and society, public order and the interests of the general public compel that course as provided in
+Article 19(2)
+to (6).
+ 
+
+This view again, according to Kailsam, J., is inconsistent with the law laid down by the Constitution Bench in Jagmohan, wherein it was held that deprivation of life is constitutionally permissible if that is done according to "procedure established by law.
+ 
+
+(iv) In Rajendra Prasad, the majority has further opined:
+ The only correct approach is to read into
+Section 302
+, I. P. C. and
+Section 354(3)
+, Criminal P. C., the human rights and humane trends in the Constitution. So examined, the right to life and the fundamental freedoms is deprived when he is hanged to death, his dignity is defiled when his neck is noosed and strangled.
+ 
+
+7. Against the above, Kailasam, J. commented : The only change after the Constitution Bench delivered its judgment is the introduction of
+Section 354(3)
+which requires special reasons to be given if the court is to award the death sentence. If without the restriction of stating sufficient reasons death sentence could be constitutionally awarded under the I. P. C. and Criminal P. C. as it stood before the amendment, it is difficult to perceive how by requiring special reasons to be given the amended section would be unconstitutional unless the "sentencing sector is made restrictive and least vagarious".
+ (v) In Rajendra Prasad, the majority has held that: "such extraordinary grounds alone constitutionally qualify as special reasons as leave no option to the court but to execute the offender if State and society are to survive. One stroke of murder hardly qualifies for this drastic requirement, however gruesome the killing or pathetic the situation, unless the inherent testimony oozing from that act is irresistible that the murderous appetite of the convict is too chronic and deadly that ordered life in a given locality or society or in prison itself would be gone if this man were now or later to be at large. If he is an irredeemable murderer, like a bloodthirsty tiger, be has to emit his terrestrial tenancy.
+ 
+
+8. According to Kailasam, J., what it extracted above, runs directly counter to and cannot be reconciled with the following observations in Jagmohan's case:
+ 
+ 
+
+But some (murders) at least are diabolical in conception and cruel in execution. In some others where the victim is a person of high standing in the country, society is liable to be rocked to its very foundation. Such murders cannot be simply washed away by finding alibis in the social maladjustment of the murderer. Prevalence of such crimes speaks, in the opinion of many, for the inevitability of death penalty not only by way of deterrence but as a token of emphatic disapproval by the society.... A very responsible body (Law Commission) has come to the conclusion after considering all the relevant factOrs. On the conclusions thus offered to us, it will be difficult to hold that capital punishment as such is unreasonable or not required in the public interest.
+ 
+
+(vi) Kailasam, J. was further of the opinion that it is equally beyond the functions of a court to evolve "working rules for imposition of death sentence bearing the markings of enlightened flexibility and social sensibility" or to make law "by cross-fertilisation from sociology, history, cultural anthropology and current national perils and developmental goals and, above all, constitutional currents". This function, in his view, belongs only to Parliament The Court must administer the law as it stands.
+ 
+
+(vii) The learned Judge has further expressed that the view taken by V.R. Krishna Iyer, J. in Rajendra Prasad that "special reasons" necessary for imposing death penalty must relate not to the crime as such, but to the criminal is not warranted by the law as it stands today.
+ 
+
+9. Without expressing his own opinion on the various questions raised in that case including the one With regard to the scope, amplification and application of Section 354(3) of the CrPC, 1973, Sarkaria, J., in agreement with Kailasam, J., directed the records of the case to be submitted to the Hon'ble the Chief Justice, for constituting a large Bench to resolve the doubts, difficulties and inconsistencies pointed out by Kailasam, J.
+10. In the meanwhile, several persons convicted of murders and sentenced to death, filed writ petitions (namely, Writ Petitions 564, 165, 179, 434, 89, 754, 756 and 976 of 1979) under
+Article 32
+of the Constitution directly challenging the constitutional validity of the death penalty provided in
+Section 302
+of the Indian Penal Code for the offence of murder, and the sentencing procedure provided in
+Section 354(3)
+of the CrPC, 1974. That is how, the matter has now come up before this larger Bench of five Judges.
+11. At the outset, Shri R. K. Garg submitted with some vehemence and persistence, that Jagmohan's case needs reconsideration by a larger Bench if not by the Full Court. Reconsideration of Jagmohan, according to the learned Counsel, is necessitated because of subsequent events and changes in law. Firstly, it is pointed out that when Jagmohan was decided in 1972, the then extant
+CrPC
+, 1898 left the choice between death and life imprisonment as punishment for murder entirely to the discretion of the Court. This position has since undergone a complete change and under
+Section 354(3)
+of the CrPC, 1973, death sentence has ceased to be the normal penalty for murder.
+Secondly, it is argued, the seven-Judge decision of this Court in
+Maneka Gandhi v. Union of India
+has given a new interpretative dimension of the provisions of
+Articles 21
+, 19
+and
+14
+and their inter-relationship, and according to this new interpretation every law of punitive detention both in its procedural and substantive aspects must pass the test of all the three Articles. It is stressed that an argument founded on this expansive interpretation of these Articles was not available when Jagmohan was decided. Thirdly, it is submitted that India has since acceded to the International Covenant of Civil and Political Rights adopted by the General Assembly of the United Nations, which came into force on December 16, 1976. By virtue of this Covenant, India and i". other 47 countries who are a party to it, stand committed to a policy for abolition of the 'death penalty'.
+12. Dr. L. M. Singhvi submitted that the question of death penalty cannot be foreclosed for ever on the abstract doctrine of stare decisis by a previous decision of this Court. It is emphasised that the very nature of the problem is such that it must be the subject of review from time to time so as to be in tune with the evolving standards of decency in a maturing society.
+13. The learned Solicitor-General, Shri Soli Sorabji opposed the request of Shri Garg for referring the matter to a larger Bench because such a course would only mean avoidable delay in disposal of the matter. At the same time, the learned Counsel made it clear that since the constitutionality of the death penalty for murder was now sought to be challenged on additional arguments based on subsequent events and changes in law, he would have no objection on the ground of stare decisis, to a fresh consideration of the whole problem by this very Bench.
+14. In view of the concession made by Shri Sorabji we proceeded to hear the counsel for the parties' at length, and to deal afresh with the constitutional questions concerning death penalty raised in these writ petitions.
+15. We have heard the arguments of Shri R. K. Garg, appearing for the writ-petitioners in Writ Petition No. 564/79 for more than three weeks and also those of Dr. L. M. Singhvi, Dr. Chitaley and Shri Mukhoty, Dave and R. K. Jain, appearing for intervenes or for the other writ-petitioners.
+16. We have also heard the arguments of Shri Soli Sorabji, Solicitor-General, appearing for the Union of India and Shri Patel appearing for the State of Maharashtra and the other counsel appearing for the respondents.
+17. The principal questions that fall to be considered in this case are:
+(i) Whether death penalty provided for the offence of murder in
+Section 302
+, Penal Code is unconstitutional.
+(ii) If the answer to the foregoing question be in the negative, whether the sentencing procedure provided in Sec, 354(3) of the
+CrPC
+, 1973 (Act 2 of 1974) is unconstitutional on the ground that it invests the Court with unguided and untrammelled discretion and allows death sentence to be arbitrarily or freakishly imposed on a person found guilty of murder or any other capital offence punishable under the
+Indian Penal Code
+with death or, in the alternative, with imprisonment for life.
+18. We will first take up Question No. (I) relating to the constitutional validity of
+Section 302
+, Penal Code.
+Question No. (I):
+19. Before dealing with the contentions canvassed, it will be useful to have a short survey of the legislative history of the provisions of the Penal Code which permit the imposition "of death penalty toe certain offences.
+20. The
+Indian Penal Code
+was drafted by the First Indian Law Commission presided over by Mr. Macaulay. The draft underwent further revision at the hands of well-known jurists, tike Sir Barnes Peacock, and was completed in 1850. The
+Indian Penal Code
+was passed by the then Legislature on October 6, 1860 and was enacted as Act No. XLV of 1860.
+21.
+Section 33
+of the Penal Code enumerates punishments to which offenders are liable under the provisions of this Code. Clause Firstly of the section mentions 'Death' at one of such punishments. Regarding 'death' as a punishment, the authors of the Code say: "We are convinced that it ought to be very sparingly inflicted, and we propose to employ it only in cases where either murder or the highest offence against the State has been committed." Accordingly, under the Code, death is the punishment that must be awarded for murder by a person under sentence of imprisonment for life (
+Sec. 303
+). This apart, the Penal Code prescribed 'death' as an alternative punishment to which the offenders may be sentenced, for the following seven offences:
+(1) Waging was against the Government of India. (
+S. 121
+)
+ 
+
+(2) Abetting mutiny actually committed (
+S. 132
+)
+ 
+
+(3) Giving or fabricating false evidence upon which an innocent person suffers death. (
+S. 194
+)
+ 
+
+(4) Murder which may be punished with death or life imprisonment (
+S. 302
+)
+ 
+
+(5) Abetment of suicide of a minor on insane, or intoxicated person. (
+S. 305
+)
+ 
+
+(6) Dacoity accompanied with murder. (
+S. 396
+)
+ 
+
+(7) Attempt to murder by a person under sentence of imprisonment for life if hurt is caused. (
+S. 307
+)
+22. In the instant cases, the impugned provision of the
+Indian Penal Code
+is
+Section 302
+which says: "Whoever commits murder shall be punished with death, or imprisonment for life, and also be liable to fine". The related provisions are contained in
+Sections 299
+and
+300
+.
+Section 299
+defines 'culpable homicide'.
+Section 300
+defines 'murder'. Its material part runs as follows:
+Except in the cases hereinafter excepted, culpable homicide is murder, if the act by which the death is caused is done with the intention of causing death, of
+ 
+
+Secondly, - If it is done with me intention of causing such bodily injury as the offender knows to be likely to cause death of the person to whom the harm is caused, or
+ 
+
+Thirdly, - If it is done with the intention of causing bodily injury to any person and the bodily injury intended to be inflicted is sufficient in the ordinary course of nature to cause death, or
+ 
+
+Fourthly, - If the person committing the act knows that it is so imminently dangerous that it must, in all probability, cause death, or such bodily injury as is likely to cause death, and commits such act without any excuse for incurring the risk of causing death or such injury as aforesaid.
+23. The first contention of Shri Garg is that the provision of death penalty in
+Section 302
+, Penal Code offends
+Article 19
+of the Constitution. It ii submitted that the right to live is basic to the enjoyment of all the six freedoms guaranteed in Clauses (a) to (e) and (g) of
+Article 19(1)
+of the Constitution and death penalty puts an end to all these freedoms; that since death penalty serves no social purpose and its value as a deterrent remains unproven and it defiles the dignity of the individual so solemnly vouchsafed in the Preamble of the Constitution, its imposition must be regarded as an 'unreasonable restriction' amounting to total prohibition, on the six freedoms guaranteed in
+Article 19(1).
+24.
+Article 19
+, as in force today, reads as under:
+19(1). All citizens shall have the right-
+(a) to freedom of speech and expression;
+(b) to assemble peaceably and without arms;
+(c) to form associations or unions;
+(d) to move freely throughout the territory of India;
+(e) to reside and settle in any part of the territory of India;
+(f) ...;
+(g) to practise any profession, or to carry on any occupation, trade or business.
+(2) Nothing in Sub-clause (a) of Clause (1) shall affect the operation of any existing law, or prevent the State from making any law, in so far as such law imposes reasonable restrictions on the exercise of the right conferred by the said sub-clause in the interests of the sovereignty and integrity of India, the security of the State, friendly relations with foreign States, public order, decency or morality, or in relation to contempt of court, defamation or incitement to an offence.
+(3) Nothing in Sub-clause (b) of the said clause shall affect the operation of any existing law in so far as it imposes, or prevent the State from making any law imposing, in the interests of the sovereignty and integrity of India or public order, reasonable restriction! on the exercise of the right conferred by the said sub-clause.
+(4) Nothing in Sub-clause (c) of the said clause shall affect the operation of any existing law in so far as it imposes, or prevent the State from making any law imposing, in the interests of the sovereignty and integrity of India or public order or morality, reasonable restrictions on the exercise of the right conferred by the said sub-clause.
+(5) Nothing fan Sub-clauses (d) and (e) of the said clause shall affect the operation of any existing law in so far as it imposes, or prevent the State from making any law imposing, reasonable restrictions on the exercise of any of the rights conferred by the said sub-clauses either in the interests of the general public or for the protection of the interests of any Scheduled Tribe.
+(6) Nothing in Sub-clause (g) of the said clause shall affect the operation of any existing law in so far as it imposes, or prevent the State from making any law imposing, in the interests of the general public, reasonable restrictions on the exercise of the right conferred by the said sub-clause, and in particular, nothing in the said sub-clause, shall affect me operation of any existing law in so far as it relates to, or prevent the State from-making any law relating to,-
+(i) the professional or technical qualifications necessary for practising any profession or carrying on any occupation, trade or business, or
+(ii) the carrying on by the State, or by a corporation owned or controlled by the State, of any trade, business, industry or sex-vice, whether to the exclusion, complete on partial, of citizens or otherwise.
+25. It will be seen that the first part of the Article declares the rights in Clause (1) comprising of six Sub-clauses namely, (a) to (e) and (g). The second part of the Article hi its five Cls. (2) to (6) specifies the limits up to which t

@@ -1,4 +1,4 @@
-CASE: KS Puttaswamy v Union of India — Privacy (2017)
+CASE: K.S. Puttaswamy v Union of India — Privacy (2017)
 SOURCE: https://indiankanoon.org/doc/91938676/
 
 [Cites
@@ -325,4 +325,265 @@ would
              who rendered the subsequent judgments - where right to privacy is
              asserted or referred to their Lordships concern for the liberty of
              human beings, we are of the humble opinion that there appears to
-             be certain amount o
+             be certain amount of apparent unresolved contradiction in the law
+             declared by this Court.
+13. Therefore, in our opinion to give a quietus to the kind of
+             controversy raised in this batch of cases once for all, it is better that
+             the ratio decidendi of
+M.P. Sharma
+(supra) and Kharak Singh
+             (supra) is scrutinized and the jurisprudential correctness of the
+             subsequent decisions of this Court where the right to privacy is
+             either asserted or referred be examined and authoritatively decided
+             by a Bench of appropriate strength.”
+
+
+
+5     On 18 July 2017, a Constitution Bench presided over by the learned Chief
+
+Justice considered it appropriate that the issue be resolved by a Bench of nine judges.
+
+The order of the Constitution Bench reads thus:
+“During the course of the hearing today, it seems that it has become
+             essential for us to determine whether there is any fundamental right
+             of privacy under the Indian Constitution. The determination of this
+             question would essentially entail whether the decision recorded by
+             this Court in M.P. Sharma and Ors. vs. Satish Chandra, District
+             Magistrate, Delhi and Ors. - 1950 SCR 1077 by an eight-Judge
+             Constitution Bench, and also, in
+Kharak Singh vs. The State of
+             U.P. and Ors.
+- 1962 (1) SCR 332 by a six-Judge Constitution
+             Bench, that there is no such fundamental right, is the correct
+             expression of the constitutional position.
+7
+PART A
+
+
+
+             Before dealing with the matter any further, we are of the view that
+             the issue noticed hereinabove deserves to be placed before the
+             nine-Judge Constitution Bench. List these matters before the Nine-
+             Judge Constitution Bench on 19.07.2017.”
+6     During the course of hearing, we have been ably assisted on behalf of the
+
+petitioners by Mr Gopal Subramanium, Mr Kapil Sibal, Mr Arvind Datar, Mr Shyam
+
+Divan, Mr Anand Grover, Ms Meenakshi Arora, Mr Sajan Poovayya and Mr Jayant
+
+Bhushan, learned senior counsel. Mr J S Attri, learned senior counsel supported them
+
+on behalf of the State of Himachal Pradesh. On behalf of the Union of India, the Court
+
+has had the benefit of the erudite submissions of Mr K K Venugopal, Attorney General
+
+for India. He has been ably supported by Mr Tushar Mehta, Additional Solicitor
+
+General, Mr Rakesh Dwivedi, senior counsel for the State of Gujarat, Mr Aryama
+
+Sundaram for the State of Maharashtra, Mr Gopal Sankaranarayanan and Dr Arghya
+
+Sengupta respectively. While some state governments have supported the stand of
+
+the Union government, others have supported the petitioners.
+
+
+
+
+7     The correctness of the decisions in M P Sharma and Kharak Singh, is to be
+
+evaluated during the course of the reference. Besides, the jurisprudential correctness
+
+of subsequent decisions holding the right to privacy to be a constitutionally protected
+
+right is to be determined. The basic question whether privacy is a right protected
+
+under our Constitution requires an understanding of what privacy means. For it is
+
+when we understand what interests or entitlements privacy safeguards, that we can
+
+determine whether the Constitution protects privacy. The contents of privacy need to
+8
+PART B
+
+
+be analysed, not by providing an exhaustive enunciation or catalogue of what it
+
+includes but by indicating its broad contours. The Court has been addressed on
+
+various aspects of privacy including : (i) Whether there is a constitutionally protected
+
+right to privacy; (ii) If there is a constitutionally protected right, whether this has the
+
+character of an independent fundamental right or whether it arises from within the
+
+existing guarantees of protected rights such as life and personal liberty; (iii) the
+
+doctrinal foundations of the claim to privacy; (iv) the content of privacy; and (v) the
+
+nature of the regulatory power of the state.
+B         Decision in M P Sharma
+
+
+8         An investigation was ordered by the Union government under the Companies
+Act into the affairs of a company which was in liquidation on the ground that it had
+
+made an organized attempt to embezzle its funds and to conceal the true state of its
+
+affairs from the share-holders and on the allegation that the company had indulged in
+
+fraudulent transactions and falsified its records. Offences were registered and search
+
+warrants were issued during the course of which, records were seized. The challenge
+
+was that the searches violated the fundamental rights of the petitioners under
+Article
+
+19(1)(f)
+and
+Article 20(3)
+of the Constitution. The former challenge was rejected. The
+
+question which this Court addressed was whether there was a contravention of
+Article
+
+20(3).
+Article 20(3)
+mandates that no person accused of an offence shall be compelled
+
+to be a witness against himself. Reliance was placed on a judgment9 of the US
+9
+Boyd v. United States, 116 US 616 (1886)
+9
+PART B
+
+
+Supreme Court holding that obtaining incriminating evidence by an illegal search and
+
+seizure violates the Fourth and Fifth Amendments of the American Constitution. While
+
+tracing the history of Indian legislation, this Court observed that provisions for search
+
+were contained in successive enactments of the
+Criminal Procedure Code
+. Justice
+
+Jagannadhadas, speaking for the Bench, held that a search or seizure does not
+
+infringe the constitutional right guaranteed by
+Article 20(3)
+of the Constitution:
+“…there is no basis in the Indian law for the assumption that a search
+                  or seizure of a thing or document is in itself to be treated as compelled
+                  production of the same. Indeed a little consideration will show that the
+                  two are essentially different matters for the purpose relevant to the
+                  present discussion. A notice to produce is addressed to the party
+                  concerned and his production in compliance therewith constitutes a
+                  testimonial act by him within the meaning of
+Article 20(3)
+as above
+                  explained. But a search warrant is addressed to an officer of the
+                  Government, generally a police officer. Neither the search nor the
+                  seizure are acts of the occupier of the searched premises. They are
+                  acts of another to which he is obliged to submit and are, therefore, not
+                  his testimonial acts in any sense.”10
+
+
+
+9         Having held that the guarantee against self-incrimination is not offended by a
+
+search and seizure, the Court observed that :
+“A power of search and seizure is in any system of jurisprudence
+                  an overriding power of the State for the protection of social security
+                  and that power is necessarily regulated by law. When the
+                  Constitution makers have thought fit not to subject such
+                  regulation to constitutional limitations by recognition of a
+                  fundamental right to privacy, analogous to the Fourth
+                  Amendment, we have no justification to import it, into a totally
+                  different fundamental right, by some process of strained
+                  construction. Nor is it legitimate to assume that the constitutional
+10
+MP Sharma (Supra note 1), at page 1096
+10
+PART C
+
+
+                   protection under
+Article 20(3)
+would be defeated by the statutory
+                   provisions for searches.”11               (emphasis supplied)
+
+
+
+10         These observations – to be more precise in one sentence - indicating that the
+
+Constitution makers did not subject the regulation by law of the power of search and
+
+seizure to a fundamental right of privacy, similar to the Fourth amendment of the US
+
+Constitution, have been pressed in aid to question the existence of a protected right
+
+to privacy under our Constitution.
+C          Decision in Kharak Singh
+
+
+11         After being challaned in a case of dacoity in 1941, Kharak Singh was released
+for want of evidence. But the police compiled a “history sheet” against him. ‘History
+
+sheets’ were defined in
+Regulation 228
+of Chapter XX of the U P Police Regulations
+
+as “the personal records of criminals under surveillance”. Kharak Singh, who was
+
+subjected to regular surveillance, including midnight knocks, moved this Court for a
+
+declaration that his fundamental rights were infringed.                Among the measures of
+
+surveillance contemplated by
+Regulation 236
+were the following:
+“(a) Secret picketing of the house or approaches to the houses of
+                   suspects;
+(b) domiciliary visits at night;
+(c) thorough periodical inquiries by officers not below the rank of
+                   sub-inspector into repute, habits, associations, income, expenses
+                   and occupation;
+(d) the reporting by constables and chaukidars of movements and
+                   absences from home;
+11
+Ibid, at page 1096-97
+11
+PART C
+(c) the verification of movements and absences by means of inquiry
+                   slips;
+(f) the collection and record on a history-sheet of all information
+                   bearing on conduct.”
+
+
+12         This Court held that the freedom to move freely throughout the territory of India,
+
+guaranteed by
+Article 19(1)(d)
+was not infringed by a midnight knock on the door of
+
+the petitioner since “his locomotion is not impeded or prejudiced in any manner”.
+
+
+
+13         When the decision in Kharak Singh was handed down, the principles
+
+governing the inter-relationship between the rights protected by
+Article 19
+and the
+
+right to life and personal liberty under
+Article 21
+were governed by the judgment in
+
+Gopalan. Gopalan considered each of the articles in the Chapter on fundamental
+
+rights as embodying distinct (as opposed to over-lapping) freedoms. Hence in Kharak
+
+Singh, the Court observed :
+“In view of the very limited n

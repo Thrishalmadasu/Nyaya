@@ -7,6 +7,8 @@ from pathlib import Path
 
 import fitz  # PyMuPDF
 
+from ingestion.keywords import keywords_for
+
 
 @dataclass
 class TextChunk:
@@ -23,6 +25,26 @@ _SECTION_PATTERNS = [
 
 # Pattern for Constitution articles
 _ARTICLE_PATTERN = re.compile(r"(?m)^(\d+[A-Z]?)\.\s+[A-Z]")
+
+# A single section's body is embedded as one chunk when it fits the window,
+# otherwise split into overlapping windows so the tail is never dropped.
+_SECTION_WINDOW = 1500
+_SECTION_OVERLAP = 200
+
+
+def _window_text(text: str, size: int, overlap: int) -> list[str]:
+    """Split text into overlapping windows. Returns [text] if it already fits."""
+    if len(text) <= size:
+        return [text]
+    step = max(1, size - overlap)
+    windows = []
+    for start in range(0, len(text), step):
+        piece = text[start : start + size].strip()
+        if piece:
+            windows.append(piece)
+        if start + size >= len(text):
+            break
+    return windows
 
 
 def _extract_pdf_text(path: Path) -> str:
@@ -66,20 +88,34 @@ def _chunk_statute(
         first_line = section_body.split("\n")[0][:120].strip()
         section_title = re.sub(r"[—\-]+$", "", first_line).strip()
 
-        chunk_text = f"{section_id}. {section_body[:1500]}"
+        # Enrich with lay synonyms so plain-language fact-pattern queries match
+        # the right offence (e.g. "stealing" -> the theft section). Computed once
+        # per section from the title + body and applied to every sub-chunk.
+        keywords = keywords_for(section_title, section_body)
+        keyword_line = f"Keywords: {', '.join(keywords)}. " if keywords else ""
 
-        chunks.append(
-            TextChunk(
-                text=chunk_text,
-                metadata={
-                    "source_act": source_act,
-                    "section_id": section_id,
-                    "section_title": section_title,
-                    "code_regime": code_regime,
-                    "year": year,
-                },
+        # Long sections are split into overlapping sub-chunks rather than
+        # truncated at 1500 chars. Every sub-chunk leads with the section id +
+        # title (and keyword line) so the section's identity is present even in
+        # later parts; all parts keep the same section_id (so citation lookup by
+        # section_id is unaffected) and record a 1-based part index.
+        windows = _window_text(section_body, _SECTION_WINDOW, _SECTION_OVERLAP)
+        for part_idx, part_body in enumerate(windows, start=1):
+            chunk_text = f"{section_id}. {section_title}. {keyword_line}{part_body}"
+            chunks.append(
+                TextChunk(
+                    text=chunk_text,
+                    metadata={
+                        "source_act": source_act,
+                        "section_id": section_id,
+                        "section_title": section_title,
+                        "code_regime": code_regime,
+                        "year": year,
+                        "part": str(part_idx),
+                        "keywords": ", ".join(keywords),
+                    },
+                )
             )
-        )
         i += 2
 
     # Fallback: if few sections found, also chunk by sliding window over paragraphs
@@ -133,10 +169,29 @@ def chunk_statute_txt(
     return _chunk_statute(text, source_act, code_regime, year, is_constitution=is_const)
 
 
+def _parse_precedent_header(text: str, fallback_name: str) -> tuple[str, int]:
+    """Read the ``CASE:`` header line for the authoritative title and year.
+
+    Files are written as ``CASE: <Title> (<Year>)`` by the scraper. Trusting the
+    header (not the filename) means a mislabelled file can't masquerade as the
+    case its filename claims — the embedded metadata reflects the actual content.
+    """
+    case_name = fallback_name
+    year = 0
+    m = re.search(r"(?im)^CASE:\s*(.+)$", text)
+    if m:
+        case_name = m.group(1).strip()
+    ym = re.search(r"\((\d{4})\)", case_name)
+    if ym:
+        year = int(ym.group(1))
+    return case_name, year
+
+
 def chunk_precedent_file(txt_path: Path) -> list[TextChunk]:
     """Chunk a precedent text file into ~1000-char overlapping chunks."""
     text = txt_path.read_text(encoding="utf-8", errors="ignore")
-    case_name = txt_path.stem.replace("_", " ").title()
+    fallback_name = txt_path.stem.replace("_", " ").title()
+    case_name, year = _parse_precedent_header(text, fallback_name)
 
     chunks: list[TextChunk] = []
     chunk_size = 1000
@@ -154,7 +209,7 @@ def chunk_precedent_file(txt_path: Path) -> list[TextChunk]:
                     "section_id": f"Para {i // (chunk_size - overlap) + 1}",
                     "section_title": case_name,
                     "code_regime": "PRECEDENT",
-                    "year": 0,
+                    "year": year,
                 },
             )
         )

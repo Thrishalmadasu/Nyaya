@@ -1,278 +1,1146 @@
 CASE: Alister Anthony Pareira v State of Maharashtra (2012)
-SOURCE: https://indiankanoon.org/doc/1672119/
+SOURCE: https://indiankanoon.org/doc/79026890/
 
 [Cites
-9
+38
 , Cited by
-0
+638
 ]
-Punjab-Haryana High Court
-Shamsher Singh And Others vs State Of Punjab on 2 September, 2009
-Author:
-Sabina
+Supreme Court of India
+Alister Anthony Pareira vs State Of Maharashtra on 12 January, 2012
+Equivalent citations: 2012 AIR SCW 930, 2012 (2) SCC 648, 2012 CRI. L. J. 1160, AIR 2012 SC( CRI) 419, 2012 (2) AIR BOM R 718, (2012) 1 GUJ LH 405, (2012) 1 CRILR(RAJ) 126, (2012) 1 CURCRIR 147, (2012) 1 UC 579, (2012) 1 CRIMES 76, (2012) 1 MAD LJ(CRI) 627, (2012) 1 SCALE 189, (2012) 1 BOMCR(CRI) 609, (2012) 1 DLT(CRL) 157, (2012) 110 ALLINDCAS 251 (SC), (2012) 2 MH LJ (CRI) 490, (2012) 1 ACC 104, 2012 CRILR(SC&MP) 126, (2012) 1 RECCRIR 524, 2012 CRILR(SC MAH GUJ) 126, (2012) 76 ALLCRIC 660, 2012 CALCRILR 1 602, (2012) 2 CHANDCRIC 20, 2012 (1) SCC (CRI) 953, 2012 (1) KLT SN 33 (SC), AIR 2012 SUPREME COURT 3802
 Bench:
-Sabina
-Criminal Misc. No.M-23548 of 2009 (O&M)                          1
+R.M. Lodha
+,
+Jagdish Singh Khehar
+REPORTABLE
 
 
 
-      In the High Court of Punjab and Haryana at Chandigarh
 
 
+             IN THE SUPREME COURT OF INDIA
 
-                         Criminal Misc. No.M-23548 of 2009 (O&M)
-                         Date of decision: 2.9. 2009
 
 
+           CRIMINAL APPELLATE JURISDICTION
 
 
-Shamsher Singh and others
 
-                                                       ......Petitioners
+       CRIMINAL APPEAL  NOS. 1318-1320 OF 2007
 
-                         Versus
 
 
 
-State of Punjab
-                                                     .......Respondent
+Alister Anthony Pareira                              ...Appellant
 
 
 
-CORAM: HON'BLE MRS. JUSTICE SABINA
+                          Versus
 
+ 
 
-Present:    Mr.Gurcharan Singh, Advocate,
-            for the petitioners.
+State of Maharashtra                                 ...Respondent
 
-                  ****
 
 
-SABINA, J.
-Petitioners have filed this petition under
-Section 439
-of
 
-the Code of Criminal Procedure for grant of regular bail in case FIR
 
-No. 209 dated 21.9.2007, under
-Sections 302
-/
-307
-/
-326
-/
-325
-/
-148
-/
-149
-of the Indian Penal Code and
-Section 25
-of the Arms Act
+                           JUDGEMENT
+R.M. LODHA, J.
+On the South-North Road at the East side of 
 
-registered at Police Station Civil Lines, Patiala.
-FIR in this case was registered on the basis of statement
-Criminal Misc. No.M-23548 of 2009 (O&M)                      2
-of Darshan Singh. The contents of the FIR as reproduced in para 2
 
-of the petition read as under:-
-"Stated that I am resident of the above address. I have
 
-           been made as Incharge of Baghichi Baba Budha Dal,
+Carter   Road, Bandra  (West),  Mumbai  in  the   early  hours 
 
-           Lower Mall, Patiala by Balbir Singh, who has been made
 
-           as Jathedar of Budha Dal by Jathedar Baba Santa Singh,
 
-           Head 96 Karori, Budha Dal.     I was sitting outside the
+of   November   12,   2006   between   3.45   -   4.00   a.m.,   a   car  
 
-           room of Jathedar Baba Santa Singh for looking after him
 
-           along with Assa Singh s/o Dara Singh, Jagdish Singh s/o
 
-           Bala Assa Singh, Bhajan Singh s/o Assa Singh, Karamjit
+ran   into     the   pavement   killing     seven   persons   and 
 
-           Singh s/o Bhajan Singh, Vishav Partap Singh s/o Dara
 
-           Singh, Balbir Singh s/o Baba Kirpal Singh, resident of
 
-           Patiala, Nihang Surjit Singh s/o Wazir Singh, resident of
+causing injuries to eight persons. The appellant - Alister  
 
-           Patiala because Baba Santa Singh being Sick from long
+
+Anthony   Pareira   -   was   at   the   wheels.       He     has   been 
 
-           time used to reside at Baghichi Baba Budha Dal, Patiala.
 
-           Today at about 5.00 P.M. Udey Singh @ Paramjit Singh
 
-           s/o Sohan Singh resident of Tej Colony, Patiala armed
+convicted by the  High Court for  the offences punishable 
 
-           with pistol, Gurkirpal Singh @ Pannu s/o Udey Singh
 
-           armed with 315 bore rifle, Manjit Kaur wife of Udey Singh
 
-           armed with pistol, Manpreet Kaur @ Bawa d/o Udey
+under   Sections   304   Part   II,   338   and   337   of   the
+Indian  
 
-           Singh armed with kirpal who attacked Baba Assa Singh
 
-           who had fallen. Surjit Singh s/o Karam Singh r/o Marron,
 
-           P.S. Sadar, Batala, Incharge of Horses Budha Dal armed
+Penal Code
+, 1860  (
+IPC
+).
+2.           The   prosecution   case   against   the   appellant   is 
 
-           with 12 bore rifle, Kikar Singh s/o Nihang Singh armed
-Criminal Misc. No.M-23548 of 2009 (O&M)                       3
-with 315 bore, Dharam Singh s/o Mangal Singh r/o Kande
 
-          Kalan, P.S.Sardulgarh armed with 12 bore, Ranjha Singh
 
-          Nihang r/o Jawahar Ke Kalan, District Mansa armed with
+this:   the   repair   and   construction   work   of   the   Carter 
 
-          12 bore, Paramjit Singh @ Shaheed r/o Gujjarwal,
 
-          P.S.Dehlon, armed with 315 bore, Kala Singh s/o Tara
 
-          Singh, Sikligar r/o Nabha Gate, Patiala, runs a shop of
+Road,   Bandra   (West)   at   the   relevant   time   was   being 
 
-          swords armed with Mauze, Major Singh r/o Dugga,
 
-          District Sangrur armed with 12 bore, Sukhdev Singh @
 
-          Fauji Nihang armed with 12 bore, Balwinder Singh Nihang
+carried   out   by   New   India   Construction   Company.   The 
 
-          who lives at Delhi armed with sword, Ram Singh Sewadar
 
-          armed with 12 bore, Dhada Singh Nihang who lives with
 
-          Surjit Singh armed with sword, Sukhdev Singh @ Balbir
+labourers were engaged by the construction company for 
 
-          Singh armed with sword, Jasbir Singh, Sukhdev Singh,
 
-          r/o village Raipur Talwandi Sabo armed by SS BL 12
 
-          bore, Baba Shaheed Singh s/o Samma Singh r/o Mari
+executing   the   works.     The   temporary   sheds   (huts)   were 
 
-          Bhuchian, P.S.Sri Hargobindpur armed with khanda
 
-          Kartar s/o Arjan Caste Jat r/o Bhallran, P.S. Nawan
 
-          Gaon, District Mohali armed with sword, Ranjit Singh s/o
+put   up   for   the   residence   of   labourers   on   the   pavement.
+In   the   night   of   November   11,   2006   and   November   12, 
 
-          Kartar Singh r/o Balamgarh, Patiala armed with sword
 
-          and 15/20 other persons to whom I can recognize on
 
-          coming in front of me by common intention came to us
+2006, the labourers were asleep in front of their huts on 
 
-          and said that Baba Balbir Singh be brought out from
 
-          inside then I said to them that Baba Balbir Singh of village
 
-          Sur Singhwala has gone to Amritsar where there was
-Criminal Misc. No.M-23548 of 2009 (O&M)                      4
-mela    of    Baba Bidhi Chand and then they said to us
+the   pavement.       Between   3.45   to   4.00   a.m.,   that   night,  
 
-          about Baba Santa Singh that we would take away Baba
 
-          Santa Singh         then in the meanwhile we tried to stop
 
-          them then Udey Singh @ Paramjit Singh, his wife and his
+the   appellant   while   driving   the   car   (corolla)   bearing 
 
-          daughter were leading all of them and said as to now
 
-          what are you seeing then Udey Singh and his son
 
-          Gurkirpal Singh @ Pannu raised a lalkara in a high
+Registration   No.   MH-01-R-580   rashly   and   negligently 
 
-          pitched voice that today all Nihang Singh's of Balbir
 
-          Singh's Group be not spared and then Udey Singh @
 
-          Paramjit Singh and Nihang Singh's accompanying him by
+with   knowledge   that   people   were   asleep   on   footpath 
 
-          common intention started firing indiscriminately which
 
-          Gurkirpal Singh @ Pannu armed by him, Karamjit Singh
 
-          s/o Bhajan Singh and Udey Singh armed by then fired at
+rammed   the   car   over   the   pavement;     caused   death   of 
 
-          Jagdish Singh and remaining companions Udey Singh
 
-          and Surjit Singh armed by their weapons armed by them
 
-          made direct firing on Jagdish Singh s/o Assa Singh, Assa
+seven persons and injuries  to  eight persons.  At the time
+2
+of   incident,   the   appellant   was   found   to   have   consumed 
 
-          Singh s/o Dara Singh. During firing we made firing in the
 
-          air for our safety and used dangs and sticks and
 
-          there was chaos amongst them. In the above said
+alcohol.   A   liquor   bottle   was   recovered   from   the 
 
-          chaos        some    ammunition    and   Kirpans, vehicles
 
-          Scorpio, Indica Car, number of which were entered
 
-          later on, Ceilo Car and one Jeep were left at the
+appellant's   car.       On   his   medical   examination,   he   was 
 
-          spot and the above said accused ran away after
 
-          taking some ammunition and kirpans and son of Udey
-Criminal Misc. No.M-23548 of 2009 (O&M)                        5
-Singh ran away along with his mother and sister in the
 
-           Scoda Car. The cause of grievance was that Udey Singh
+found   to   have   0.112%   w/v   liquor   (ethyl   alcohol)   in   his 
 
-           @ Paramjit Singh wanted to make successor of Baba
 
-           Santa Singh Jathedar whereas Baba Santa Singh
 
-           Jathedar has made Baba Balbir Singh s/o Shri Assa
+blood.   The   appellant   was   fully   familiar   with   the   area 
 
-           Singh r/o Baghichi Baba Santa Singh, Chhauni Budha Dal
 
-           96 Karori as his successor/heir. They have caused many
 
-           injuries with their weapons on my body by their arms and
+being the resident of Carter Road.
+3.           The         contractor--Panchanadan              Paramalai 
 
-           Jagdish Singh s/o Assa Singh, Assa Singh s/o Dara
 
-           Singh, Karamjit Singh s/o Bhajan Singh, Bhajan Singh s/o
 
-           Assa Singh by arranging vehicles got me admitted at R.H.
+Harijan   (PW-2)   -   who   had   engaged   the   labourers   and 
 
-           Patiala in the injured condition where I am under
 
-           treatment and about remaining above said persons I cam
 
-           to know at R.H.Patiala that all those persons have died."
-After hearing learned counsel for the petitioners, I am of
+witnessed the incident   reported the matter  immediately 
 
-the opinion that no ground for grant of bail to the petitioners is made
 
-out.
-During investigation of the case, statement of Vishav
 
-Partap Singh was recorded and he had named petitioners Virsa
+to   the  Khar Police Station.    His statement (Ex. 13) was 
 
-Singh and Kehar Singh in his statement. Petitioner Shamsher Singh
 
-was named by Baldev Singh, when his statement was recorded
+
+recorded   and   based   on   that   a     first   information   report 
+
+
+
+(No.   838)   was   registered   under
+Section   304
+,
+279
+,
+336
+,
+337
+,
+338
+and
+427
+IPC;
+Section   185
+of   the   Motor  
+
+
+
+Vehicles   Act,   1988   and
+Section   66   (1)(b)
+of   Bombay 
+
+
+
+Prohibition Act, 1949.
+4.           On   completion   of   investigation,   the   charge 
+
+
+
+sheet   was   submitted   against   the   appellant   by   the 
+
+
+
+Investigating   Officer   in   the   court   of   Magistrate   having 
+
+
+
+jurisdiction.    The   appellant   was  committed   to   the   Court
+3
+of   Sessions   and   was   tried   by   2nd  Adhoc   Additional 
+
+
+
+Sessions Judge, Sewree, Mumbai.
+5.          The   indictment   of   the   appellant   was   on   two 
+
+
+
+charges.  The two charges read:-
+"(i) that   on   November   12,   2006   between   3.45   to 
+
+            4.00 a.m. you have driven the car bearing No. 
+
+            MH-01-R-580   rashly   and   negligently   with 
+
+            knowledge that people are sleeping on footpath 
+
+            and   likely   to   cause   death   of   those   persons 
+
+            slept   over   footpath   and   thereby   caused   the 
+
+            death   of   seven   persons   who   were   sleeping   on 
+
+            footpath   on   Carter   Road   and   thereby 
+
+            committed   an   offence   punishable   under 
+
+            Section 304 Part II
+IPC
+.
+(ii) on above date, time and place you have driven 
+
+            the vehicle in rashly and negligent manner and 
+
+            thereby   caused   grievous   injury   to   seven 
+
+            persons   who   were   sleeping   on   footpath   and 
+
+            thereby   committed   an   offence   punishable 
+
+            under
+Section 338
+IPC."
+6.          The   prosecution,   to   prove   the   above   charges 
+
+
+
+against   the   appellant,       tendered   oral   as   well   as 
+
+
+
+documentary   evidence.     In   all,     18     witnesses,     namely, 
+
+
+
+Dr.   Nitin   Vishnu   Barve   (PW-1),   Panchanadan   Paramalai
+4
+Harijan  (PW-2),  Ramchandra Chakrawarti (PW-3), Pindi 
+
+
+
+Ramu   (PW-4),   Sriniwas   Raman   Pindi   (PW-5),   Smt. 
+
+
+
+Mariamma   Shingamana   (PW-6),   Smt.   Prema   Chingaram 
+
+
+
+(PW-7), Jagan Singaram (PW-8), Sigamani Shankar  Pani 
+
+
+
+(PW-9),   Mallikarjun   Bajappa   Motermallappa   (PW-10), 
+
+
+
+J.C.   Cell   Mendosa   (PW-11),   Praveen   Sajjan   Mohite   (PW-
+12),   Limbaji   Samadhan   Ingle   (PW-13),   Dr.   Sharad 
+
+
+
+Maniklal   Ruia   (PW-14),   Rajendra   Nilkanth   Sawant   (PW-
+15),   Basraj   Sanjeev   Mehetri   (PW-16),   Meenakshi   Anant 
+
+
+
+Gondapatil   (PW-17)   and   Somnath   Baburam   Phulsunder 
+
+
+
+(PW-18) were examined. The complaint,  spot panchnama 
+
+
+
+along   with   sketch   map,   C.A.   Reports   and   other 
+
+
+
+documents were also proved.
+7.           The   statement   of   the   appellant   under
+Section 
+
+
+
+313
+of the Criminal Procedure Code, 1973 (for short, `the  
+
+
+
+Code') was recorded.       He admitted that he was driving 
+
+
+
+the     car   no.   MH-01-R-580   at   the   relevant   time   and   the  
+
+
+
+accident   did   occur   but     his   explanation     was   that   it 
+
+
+
+happened          on   account   of   failure   of   engine   and
+5
+mechanical defect in the car and there was no negligence 
+
+
+
+or  rashness on his part.
+8.          The   2nd  Adhoc   Additional   Sessions   Judge, 
+
+
+
+Sewree,   Mumbai,   on   April   13,   2007   convicted   the 
+
+
+
+appellant   for   the   offences   punishable   under
+Sections 
+
+
+
+304A
+and
+337
+IPC. The     court  sentenced  him     to   suffer 
+
+
+
+simple   imprisonment   of   six   months   with   fine   of   Rs.   5 
+
+
+
+lakhs   for   the   offence   under
+Section   304A
+IPC   and   in 
+
+
+
+default further suffer simple imprisonment of one month 
+
+
+
+and     simple   imprisonment   of   15   days   for   the   offence 
+
+
 
 under
-Section 161
-of the Code of Criminal Procedure during
+Section 337
+IPC.  Both the sentences were ordered 
 
-investigation of the case.   In the alleged occurrence Assa Singh,
 
-Jagdish Singh, Bhajan Singh and Karamjit Singh had been murdered
-Criminal Misc. No.M-23548 of 2009 (O&M)                           6
-and two persons had suffered injuries.
-Keeping in view the seriousness of offence alleged to
 
-have been committed by the petitioners, no ground for grant of bail is
+to run concurrently.
+9.          On   April   19,   2007,   the   Bombay   High   Court 
 
-made out.
-Accordingly, this petition is dismissed.
-(SABINA)
-                                                        JUDGE
-September 02, 2009
-anita
+
+
+took   suo   motu   cognizance   of   the   judgment   and   order 
+
+
+
+dated April 13, 2007 passed by the 2nd  Adhoc Additional 
+
+
+
+Sessions Judge, Sewree and issued notice to the State of 
+
+
+
+Maharashtra,   the   appellant   and   to   the   heirs   of   the 
+
+
+
+deceased and also to the injured persons.
+6
+10.          The   State   of   Maharashtra   preferred   criminal 
+
+
+
+appeal   (No.   566   of   2007)   under   Section   378(3)   of   the 
+
+
+
+Code   challenging   the   acquittal   of   the   appellant   under 
+
+
+
+Sections   304   Part   II   and   338
+IPC
+.   Another   criminal 
+
+
+
+appeal (No. 430 of 2007) was also preferred by the State  
+
+
+
+of   Maharashtra   seeking   enhancement   of   sentence 
+
+
+
+awarded   to   the   appellant   for   the   offence   under   Section 
+
+
+
+304A and
+Section 337
+IPC by the trial court.
+11.          The   appellant   also   preferred   criminal   appeal 
+
+
+
+(No. 475/2007) for setting aside  the judgment and order 
+
+
+
+dated April 13, 2007 passed by the trial court convicting  
+
+
+
+him   under   Section   304A   and
+Section   337
+IPC   and     the 
+
+
+
+sentence awarded to him by the trial court.
+12.          All   these    matters   were   heard  together   by  the 
+
+
+
+High   Court   and   have   been     disposed  of   by   the   common 
+
+
+
+judgment   on   September   6,   2007.   The   High   Court   set 
+
+
+
+aside   the   acquittal   of   the   appellant   under
+Section   304
+IPC   and   convicted     him   for   the   offences     under   Section 
+
+
+
+304 Part II, Section  338 and
+Section  337
+IPC. The High
+7
+Court   sentenced   the   appellant   to   undergo   rigorous 
+
+
+
+imprisonment   for   three  years   for   the   offence  punishable 
+
+
+
+under Section 304 Part II
+IPC
+with a fine of Rs. 5 lakhs.
+On   account   of   offence   under
+Section   338
+IPC,       the 
+
+
+
+appellant   was   sentenced   to   undergo   rigorous 
+
+
+
+imprisonment for a term of one year and for the offence  
+
+
+
+under
+Section   337
+IPC   rigorous   imprisonment   for   six 
+
+
+
+months.   The   High   Court   noted   that   fine   amount   as   per 
+
+
+
+the  order of the  trial court had already been distributed 
+
+
+
+to the families of victims.
+13.         It   is   from   the   above   judgment   of   the   High 
+
+
+
+Court   that   the   present   appeals   have   been   preferred   by 
+
+
+
+the appellant.
+14.         A great deal of argument in the hearing of the 
+
+
+
+appeals turned on the indictment of the appellant on the 
+
+
+
+two   charges,   namely,   the   offence   punishable   under 
+
+
+
+Section 304 Part II
+IPC
+and the offence punishable under
+Section 338
+IPC and his conviction for the above offences 
+
+
+
+and also under
+Section 337
+IPC.   Mr. U.U. Lalit, learned
+8
+senior   counsel   for   the   appellant   argued   that   this     was 
+
+
+
+legally   impermissible   as   the   charges   under   Section   304 
+
+
+
+Part   II
+IPC
+and
+Section   338
+IPC     were   mutually 
+
+
+
+destructive   and   the   two     charges   under   these   Sections 
+
+
+
+cannot co-exist.   His submission was   that the appellant 
+
+
+
+was   charged   for   the   above   offences   for   committing   a 
+
+
+
+single   act   i.e., rash or negligent for causing   injuries to 
+
+
+
+eight     persons     and   at   the   same   time   committed   with  
+
+
+
+knowledge resulting  in death of seven persons  which is  
+
+
+
+irreconcilable   and   moreover   that   has   caused   grave 
+
+
+
+prejudice to the appellant resulting in failure of justice.
+15.          Mr.   U.U.   Lalit,   learned   senior   counsel   also 
+
+
+
+argued that   no question was put to the appellant in his 
+
+
+
+statement   under   Section   313   of   the   Code   about   his 
+
+
+
+drunken condition or that he was under the influence of 
+
+
+
+alcohol and,  thus,  had knowledge that his act was likely 
+
+
+
+to result in causing death. CA Report (Ex. 49)  that blood  
+
+
+
+and   urine   of   the   appellant   had   alcohol   content   and   the 
+
+
+
+evidence of PW-1 that he found the appellant in drunken
+9
+condition and his blood sample was taken were also not 
+
+
+
+put   to   the   appellant.       These   incriminating   evidences, 
+
+
+
+learned   senior   counsel   submitted,   cannot   form   basis   of 
+
+
+
+conviction.  The conclusion arrived at by the Investigating 
+
+
+
+Officers (PW-17 and PW-18) regarding drunken condition 
+
+
+
+of the  appellant   which   was put to the  appellant in his 
+
+
+
+statement under Section 313 of the Code  was of no legal 
+
+
+
+use.   Moreover,   PW-17   and   PW-18   have   not   deposed 
+
+
+
+before the court that the appellant was found in drunken 
+
+
+
+condition   much   less   under   the   influence   of   liquor.
+Learned senior counsel would thus submit that the sole 
+
+
+
+basis   of   the   appellant's   conviction   under   Section   304 
+
+
+
+Part-II
+IPC
+that   the   appellant   had   knowledge   that   his 
+
+
+
+reckless   and   negligent   driving   in   a   drunken   condition 
+
+
+
+could   result   in   serious   consequences   of   causing   a   fatal 
+
+
+
+accident cannot be held to have been established. In this 
+
+
+
+regard, learned senior counsel relied upon two decisions 
+
+
+
+of this Court, namely, (i) Ghulam Din Buch & Ors. v. State  
+
+
+
+of J & K1 and  (ii) Kuldip Singh  & Ors. v. State of Delhi2.
+1  1996 (9) SCC 239
+
+2  2003 (12) SCC 528
+10
+16.          Mr.   U.U.   Lalit   vehemently   contended   that     no 
+
+
+
+charge   was   framed   that   the   appellant   had   consumed 
+
+
+
+alcohol.    Moreover,  he   submited  that     no  reliance   could 
+
+
+
+be   placed   on   C.A.   Report   (Ex.   49)   as   the   evidence   does 
+
+
+
+not satisfactorily establish that the samples were kept in  
+
+
+
+safe   custody   until  they   reached   the   CFSL.   Moreover,   no 
+
+
+
+charge   was   framed   by   the   court   against   the   appellant 
+
+
+
+under
+Section 185
+of the Motor Vehicles Act, 1988   and
+Section 66(1)(b)
+of the Bombay Prohibition Act, 1949.
+17.          Learned   senior   counsel   argued                    that 
+
+
+
+appellant's conviction under
+Section 304A
+,
+338
+and
+337
+IPC was not legally sustainable for more than one reason.
+First,   no   charge   under
+Section   304A
+IPC   was   framed 
+
+
+
+against   the   appellant   as   he   was   charged   only   under 
+
+
+
+Section   304   Part   II
+IPC
+and
+Section   338
+IPC   which   are 
+
+
+
+not the offences of the same category. In the absence of 
+
+
+
+charge under
+Section 304A
+IPC, the appellant cannot be 
+
+
+
+convicted for the said offence being not a minor offence of 
+
+
+
+Section   304   Part   II
+IPC
+.    The   charge   under
+Section   338
+11
+IPC   does   not   help   the   prosecution   as   by   virtue   of   that 
+
+
+
+charge   the   appellant   cannot   be   convicted   under
+Section 
+
+
+
+304A
+IPC   being   graver   offence   than
+Section   338
+IPC.
+Secondly,   the   accident   had   occurred   not   on   account   of 
+
+
+
+rash  or  negligent act of the  appellant  but  on  account  of 
+
+
+
+failure   of   the   engine.     He   referred   to   the   evidence   of 
+
+
+
+Rajendra Nilkanth Sawant (PW-15) who  deposed that he 
+
+
+
+could   not   state   if   the   accident   took   place   due   to 
+
+
+
+dislodging of right side wheel and dislodging of the engine 
+
+
+
+from  the foundation.  In the absence of any firm opinion 
+
+
+
+by   an   expert   as   regards   the   cause   of   accident,   the 
+
+
+
+possibility of the accident having occurred on account of 
+
+
+
+mechanical   failure   cannot   be   ruled   out.   Thirdly,   in   the 
+
+
+
+absence   of   medical   certificate   that   the   persons   injured 
+
+
+
+received grievous injuries, charge under
+Section 338
+IPC 
+
+
+
+was not established.
+18.          Learned   senior   counsel   lastly   submitted   that 
+
+
+
+in   case   the   charges   against   appellant   are   held   to   be 
+
+
+
+proved, having regard to the facts, namely, the age of the
+12
+appellant  at the time of the accident; the appellant being 
+
+
+
+the   only   member   to   support   his   family     -   mother   and 
+
+
+
+unmarried   sister   -   having   lost   his   father   during   the  
+
+
+
+pendency   of   the   present   appeals;   the   fine   and 
+
+
+
+compensation of Rs. 8.5 lakhs having been paid  and the 
+
+
+
+sentence   of   two   months   already   undergone,               the 
+
+
+
+appellant may be released on probation of good conduct 
+
+
+
+and behavior or, in the alternative,  the sentence may be 
+
+
+
+reduced   to   the   period   already   undergone   by   the 
+
+
+
+appellant.
+19.           On   the   other   hand,   Mr.   Sanjay   Kharde, 
+
+
+
+learned   counsel   for   the   State   of   Maharashtra   stoutly 
+
+
+
+defended   the   judgment   of   the   High   Court.     He   argued 
+
+
+
+that   the   fact that  labourers  were  asleep on   the  footpath 
+
+
+
+has gone unchallenged by the defence.  He would submit 
+
+
+
+that   the   drunken   condition   of   the   appellant   is     fully 
+
+
+
+proved by the evidence of PW-1.   Further, PW-1 has not  
+
+
+
+at all been cross-examined on this aspect. The recovery of 
+
+
+
+liquor bottle   is proved by the evidence   of spot panchas
+13
+(PW-11 and PW-16).  They have not been cross examined 
+
+
+
+in   this   regard.       PW-17     collected   blood   sample   of   the 
+
+
+
+appellant     from   PW-1   and   then   PW-18     forwarded   the 
+
+
+
+blood   sample   to   the   chemical   analyzer   along   with   the 
+
+
+
+forwarding letter.   The appellant has not challenged C.A. 
+
+
+
+Report (Ex. 49) in the cross-examination of PW-18.
+20.          Learned   counsel   for   the   State   submitted   that 
+
+
+
+the involvement of the appellant in the incident  has been 
+
+
+
+fully   established   by   the   evidence   of   PW-13   who   was   an 
+
+
+
+eye-witness and working as a watchman at construction 
+
+
+
+site.   Moreover,   the   appellant   was   apprehended 
+
+
+
+immediately after the incident.  There is no denial by  the 
+
+
+
+appellant about occurrence of the accident.   The defence  
+
+
+
+of   the appellant was that the accident happened due to  
+
+
+
+engine   and   mechanical   failure   but   the   appellant   has 
+
+
+
+failed   to   probablise   his   defence.       He   referred   to   the  
+
+
+
+evidence   of   PW-15   -   motor   vehicle   inspector   -   to   show 
+
+
+
+that the brake and the gear of the car were operative.
+14
+21.              Learned   counsel   for   the   State   referred   to   the 
+
+
+
+evidence   of   injured   witnesses   and   also   the   evidence   of 
+
+
+
+PW-12   and   PW-14   who   issued   medical   certificates   and 
+
+
+
+submitted   that   the   prosecution   has   established   beyond 
+
+
+
+reasonable doubt that the knowledge was attributable to 
+
+
+
+the   accused   as   he   was   driving   the   car   in   a   drunken 
+
+
+
+condition   at   a   high   speed.   The   accused   had   the 
+
+
+
+knowledge, as he was resident of the same area, that the  
+
+
+
+labourers   sleep   at   the   place   of   occurrence.   Learned 
+
+
+
+counsel   submitted   that   the   evidence   on   record   and   the 
+
+
+
+attendant   circumstances   justify   attributability   of   actual 
+
+
+
+knowledge   to   the   appellant   and   the     High   Court   rightly 
+
+
+
+held so. In this regard, the learned counsel for the State  
+
+
+
+placed   reliance   upon   two   decisions   of   this   Court   in
+Jai  
+
+
+
+Prakash  v.  State  (Delhi Administration
+)3  and
+Joti Parshad 
+
+
+
+v.  State   of   Haryana4
+.     He   disputed   that   there   was   any 
+
+
+
+error in the framing of charge.  He would contend that  in 
+
+
+
+any   case   an   error   or   omission   in   framing   of   charge   or 
+
+
+
+irregularity   in   the   charge   does   not   invalidate   the 
+
+3  1991 (2) SCC 32
+
+4  1993 Supp (2)  SCC 497
+15
+conviction   of   an   accused.   The   omission     about   the 
+
+
+
+drunken   condition   of   the   accused   in   the   charge   at   best 
+
+
+
+can be said to be an irregularity but that does not affect 
+
+
+
+the conviction.
+In this regard, he relied upon Section 464 
+
+
+
+of   the   Code   and   the   decisions   of   this   Court   in
+Willie  
+
+
+
+(William)   Slaney  v.  State   of   Madhya   Pradesh5
+,
+Dalbir  
+
+
+
+Singh  v.  State  of U.P.6
+and  Annareddy Sambasiva  Reddy  
+
+
+
+and  others v. State of Andhra Pradesh7.
+22.             Mr.   Sanjay   Kharde   submitted   that   by   not 
+
+
+
+putting   C.A.   Report   (Ex.   49)   to   the   appellant   in   his 
+
+
+
+statement   under   Section   313   of   the   Code,   no   prejudice 
+
+
+
+has been caused to him as he admitted in his statement 
+
+
+
+under   Section   313   of   the   Code   that   he   was   fully   aware 
+
+
+
+about   the     statem

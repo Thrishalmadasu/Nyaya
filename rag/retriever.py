@@ -54,15 +54,23 @@ def retrieve(
     query: str,
     code_regime: str | None = None,
     top_k: int = 8,
+    include_constitution: bool = False,
 ) -> list[Chunk]:
-    """Query the Chroma collection and return the top-k relevant chunks."""
+    """Query the Chroma collection and return the top-k relevant chunks.
+
+    By default the filter is restricted to the active ``code_regime`` only.
+    Constitutional articles are pulled in only when ``include_constitution`` is
+    set — otherwise they compete in (and pollute) every ordinary-crime query,
+    e.g. Article 20 surfacing for a murder case.
+    """
     collection = _get_collection()
 
     where: dict | None = None
     if code_regime:
-        # Include both BNS and IPC chunks (IPC may still be relevant for context)
-        # but prefer the active regime
-        where = {"code_regime": {"$in": [code_regime, "CONST"]}}
+        regimes = [code_regime]
+        if include_constitution and code_regime != "CONST":
+            regimes.append("CONST")
+        where = {"code_regime": {"$in": regimes}} if len(regimes) > 1 else {"code_regime": code_regime}
 
     results = collection.query(
         query_texts=[query],
@@ -84,6 +92,46 @@ def retrieve(
                 section_id=meta.get("section_id", ""),
                 section_title=meta.get("section_title", ""),
                 code_regime=meta.get("code_regime", ""),
+                year=str(meta.get("year", "")),
+                score=1.0 - dist,
+            )
+        )
+
+    return chunks
+
+
+def retrieve_precedents(query: str, top_k: int = 3) -> list[Chunk]:
+    """Query the Chroma collection for embedded precedent chunks.
+
+    Mirrors ``retrieve()`` but filters strictly to ``code_regime="PRECEDENT"``
+    so landmark-case paragraphs surface for advocate arguments without
+    competing against statute sections. Returns an empty list if the corpus
+    holds no precedents (callers can then fall back to internet search).
+    """
+    collection = _get_collection()
+    if collection.count() == 0:
+        return []
+
+    results = collection.query(
+        query_texts=[query],
+        n_results=min(top_k, max(1, collection.count())),
+        where={"code_regime": "PRECEDENT"},
+        include=["documents", "metadatas", "distances"],
+    )
+
+    chunks: list[Chunk] = []
+    docs = results.get("documents", [[]])[0]
+    metas = results.get("metadatas", [[]])[0]
+    distances = results.get("distances", [[]])[0]
+
+    for doc, meta, dist in zip(docs, metas, distances):
+        chunks.append(
+            Chunk(
+                text=doc,
+                source_act=meta.get("source_act", "Precedent"),
+                section_id=meta.get("section_id", ""),
+                section_title=meta.get("section_title", ""),
+                code_regime=meta.get("code_regime", "PRECEDENT"),
                 year=str(meta.get("year", "")),
                 score=1.0 - dist,
             )

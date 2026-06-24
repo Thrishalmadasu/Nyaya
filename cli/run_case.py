@@ -1,9 +1,10 @@
 """CLI entry point for the AI Moot Court.
 
 Usage:
-    python -m cli.run_case "On 15 August 2024, accused Raj Sharma was caught..."
-    python -m cli.run_case --file path/to/case.txt
-    python -m cli.run_case --auto   # skip HITL, auto-approve (for eval/demo)
+    python -m cli.run_case --date 2024-08-15 "On 15 August 2024, accused Raj Sharma was caught..."
+    python -m cli.run_case --date 2024-08-15 --file path/to/case.txt
+    python -m cli.run_case --auto --date 2024-08-15 "..."   # skip HITL, auto-approve (for eval/demo)
+    python -m cli.run_case "..."   # will prompt interactively for the date
 """
 from __future__ import annotations
 
@@ -11,6 +12,7 @@ import argparse
 import json
 import sys
 import uuid
+from datetime import date, datetime
 from pathlib import Path
 
 from dotenv import load_dotenv
@@ -22,6 +24,51 @@ from rich.table import Table
 load_dotenv()
 
 console = Console()
+
+_BNS_CUTOVER = date(2024, 7, 1)
+_DATE_FMTS = ["%Y-%m-%d", "%d-%m-%Y", "%d/%m/%Y", "%B %d, %Y", "%d %B %Y"]
+
+
+def _parse_date_arg(s: str) -> str:
+    """Parse a date string and return canonical YYYY-MM-DD, or raise SystemExit."""
+    for fmt in _DATE_FMTS:
+        try:
+            return datetime.strptime(s.strip(), fmt).strftime("%Y-%m-%d")
+        except ValueError:
+            pass
+    console.print(
+        f"[red]Error:[/red] Could not parse date '{s}'. "
+        "Use formats like 2024-08-15, 15-08-2024, or '15 August 2024'."
+    )
+    sys.exit(1)
+
+
+def _prompt_date() -> str:
+    """Interactively ask for the offence date and return canonical YYYY-MM-DD."""
+    console.print(
+        "\n[bold yellow]Offence Date Required[/bold yellow]\n"
+        "The offence date determines which law applies:\n"
+        "  • On/after 1 Jul 2024 → [green]BNS[/green]\n"
+        "  • Before 1 Jul 2024  → [blue]IPC[/blue]\n"
+    )
+    while True:
+        raw = console.input("[bold]Enter offence date[/bold] (e.g. 2024-08-15 or 15-08-2024): ").strip()
+        if not raw:
+            console.print("[red]Date cannot be empty. Please try again.[/red]")
+            continue
+        for fmt in _DATE_FMTS:
+            try:
+                canonical = datetime.strptime(raw, fmt).strftime("%Y-%m-%d")
+                d = datetime.strptime(canonical, "%Y-%m-%d").date()
+                regime = "BNS" if d >= _BNS_CUTOVER else "IPC"
+                console.print(f"[dim]→ {canonical} — applying [bold]{regime}[/bold][/dim]\n")
+                return canonical
+            except ValueError:
+                pass
+        console.print(
+            f"[red]Could not parse '{raw}'.[/red] "
+            "Try formats like 2024-08-15, 15-08-2024, or '15 August 2024'."
+        )
 
 
 def _print_argument(arg: dict, round_num: int) -> None:
@@ -72,7 +119,7 @@ def _print_verdict(verdict: dict) -> None:
     ))
 
 
-def run(facts: str, auto_approve: bool = False) -> dict:
+def run(facts: str, offence_date: str, auto_approve: bool = False) -> dict:
     from graph.court import get_graph
 
     graph = get_graph()
@@ -81,6 +128,7 @@ def run(facts: str, auto_approve: bool = False) -> dict:
 
     initial_state = {
         "facts_raw": facts,
+        "offence_date": offence_date,
         "round_transcript": [],
         "judge_scores": [],
         "current_round": 1,
@@ -169,6 +217,11 @@ def main() -> None:
     group = parser.add_mutually_exclusive_group(required=True)
     group.add_argument("facts", nargs="?", help="Fact scenario as a string")
     group.add_argument("--file", type=Path, help="Path to a .txt file with the fact scenario")
+    parser.add_argument(
+        "--date",
+        metavar="YYYY-MM-DD",
+        help="Offence date (determines BNS vs IPC). Prompted interactively if omitted.",
+    )
     parser.add_argument("--auto", action="store_true", help="Auto-approve HITL (for eval/demo)")
     parser.add_argument("--json", action="store_true", help="Output final state as JSON")
     args = parser.parse_args()
@@ -182,7 +235,9 @@ def main() -> None:
         console.print("[red]Error: no fact scenario provided[/red]")
         sys.exit(1)
 
-    final_state = run(facts, auto_approve=args.auto)
+    offence_date = _parse_date_arg(args.date) if args.date else _prompt_date()
+
+    final_state = run(facts, offence_date=offence_date, auto_approve=args.auto)
 
     if args.json:
         print(json.dumps(final_state.get("verdict", {}), indent=2, default=str))

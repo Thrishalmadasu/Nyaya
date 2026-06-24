@@ -4,6 +4,7 @@ from __future__ import annotations
 import os
 import sys
 import uuid
+from datetime import date
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
@@ -215,6 +216,7 @@ def _init_state() -> None:
         "phase": "idle",
         "thread_id": None,
         "facts_raw": "",
+        "offence_date": None,
         "clerk_output": None,
         "rounds": [],
         "audit_result": None,
@@ -253,7 +255,7 @@ def _get_graph():
 
 
 def _reset() -> None:
-    for k in ["phase", "thread_id", "facts_raw", "clerk_output",
+    for k in ["phase", "thread_id", "facts_raw", "offence_date", "clerk_output",
               "rounds", "audit_result", "verdict", "error_msg"]:
         st.session_state.pop(k, None)
     _init_state()
@@ -545,13 +547,14 @@ _ACTIVITY_LABELS = {
 _MAX_ROUNDS = 8
 
 
-def _run_pre_hitl(facts: str) -> None:
+def _run_pre_hitl(facts: str, offence_date: str) -> None:
     thread_id = str(uuid.uuid4())
     st.session_state.thread_id = thread_id
     config = {"configurable": {"thread_id": thread_id}}
     graph = _get_graph()
     initial_state = {
         "facts_raw": facts,
+        "offence_date": offence_date,
         "round_transcript": [],
         "judge_scores": [],
         "current_round": 1,
@@ -994,22 +997,78 @@ def main() -> None:
         facts = st.text_area("Facts", value=prefill, height=180,
             placeholder="Describe the facts of the case in detail — who, what, when, where, what evidence exists.",
             label_visibility="collapsed")
+
+        st.markdown("<div class='ny-section' style='margin-top:1rem'>Offence Date <span style='color:#C05050'>*</span></div>", unsafe_allow_html=True)
+        st.markdown(
+            "<p style='color:var(--text-muted);font-size:0.75rem;margin-bottom:0.5rem'>"
+            "The offence date determines whether BNS (on/after 1 Jul 2024) or IPC (before 1 Jul 2024) applies. "
+            "Select using the picker or type a date below.</p>",
+            unsafe_allow_html=True,
+        )
+        date_col_pick, date_col_text = st.columns([2, 3])
+        with date_col_pick:
+            picked_date = st.date_input(
+                "Pick a date",
+                value=None,
+                min_value=date(1950, 1, 1),
+                max_value=date(2099, 12, 31),
+                label_visibility="collapsed",
+            )
+        with date_col_text:
+            typed_date = st.text_input(
+                "Or type a date",
+                value="",
+                placeholder="e.g. 15-08-2024 or 2024-08-15",
+                label_visibility="collapsed",
+            )
+
         col_btn, col_note = st.columns([2, 6])
         with col_btn:
             go = st.button("Convene Court", type="primary", use_container_width=True)
         with col_note:
             st.markdown("<p style='color:var(--text-muted);font-size:0.73rem;margin-top:0.5rem'>Educational simulation only &mdash; not legal advice.</p>", unsafe_allow_html=True)
         if go:
+            _DATE_FMTS_UI = ["%Y-%m-%d", "%d-%m-%Y", "%d/%m/%Y", "%B %d, %Y", "%d %B %Y"]
+            resolved_date: str | None = None
+
+            # Free-text takes priority if provided; fall back to picker
+            if typed_date.strip():
+                from datetime import datetime as _dt  # noqa: PLC0415
+                parsed_ok = False
+                for fmt in _DATE_FMTS_UI:
+                    try:
+                        resolved_date = _dt.strptime(typed_date.strip(), fmt).strftime("%Y-%m-%d")
+                        parsed_ok = True
+                        break
+                    except ValueError:
+                        pass
+                if not parsed_ok:
+                    st.error(
+                        f"Could not parse '{typed_date}' as a date. "
+                        "Try formats like 15-08-2024, 2024-08-15, or 15 August 2024."
+                    )
+                    resolved_date = None
+            elif picked_date is not None:
+                resolved_date = picked_date.strftime("%Y-%m-%d")
+
             if not facts.strip():
                 st.error("Please enter a fact scenario before convening court.")
+            elif resolved_date is None:
+                st.error("Please provide the offence date — it determines which law applies (BNS or IPC).")
             else:
+                cutover = date(2024, 7, 1)
+                from datetime import datetime as _dt2  # noqa: PLC0415
+                _d = _dt2.strptime(resolved_date, "%Y-%m-%d").date()
+                regime_preview = "BNS" if _d >= cutover else "IPC"
+                st.info(f"Offence date: **{resolved_date}** → applying **{regime_preview}**")
                 st.session_state.facts_raw = facts.strip()
+                st.session_state.offence_date = resolved_date
                 st.session_state.phase = "running"
                 st.rerun()
 
     elif st.session_state.phase == "running":
         st.markdown(f"<p style='color:var(--text-muted);font-size:0.8rem;margin-bottom:1.5rem'>{st.session_state.facts_raw[:220]}{'…' if len(st.session_state.facts_raw) > 220 else ''}</p>", unsafe_allow_html=True)
-        _run_pre_hitl(st.session_state.facts_raw)
+        _run_pre_hitl(st.session_state.facts_raw, st.session_state.offence_date)
         st.rerun()
 
     elif st.session_state.phase == "awaiting_hitl":

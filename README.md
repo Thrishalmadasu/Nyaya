@@ -68,8 +68,8 @@ Fact Scenario
 | Agent | Role | Tools | Output Type |
 |-------|------|-------|-------------|
 | **Clerk** | Parses facts → structured CaseFile; sets code regime deterministically | None | `CaseFile` |
-| **Prosecution Advocate** | Argues liability; must cite ≥2 statutes + 1 precedent | `statute_retrieval_tool`, `precedent_search_tool` | `Argument` |
-| **Defence Advocate** | Argues exculpation; same citation requirements | `statute_retrieval_tool`, `precedent_search_tool` | `Argument` |
+| **Prosecution Advocate** | Argues liability; must cite ≥2 statutes + 1 precedent | statute retrieval, precedent retrieval (local corpus → Tavily fallback) | `Argument` |
+| **Defence Advocate** | Argues exculpation; same citation requirements | statute retrieval, precedent retrieval (local corpus → Tavily fallback) | `Argument` |
 | **Judge** | Scores each side's round strength (1–10), decides loop vs proceed; win probability is then computed deterministically from those scores | None | `JudgeScore` |
 | **Auditor** | Validates every cited statute against corpus; blocks hallucinations | `citation_validator_tool` | `CitationAuditResult` |
 
@@ -138,7 +138,9 @@ cp .env.example .env
 ```bash
 python -m ingestion.build_corpus
 ```
-This downloads statute PDFs, scrapes landmark precedents, chunks them, and embeds into ChromaDB. Expect ~15–30 min on first run.
+This downloads the statute texts (clean English full text from Indian Kanoon), scrapes landmark precedents, chunks them section-by-section, and embeds into ChromaDB. Expect ~15–30 min on first run. After it finishes, verify with `python -m tools.inspect_corpus`.
+
+See **[docs/RAG.md](docs/RAG.md)** for the full ingestion pipeline, chunking strategy, metadata schema, and retrieval behaviour.
 
 ### 4. Run a case
 ```bash
@@ -172,7 +174,7 @@ python -m eval.evaluate
 | Constitution of India (Part III + IV) | CONST | 1950 |
 
 ### Precedents (Scraped from Indian Kanoon)
-25+ landmark Supreme Court judgments across: fundamental rights, murder/culpable homicide, theft/robbery, bail, private defence, evidence law, and sentencing.
+23 landmark Supreme Court judgments across: fundamental rights, murder/culpable homicide, theft/property, evidence, private defence, bail/procedure, sentencing, sexual offences, 498A, and custodial rights. Each doc ID is verified against the live site and re-validated by party name at scrape time, so the saved file always matches the case it claims. The list is biased toward the most-cited judgments in each area (e.g. Arnesh Kumar, Satender Antil, D.K. Basu, Sharad Sarda).
 
 ---
 
@@ -201,7 +203,7 @@ python -m eval.evaluate
 ## Limitations & Future Work
 
 - RAG corpus covers the main statutes but not all subordinate legislation (rules, regulations)
-- Precedent retrieval via Tavily is internet-dependent; could be replaced with a local precedent index
+- Precedent retrieval is local-first (the embedded landmark-case corpus) with Tavily internet search as a fallback when the corpus has no relevant match or no API key is configured
 - LLM may still reason incorrectly even when citing real sections — the Auditor checks existence, not interpretation accuracy
 - Future: add a sub-agent for sentencing guidelines and quantum of punishment
 

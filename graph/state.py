@@ -268,6 +268,8 @@ def _upsert_scores_by_round(existing: list[dict], new: list[dict]) -> list[dict]
 class GraphState(TypedDict):
     # Raw facts from user — consumed by Clerk
     facts_raw: str
+    # Offence date collected explicitly from UI/CLI (YYYY-MM-DD string); determines BNS vs IPC
+    offence_date: str | None
     # Set by Clerk
     case_file: CaseFile
     # Grows each round — list of Argument objects (serialised as dicts for TypedDict)
