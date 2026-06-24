@@ -1,0 +1,10 @@
+CASE: State of Andhra Pradesh v Rayavarapu Punnayya (1976)
+
+KEY FACTS: The accused inflicted a number of deliberate blows on the deceased, who died of the injuries. The question was whether the offence was murder under Section 300 IPC or culpable homicide not amounting to murder under Section 304.
+
+PRINCIPLE: In the scheme of the Penal Code, "culpable homicide" is the genus and "murder" its species — all murder is culpable homicide, but not vice versa. The Code recognises three degrees of culpable homicide. The crucial distinction lies in the degree of intention/knowledge: under Section 300 "Thirdly", an intention to cause a bodily injury that is objectively sufficient in the ordinary course of nature to cause death makes the offence murder, even without an intention to kill. Courts must carefully apply the tests separating Sections 299 and 300.
+
+HOLDING: The Supreme Court held the offence to be murder and restored the conviction under Section 302 IPC.
+
+COURT: Supreme Court of India
+AREA: criminal law — culpable homicide versus murder (Sections 299, 300 IPC)

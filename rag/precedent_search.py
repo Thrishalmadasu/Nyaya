@@ -16,8 +16,11 @@ load_dotenv()
 
 logger = logging.getLogger(__name__)
 
-# Single content cap (no double truncation). Trimmed sentence-aware in _shorten.
+# Content caps (sentence-aware trim in _shorten). Local corpus entries are now
+# concise hand-authored overviews (~120–180 words), so they get a higher cap so
+# the holding isn't clipped; arbitrary-length Tavily web text keeps the tight cap.
 _CONTENT_CHARS = 600
+_OVERVIEW_CHARS = 1200
 
 
 def _shorten(text: str, limit: int = _CONTENT_CHARS) -> str:
@@ -62,7 +65,7 @@ def _local_precedents(query: str, max_results: int) -> list[dict]:
         {
             "title": c.section_title or "Indian precedent",
             "url": "",  # local corpus has no canonical URL on the chunk
-            "content": _shorten(c.text),
+            "content": _shorten(c.text, limit=_OVERVIEW_CHARS),
             "source": "corpus",
         }
         for c in chunks

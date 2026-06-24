@@ -1,0 +1,10 @@
+CASE: Sharad Birdhichand Sarda v State of Maharashtra (1984)
+
+KEY FACTS: A young woman died of poisoning soon after her marriage. The husband was convicted of her murder largely on circumstantial evidence and on her letters and statements describing ill-treatment, the prosecution alleging homicidal poisoning and the defence pleading suicide.
+
+PRINCIPLE: For a conviction resting on circumstantial evidence, five golden principles ("panchsheel") must be satisfied: the circumstances must be fully established; they must be consistent only with the guilt of the accused; they must be conclusive in nature; they must exclude every hypothesis except guilt; and they must form a complete chain leaving no reasonable ground for innocence. The Court also explained the scope of Section 32(1) of the Evidence Act on statements as to the circumstances of the transaction resulting in death.
+
+HOLDING: Finding the chain of circumstances incomplete and a reasonable possibility of suicide, the Court set aside the conviction and acquitted the accused.
+
+COURT: Supreme Court of India
+AREA: criminal law — circumstantial evidence, dying declarations

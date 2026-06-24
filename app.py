@@ -1010,26 +1010,16 @@ def main() -> None:
         st.markdown("<div class='ny-section' style='margin-top:1rem'>Offence Date <span style='color:#C05050'>*</span></div>", unsafe_allow_html=True)
         st.markdown(
             "<p style='color:var(--text-muted);font-size:0.75rem;margin-bottom:0.5rem'>"
-            "The offence date determines whether BNS (on/after 1 Jul 2024) or IPC (before 1 Jul 2024) applies. "
-            "Select using the picker or type a date below.</p>",
+            "The offence date determines whether BNS (on/after 1 Jul 2024) or IPC (before 1 Jul 2024) applies.</p>",
             unsafe_allow_html=True,
         )
-        date_col_pick, date_col_text = st.columns([2, 3])
-        with date_col_pick:
-            picked_date = st.date_input(
-                "Pick a date",
-                value=None,
-                min_value=date(1950, 1, 1),
-                max_value=date(2099, 12, 31),
-                label_visibility="collapsed",
-            )
-        with date_col_text:
-            typed_date = st.text_input(
-                "Or type a date",
-                value="",
-                placeholder="e.g. 15-08-2024 or 2024-08-15",
-                label_visibility="collapsed",
-            )
+        picked_date = st.date_input(
+            "Pick a date",
+            value=None,
+            min_value=date(1950, 1, 1),
+            max_value=date(2099, 12, 31),
+            label_visibility="collapsed",
+        )
 
         col_btn, col_note = st.columns([2, 6])
         with col_btn:
@@ -1037,28 +1027,9 @@ def main() -> None:
         with col_note:
             st.markdown("<p style='color:var(--text-muted);font-size:0.73rem;margin-top:0.5rem'>Educational simulation only &mdash; not legal advice.</p>", unsafe_allow_html=True)
         if go:
-            _DATE_FMTS_UI = ["%Y-%m-%d", "%d-%m-%Y", "%d/%m/%Y", "%B %d, %Y", "%d %B %Y"]
-            resolved_date: str | None = None
-
-            # Free-text takes priority if provided; fall back to picker
-            if typed_date.strip():
-                from datetime import datetime as _dt  # noqa: PLC0415
-                parsed_ok = False
-                for fmt in _DATE_FMTS_UI:
-                    try:
-                        resolved_date = _dt.strptime(typed_date.strip(), fmt).strftime("%Y-%m-%d")
-                        parsed_ok = True
-                        break
-                    except ValueError:
-                        pass
-                if not parsed_ok:
-                    st.error(
-                        f"Could not parse '{typed_date}' as a date. "
-                        "Try formats like 15-08-2024, 2024-08-15, or 15 August 2024."
-                    )
-                    resolved_date = None
-            elif picked_date is not None:
-                resolved_date = picked_date.strftime("%Y-%m-%d")
+            resolved_date: str | None = (
+                picked_date.strftime("%Y-%m-%d") if picked_date is not None else None
+            )
 
             if not facts.strip():
                 st.error("Please enter a fact scenario before convening court.")

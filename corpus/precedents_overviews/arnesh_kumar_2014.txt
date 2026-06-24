@@ -1,0 +1,10 @@
+CASE: Arnesh Kumar v State of Bihar (2014)
+
+KEY FACTS: The appellant, a husband apprehending arrest in a dowry-harassment complaint under Section 498-A IPC and Section 4 of the Dowry Prohibition Act, sought anticipatory bail after it was refused by the lower courts.
+
+PRINCIPLE: Arrest is not automatic merely because an offence (punishable up to seven years, such as Section 498-A) is cognizable. Police must first be satisfied of the necessity to arrest under the Section 41 CrPC parameters and ordinarily issue a notice of appearance under Section 41-A; magistrates must not authorise detention mechanically and must record reasons. The aim is to curb routine, unwarranted arrests and protect personal liberty.
+
+HOLDING: The Court issued binding directions to police and magistrates to prevent unnecessary arrests, with disciplinary/contempt consequences for non-compliance.
+
+COURT: Supreme Court of India
+AREA: criminal procedure — arrest and bail (Sections 41, 41-A CrPC)
