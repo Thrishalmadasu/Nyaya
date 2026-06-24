@@ -33,6 +33,41 @@ class PrecedentCorpusIntegrityTests(unittest.TestCase):
         self.assertTrue(_content_matches(real_olga_text, olga))
 
 
+class PrecedentNameMatchTests(unittest.TestCase):
+    """precedent_exists() matches full-form citations against the slug corpus."""
+
+    def _require_corpus(self):
+        try:
+            from rag.retriever import _get_collection
+            if _get_collection().count() == 0:
+                raise unittest.SkipTest("corpus not built")
+        except unittest.SkipTest:
+            raise
+        except Exception as exc:
+            raise unittest.SkipTest(f"retrieval deps unavailable: {exc}")
+
+    def test_full_form_citations_match_corpus_slugs(self):
+        self._require_corpus()
+        from rag.retriever import precedent_exists
+
+        for citation in (
+            "Kesavananda Bharati v. State of Kerala (1973)",
+            "Maneka Gandhi v Union of India (1978)",
+            "K.M. Nanavati v State of Maharashtra (1961)",     # single-surname slug
+            "Bachan Singh v State of Punjab (1980)",            # common surname, two-token match
+            "A.K. Gopalan v State of Madras (1950)",            # initials dropped, surname carries
+        ):
+            self.assertTrue(precedent_exists(citation), msg=citation)
+
+    def test_fabricated_cases_do_not_match_locally(self):
+        self._require_corpus()
+        from rag.retriever import precedent_exists
+
+        # A lone common surname must NOT verify a different real case.
+        self.assertFalse(precedent_exists("Rajesh Kumar v State of Delhi (2021)"))
+        self.assertFalse(precedent_exists("Totally Fake v Nobody (2099)"))
+
+
 class PrecedentSearchTests(unittest.TestCase):
     def test_sanitize_strips_site_operators(self):
         from rag.precedent_search import _sanitize_query
@@ -40,6 +75,25 @@ class PrecedentSearchTests(unittest.TestCase):
         cleaned = _sanitize_query('murder -site:evil.com "quoted"')
         self.assertNotIn("site:", cleaned.lower())
         self.assertNotIn('"', cleaned)
+
+    def test_party_tokens_drop_generic_words(self):
+        from rag.precedent_search import _citation_party_tokens
+
+        toks = [t.lower() for t in _citation_party_tokens("Maneka Gandhi v Union of India (1978)")]
+        self.assertIn("maneka", toks)
+        self.assertIn("gandhi", toks)
+        # "union"/"india"/"of"/"v" and the year are not identifying tokens.
+        self.assertNotIn("union", toks)
+        self.assertNotIn("india", toks)
+        self.assertNotIn("1978", toks)
+
+    def test_verify_online_returns_none_without_key(self):
+        import os
+        from unittest import mock
+        from rag import precedent_search
+
+        with mock.patch.dict(os.environ, {}, clear=True):
+            self.assertIsNone(precedent_search.verify_precedent_online("Some Case v Other (1999)"))
 
     def test_get_precedents_local_first(self):
         # With the corpus built, get_precedents must return local results

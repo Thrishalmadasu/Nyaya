@@ -369,15 +369,21 @@ def _audit_html(audit: dict) -> str:
         return ""
     passed = audit.get("audit_passed", True)
     cls = "pass" if passed else "fail"
-    title = "All citations verified" if passed else "Hallucinated citations detected"
+    title = "All citations verified" if passed else "Citation issues detected"
     verified = audit.get("verified_citations", [])
     hallucinated = audit.get("hallucinated_citations", [])
+    verified_precedents = audit.get("verified_precedents", [])
+    unverified_precedents = audit.get("unverified_precedents", [])
     notes = audit.get("audit_notes", "")
     detail = ""
     if verified:
-        detail += f"Verified: {', '.join(verified[:8])}. "
+        detail += f"Verified statutes: {', '.join(verified[:8])}. "
     if hallucinated:
-        detail += f"<strong style='color:#C05050'>Not found: {', '.join(hallucinated)}.</strong> "
+        detail += f"<strong style='color:#C05050'>Statutes not found: {', '.join(hallucinated)}.</strong> "
+    if verified_precedents:
+        detail += f"Verified cases: {', '.join(verified_precedents[:8])}. "
+    if unverified_precedents:
+        detail += f"<strong style='color:#C05050'>Unverified cases: {', '.join(unverified_precedents)}.</strong> "
     if notes:
         detail += notes
     return f"""
@@ -797,7 +803,7 @@ def _render_all() -> None:
 def _run_post_hitl(approved: bool) -> None:
     from langgraph.types import Command
     from utils.llm import reset_fallback
-    reset_fallback()  # verdict call must use primary model; fallback's 6K TPM limit causes 413
+    reset_fallback()  # verdict must use the full models (judge/primary), not the 8B fallback whose 6K TPM causes 413
     config = {"configurable": {"thread_id": st.session_state.thread_id}}
     graph = st.session_state.get("_graph") or _get_graph()
     decision = "approve" if approved else "reject"
@@ -1078,10 +1084,12 @@ def main() -> None:
         _render_all()
         audit = st.session_state.audit_result or {}
         hallucinated = audit.get("hallucinated_citations", [])
+        unverified_precedents = audit.get("unverified_precedents", [])
         caution = ""
-        if hallucinated:
-            hallucinated_str = ", ".join(hallucinated)
-            caution = f"<br><strong style='color:#C05050'>Caution:</strong> The following citations were not verified: {hallucinated_str}"
+        flagged = hallucinated + unverified_precedents
+        if flagged:
+            flagged_str = ", ".join(flagged)
+            caution = f"<br><strong style='color:#C05050'>Caution:</strong> The following citations were not verified: {flagged_str}"
 
         max_rounds = int(os.getenv("MOOT_COURT_MAX_ROUNDS", "5"))
         rounds_done = len([r for r in st.session_state.rounds if r.get("score")])

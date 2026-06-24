@@ -5,7 +5,7 @@ from langgraph.graph import END, START, StateGraph
 from langgraph.checkpoint.memory import MemorySaver
 
 from graph.state import GraphState
-from graph.edges import auditor_routing, hitl_routing, judge_routing
+from graph.edges import hitl_routing, judge_routing
 
 
 def _hitl_node(state: GraphState) -> dict:
@@ -26,7 +26,8 @@ def _hitl_node(state: GraphState) -> dict:
         "=" * 60 + "\n"
         f"Audit passed: {state.get('audit_passed')}\n"
         f"Audit notes: {audit.get('audit_notes', '') if audit else ''}\n"
-        f"Hallucinated citations: {audit.get('hallucinated_citations', []) if audit else []}\n\n"
+        f"Hallucinated statutes: {audit.get('hallucinated_citations', []) if audit else []}\n"
+        f"Unverified cases: {audit.get('unverified_precedents', []) if audit else []}\n\n"
         "Type 'approve' to accept the verdict, or 'reject' to hear another round of argument.\n"
     )
 
@@ -78,15 +79,14 @@ def build_graph(checkpointer=None) -> StateGraph:
         },
     )
 
-    # Conditional: Auditor decides clean vs re-argue
-    graph.add_conditional_edges(
-        "auditor_node",
-        auditor_routing,
-        {
-            "prosecution_node": "prosecution_node",
-            "hitl_node": "hitl_node",
-        },
-    )
+    # Auditor always proceeds to HITL — the audit outcome (hallucinated /
+    # verified citations) is surfaced to the human reviewer, who Approves or
+    # Rejects. This is a direct edge, not a routing decision: the earlier
+    # 'route back to prosecution on a failed audit' design caused an infinite
+    # loop (every re-argue invented new hallucinated citations → audit failed
+    # again → re-argued again) and overwrote the same round slot in session
+    # state, making the trial appear to stop at 2 rounds.
+    graph.add_edge("auditor_node", "hitl_node")
 
     # Conditional: HITL decides approve vs reject
     graph.add_conditional_edges(

@@ -43,24 +43,6 @@ def judge_routing(state: GraphState) -> Literal["prosecution_node", "auditor_nod
     return "auditor_node"
 
 
-def auditor_routing(
-    state: GraphState,
-) -> Literal["prosecution_node", "hitl_node"]:
-    """Route after the Auditor validates citations.
-
-    Always proceeds to HITL regardless of audit result. The audit outcome
-    (hallucinated citations, verified citations) is displayed to the human
-    reviewer who can then Approve or Reject.
-
-    The original 'route back to prosecution on failure' design caused an
-    infinite loop: every re-argue produced new hallucinated citations
-    (LLM-invented statutes) → auditor failed again → re-argued again.
-    The re-argue also overwrote the same round slot in session state,
-    making round 2 data disappear and the trial appear to stop at 2 rounds.
-    """
-    return "hitl_node"
-
-
 def hitl_routing(state: GraphState) -> Literal["verdict_node", "prosecution_node"]:
     """Route after human review.
 

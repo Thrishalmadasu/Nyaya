@@ -177,8 +177,10 @@ def run(facts: str, offence_date: str, auto_approve: bool = False) -> dict:
         color = "green" if current_state.get("audit_passed") else "red"
         console.print(Panel(
             f"[{color}]{status}[/{color}]\n"
-            f"Verified: {audit.get('verified_citations', [])}\n"
-            f"Hallucinated: {audit.get('hallucinated_citations', [])}\n"
+            f"Verified statutes: {audit.get('verified_citations', [])}\n"
+            f"Hallucinated statutes: {audit.get('hallucinated_citations', [])}\n"
+            f"Verified cases: {audit.get('verified_precedents', [])}\n"
+            f"Unverified cases: {audit.get('unverified_precedents', [])}\n"
             f"Notes: {audit.get('audit_notes', '')}",
             title="🔍 Citation Audit",
             border_style=color,
