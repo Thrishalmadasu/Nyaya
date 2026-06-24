@@ -7,7 +7,7 @@ from langchain_core.messages import HumanMessage, SystemMessage
 
 from agents.prompts import JUDGE_SYSTEM, VERDICT_SYSTEM
 from graph.state import GraphState, JudgeScore, Verdict
-from utils.llm import get_structured_llm
+from utils.llm import get_judge_structured_llm
 
 # Percentage points of win probability per point of average strength margin.
 # At 7, a clear ~4.3-point average lead reaches the 80/20 early-exit threshold,
@@ -30,7 +30,7 @@ def _format_transcript(transcript: list[dict]) -> str:
 
 def judge_node(state: GraphState) -> dict:
     """LangGraph node: Judge evaluates the round and decides next step."""
-    structured_llm = get_structured_llm(JudgeScore)
+    structured_llm = get_judge_structured_llm(JudgeScore)
 
     _MAX_ROUNDS = int(os.getenv("MOOT_COURT_MAX_ROUNDS", "5"))
     current_round = state.get("current_round", 1)
@@ -175,7 +175,7 @@ def confidence_from_margin(prosecution_avg: float, defence_avg: float) -> int:
 
 def verdict_node(state: GraphState) -> dict:
     """LangGraph node: Judge renders the final verdict after HITL approval."""
-    structured_llm = get_structured_llm(Verdict)
+    structured_llm = get_judge_structured_llm(Verdict)
 
     transcript = state.get("round_transcript", [])
     scores = state.get("judge_scores", [])

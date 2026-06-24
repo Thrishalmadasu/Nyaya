@@ -803,7 +803,7 @@ def _render_all() -> None:
 def _run_post_hitl(approved: bool) -> None:
     from langgraph.types import Command
     from utils.llm import reset_fallback
-    reset_fallback()  # verdict call must use primary model; fallback's 6K TPM limit causes 413
+    reset_fallback()  # verdict must use the full models (judge/primary), not the 8B fallback whose 6K TPM causes 413
     config = {"configurable": {"thread_id": st.session_state.thread_id}}
     graph = st.session_state.get("_graph") or _get_graph()
     decision = "approve" if approved else "reject"

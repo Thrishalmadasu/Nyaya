@@ -2,10 +2,18 @@
 
 Rate-limit strategy (Groq free tier):
   Primary model:  GROQ_MODEL (default llama-3.3-70b-versatile, 100K TPD)
+  Judge model:    GROQ_JUDGE_MODEL (default openai/gpt-oss-120b, 200K TPD)
   Fallback model: GROQ_FALLBACK_MODEL (default llama-3.1-8b-instant, 500K TPD)
 
-On RateLimitError the structured_llm wrapper retries once after a short wait,
-then automatically switches to the fallback model for the rest of the session.
+The Judge (round scoring + final verdict) runs a stronger reasoning model than
+the advocates: it adjudicates the whole trial, and the judge-as-generator gap is
+where verdict quality is won or lost. It also draws on a *separate* Groq free-tier
+quota bucket, so Judge calls don't compete with advocate calls for the primary
+model's daily token budget.
+
+On RateLimitError the structured_llm wrapper retries after a short wait, then
+switches that model to the fallback for the rest of the session. Fallback state
+is tracked per-primary-model so the Judge and advocate models trip independently.
 """
 from __future__ import annotations
 
@@ -23,9 +31,13 @@ load_dotenv()
 _LLM_BACKEND = os.getenv("MOOT_COURT_LLM", "groq").lower()
 _PRIMARY_MODEL = os.getenv("GROQ_MODEL", "llama-3.3-70b-versatile")
 _FALLBACK_MODEL = os.getenv("GROQ_FALLBACK_MODEL", "llama-3.1-8b-instant")
+# Stronger model for the Judge (scoring + verdict). See module docstring.
+JUDGE_MODEL = os.getenv("GROQ_JUDGE_MODEL", "openai/gpt-oss-120b")
 
-# Session-level flag: switch permanently to fallback after first rate-limit hit
-_using_fallback: bool = False
+# Primary model names that have hit a long rate-limit and switched to the
+# higher-limit fallback for the rest of the session. Keyed by model so the Judge
+# and advocate models fall back independently rather than one tripping the other.
+_fallback_active: set[str] = set()
 
 log = logging.getLogger(__name__)
 
@@ -63,9 +75,8 @@ def _retry_after_seconds(exc: Exception) -> float | None:
 
 
 def get_llm():
-    global _using_fallback
     if _LLM_BACKEND == "groq":
-        model = _FALLBACK_MODEL if _using_fallback else _PRIMARY_MODEL
+        model = _FALLBACK_MODEL if _PRIMARY_MODEL in _fallback_active else _PRIMARY_MODEL
         return _make_groq(model)
     elif _LLM_BACKEND == "anthropic":
         from langchain_anthropic import ChatAnthropic
@@ -86,20 +97,25 @@ def get_llm():
 
 
 class _RateLimitAwareChain:
-    """Wraps a structured-output chain and retries with fallback on 429."""
+    """Wraps a structured-output chain and retries with fallback on 429.
 
-    def __init__(self, schema: Type[BaseModel]):
+    ``model`` selects the primary Groq model for this chain (defaults to
+    GROQ_MODEL). Fallback state is tracked per-model in ``_fallback_active``, so
+    a chain on the Judge model and a chain on the advocate model switch to the
+    fallback independently — each has its own Groq quota bucket.
+    """
+
+    def __init__(self, schema: Type[BaseModel], model: str | None = None):
         self._schema = schema
+        self._primary = model or _PRIMARY_MODEL
         self._chain = self._build()
 
     def _build(self) -> Any:
-        global _using_fallback
-        model = _FALLBACK_MODEL if _using_fallback else _PRIMARY_MODEL
+        model = _FALLBACK_MODEL if self._primary in _fallback_active else self._primary
         llm = _make_groq(model)
         return llm.with_structured_output(self._schema, method="json_mode")
 
     def invoke(self, messages: list, **kwargs) -> Any:
-        global _using_fallback
         from groq import RateLimitError
 
         last_exc: Exception | None = None
@@ -112,15 +128,15 @@ class _RateLimitAwareChain:
                 if wait is None:
                     wait = 4.0 * (attempt + 1)  # no hint — gentle linear back-off
 
-                if wait > _MAX_PRIMARY_WAIT and not _using_fallback:
-                    # A long wait means the primary's daily quota is spent.
+                if wait > _MAX_PRIMARY_WAIT and self._primary not in _fallback_active:
+                    # A long wait means this model's daily quota is spent.
                     # Switch to the higher-limit fallback and retry at once
                     # rather than stall the demo for a minute or more.
                     log.warning(
-                        "Primary rate-limited for ~%.0fs — switching to fallback model (%s).",
-                        wait, _FALLBACK_MODEL,
+                        "%s rate-limited for ~%.0fs — switching to fallback model (%s).",
+                        self._primary, wait, _FALLBACK_MODEL,
                     )
-                    _using_fallback = True
+                    _fallback_active.add(self._primary)
                     self._chain = self._build()
                     continue
 
@@ -132,21 +148,27 @@ class _RateLimitAwareChain:
 
 
 def reset_fallback() -> None:
-    """Force the next LLM call to use the primary model regardless of prior rate limits."""
-    global _using_fallback
-    _using_fallback = False
+    """Force the next LLM calls to use primary models regardless of prior rate limits."""
+    _fallback_active.clear()
 
 
-def get_structured_llm(schema: Type[BaseModel]):
+def get_structured_llm(schema: Type[BaseModel], model: str | None = None):
     """Return a structured-output chain with automatic rate-limit fallback.
 
-    Uses JSON mode to avoid Groq's strict tool-calling validation.
-    Non-Groq backends use the default function_calling method.
+    ``model`` overrides the primary Groq model for this chain (e.g. the Judge
+    model); it is ignored for non-Groq backends, which the free-tier juggling is
+    not aimed at. Uses JSON mode to avoid Groq's strict tool-calling validation.
     """
     if _LLM_BACKEND == "groq":
-        return _RateLimitAwareChain(schema)
+        return _RateLimitAwareChain(schema, model=model)
     llm = get_llm()
     return llm.with_structured_output(schema)
+
+
+def get_judge_structured_llm(schema: Type[BaseModel]):
+    """Structured-output chain for the Judge (round scoring + final verdict),
+    running the stronger JUDGE_MODEL. See module docstring for the rationale."""
+    return get_structured_llm(schema, model=JUDGE_MODEL)
 
 
 def get_llm_with_tools(tools: list):
