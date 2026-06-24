@@ -101,10 +101,12 @@ that neutralises the opponent's key contention — the scores MUST move to refle
 Static scores every round mean you are not re-weighing the merits.
 
 Decision rules:
-- "another_round" — DEFAULT while the merits are still live: key issues unresolved, a dispositive
-   point asserted but not yet fully tested, or either side can still meaningfully respond.
-- "proceed_to_verdict" — use ONLY when the merits are settled (one side is clearly winning and the
-   other cannot recover) OR the max round cap has been reached (you will be told).
+- "proceed_to_verdict" — once one side is clearly ahead on the merits (a lead of about 3+ strength
+   points, i.e. winning decisively while the opponent cannot realistically recover), OR the max round
+   cap has been reached (you will be told). Do NOT keep arguing a case that is already settled.
+- "another_round" — only while the contest is still genuinely live: the sides are close on the merits,
+   a dispositive point has been asserted but not yet tested, or either side can still meaningfully
+   change the balance.
 
 This is a moot court simulation for educational purposes.
 """

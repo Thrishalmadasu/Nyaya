@@ -1,8 +1,8 @@
 from __future__ import annotations
 
-import os
 from typing import Literal
 
+from graph.config import get_max_rounds
 from graph.state import GraphState
 
 
@@ -18,10 +18,10 @@ def judge_routing(state: GraphState) -> Literal["prosecution_node", "auditor_nod
     The judge's decision field is the sole authority for continuing vs stopping.
     MAX_ROUNDS is the only hard override.
 
-    Env vars are read inside the function (not at module level) so that
-    load_dotenv() in app.py is guaranteed to have run first.
+    The cap is read via get_max_rounds() (single source of truth) at call time,
+    so load_dotenv() in app.py is guaranteed to have run first.
     """
-    max_rounds = int(os.getenv("MOOT_COURT_MAX_ROUNDS", "5"))
+    max_rounds = get_max_rounds()
 
     scores = state.get("judge_scores", [])
     if not scores:

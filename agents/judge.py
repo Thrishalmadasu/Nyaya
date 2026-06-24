@@ -1,18 +1,32 @@
 """Judge agent — scores each round and decides whether to loop or proceed."""
 from __future__ import annotations
 
-import os
-
 from langchain_core.messages import HumanMessage, SystemMessage
 
 from agents.prompts import JUDGE_SYSTEM, VERDICT_SYSTEM
+from graph.config import get_max_rounds
 from graph.state import GraphState, JudgeScore, Verdict
 from utils.llm import get_judge_structured_llm
 
 # Percentage points of win probability per point of average strength margin.
-# At 7, a clear ~4.3-point average lead reaches the 80/20 early-exit threshold,
-# while a 1-point lean reads as ~57% — "leaning", not decisive.
+# At 7, a ~3-point average lead reaches the 70/30 early-exit threshold, while a
+# 1-point lean reads as ~57% — "leaning", not decisive.
 _WIN_PROB_MARGIN_SCALE = 7
+
+# Win probability at/above which the case is decisively one-sided and the trial
+# exits to verdict early (the low side mirror is 100 - this). At 70 with the
+# scale above, an average strength lead of ~3 points (e.g. 8 vs 5) ends the
+# trial; genuinely close cases (within ~2 points) keep arguing up to the cap.
+_EARLY_EXIT_WP = 70
+
+
+def win_probability(prosecution_mean: float, defence_mean: float) -> int:
+    """Running merits balance as a 5–95 win probability for the prosecution.
+
+    Pure function of the average per-round strength margin so it is trivially
+    testable and reused by both ``judge_node`` and the early-exit check.
+    """
+    return max(5, min(95, round(50 + (prosecution_mean - defence_mean) * _WIN_PROB_MARGIN_SCALE)))
 
 
 def _format_transcript(transcript: list[dict]) -> str:
@@ -32,7 +46,7 @@ def judge_node(state: GraphState) -> dict:
     """LangGraph node: Judge evaluates the round and decides next step."""
     structured_llm = get_judge_structured_llm(JudgeScore)
 
-    _MAX_ROUNDS = int(os.getenv("MOOT_COURT_MAX_ROUNDS", "5"))
+    _MAX_ROUNDS = get_max_rounds()
     current_round = state.get("current_round", 1)
     transcript = state.get("round_transcript", [])
     case_file = state["case_file"]
@@ -96,7 +110,7 @@ def judge_node(state: GraphState) -> dict:
                 f"--- End of arguments ---\n\n"
                 f"Round {current_round} of {_MAX_ROUNDS} maximum. "
                 f"Rounds remaining after this: {rounds_remaining}.\n"
-                f"{'FINAL ROUND — you MUST set decision to proceed_to_verdict.' if rounds_remaining == 0 else 'Rounds remain — default to another_round unless both sides scored 8+.'}\n\n"
+                f"{'FINAL ROUND — you MUST set decision to proceed_to_verdict.' if rounds_remaining <= 0 else 'Rounds remain — set proceed_to_verdict if one side now leads the other by 3+ points (clearly winning and the opponent cannot recover); otherwise another_round.'}\n\n"
                 f"Return ONLY a valid JSON object:\n{_schema}"
             )
         ),
@@ -124,10 +138,10 @@ def judge_node(state: GraphState) -> dict:
     rounds_count = len(rounds_so_far)
     prosecution_mean = sum(s.get("prosecution_strength", 5) for s in rounds_so_far) / rounds_count
     defence_mean = sum(s.get("defence_strength", 5) for s in rounds_so_far) / rounds_count
-    score.win_probability = max(5, min(95, round(50 + (prosecution_mean - defence_mean) * _WIN_PROB_MARGIN_SCALE)))
+    score.win_probability = win_probability(prosecution_mean, defence_mean)
 
     # Early exit — case is decisively one-sided, further rounds won't change the outcome.
-    if score.win_probability >= 80 or score.win_probability <= 20:
+    if score.win_probability >= _EARLY_EXIT_WP or score.win_probability <= 100 - _EARLY_EXIT_WP:
         score.decision = "proceed_to_verdict"
 
     next_round = current_round + 1 if score.decision == "another_round" else current_round
@@ -161,10 +175,10 @@ def confidence_from_margin(prosecution_avg: float, defence_avg: float) -> int:
     Confidence must reflect how decisively one side outscored the other across
     the whole trial. We deliberately do NOT derive it from the final
     win_probability: win_probability is gated to terminate the trial the moment
-    it reaches 80, and because it moves in fixed 5-point steps it lands on
-    exactly 80 for almost every decisive case — collapsing confidence to a
-    constant 6. The average margin keeps full resolution and is unaffected by
-    where the early-exit happened to fire.
+    it reaches 70, and because it moves in fixed steps it clusters near that
+    threshold for most decisive cases — collapsing confidence to a near-constant.
+    The average margin keeps full resolution and is unaffected by where the
+    early-exit happened to fire.
 
     The scale aligns with the verdict's confidence buckets: a 1-point average
     margin reads as "low", 2 as "moderate", 3 as "high", 4+ as "overwhelming".

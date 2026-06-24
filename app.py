@@ -1,7 +1,6 @@
 """Nyāya — Adversarial Legal Reasoning · Streamlit application."""
 from __future__ import annotations
 
-import os
 import sys
 import uuid
 from datetime import date
@@ -550,7 +549,10 @@ _ACTIVITY_LABELS = {
     "verdict_node":     "⚖ The Judge is deliberating the final verdict…",
 }
 
-_MAX_ROUNDS = 8
+# UI round-slot buffer for the pre-HITL live stream — the auto-loop never argues
+# more than the cap, so the cap is exactly the number of slots needed. (Rounds the
+# human requests later at the gate are rendered separately by _render_all.)
+from graph.config import get_max_rounds
 
 
 def _run_pre_hitl(facts: str, offence_date: str) -> None:
@@ -558,6 +560,7 @@ def _run_pre_hitl(facts: str, offence_date: str) -> None:
     st.session_state.thread_id = thread_id
     config = {"configurable": {"thread_id": thread_id}}
     graph = _get_graph()
+    max_rounds = get_max_rounds()
     initial_state = {
         "facts_raw": facts,
         "offence_date": offence_date,
@@ -578,7 +581,7 @@ def _run_pre_hitl(facts: str, offence_date: str) -> None:
     activity_slot = st.empty()
     round_slots: list[dict] = [
         {"header": st.empty(), "args": st.empty(), "score": st.empty()}
-        for _ in range(_MAX_ROUNDS)
+        for _ in range(max_rounds)
     ]
     audit_slot = st.empty()
     progress_slot.markdown(_progress_html(), unsafe_allow_html=True)
@@ -599,7 +602,7 @@ def _run_pre_hitl(facts: str, offence_date: str) -> None:
                     for arg in update["round_transcript"]:
                         rn = _rn_from(arg)
                         rn_idx = rn - 1
-                        if 0 <= rn_idx < _MAX_ROUNDS:
+                        if 0 <= rn_idx < max_rounds:
                             rd = st.session_state.rounds[rn_idx]
                             round_slots[rn_idx]["header"].markdown(_round_header_html(rn), unsafe_allow_html=True)
                             round_slots[rn_idx]["args"].markdown(_round_args_html(rd), unsafe_allow_html=True)
@@ -608,7 +611,7 @@ def _run_pre_hitl(facts: str, offence_date: str) -> None:
                     for arg in update["round_transcript"]:
                         rn = _rn_from(arg)
                         rn_idx = rn - 1
-                        if 0 <= rn_idx < _MAX_ROUNDS:
+                        if 0 <= rn_idx < max_rounds:
                             rd = st.session_state.rounds[rn_idx]
                             round_slots[rn_idx]["args"].markdown(_round_args_html(rd), unsafe_allow_html=True)
 
@@ -616,7 +619,7 @@ def _run_pre_hitl(facts: str, offence_date: str) -> None:
                     for score in update["judge_scores"]:
                         rn = _rn_from(score)
                         rn_idx = rn - 1
-                        if 0 <= rn_idx < _MAX_ROUNDS:
+                        if 0 <= rn_idx < max_rounds:
                             rd = st.session_state.rounds[rn_idx]
                             s = rd.get("score")
                             if s:
@@ -1091,15 +1094,13 @@ def main() -> None:
             flagged_str = ", ".join(flagged)
             caution = f"<br><strong style='color:#C05050'>Caution:</strong> The following citations were not verified: {flagged_str}"
 
-        max_rounds = int(os.getenv("MOOT_COURT_MAX_ROUNDS", "5"))
         rounds_done = len([r for r in st.session_state.rounds if r.get("score")])
-        can_argue_more = rounds_done < max_rounds
         round_word = "round" if rounds_done == 1 else "rounds"
         st.markdown(f"""
 <div class=\'ny-section\'>Verdict Gate</div>
 <div class=\'ny-hitl\'>
   <div class=\'ny-hitl-title\'>Rule now, or hear more argument?</div>
-  <div class=\'ny-hitl-body\'>{rounds_done} {round_word} argued so far. You can deliver the verdict now, or send both advocates back to argue another round before the judge rules.{caution}</div>
+  <div class=\'ny-hitl-body\'>{rounds_done} {round_word} argued so far. You can deliver the verdict now, or send both advocates back for another round before the judge rules — you may request as many extra rounds as you like.{caution}</div>
 </div>""", unsafe_allow_html=True)
         c1, c2, _ = st.columns([2, 2, 4])
         with c1:
@@ -1110,22 +1111,11 @@ def main() -> None:
             another = st.button(
                 "↩ Hear Another Round",
                 use_container_width=True,
-                disabled=not can_argue_more,
-                help=(
-                    "Both advocates argue one more round, then you return here to decide again."
-                    if can_argue_more
-                    else f"The {max_rounds}-round limit has been reached — you can only deliver the verdict."
-                ),
+                help="Both advocates argue one more round, then you return here to decide again.",
             )
             if another:
                 st.session_state.phase = "post_hitl_rejected"
                 st.rerun()
-        if not can_argue_more:
-            st.markdown(
-                f"<p style='color:var(--text-muted);font-size:0.72rem;margin-top:0.4rem'>"
-                f"Maximum of {max_rounds} rounds reached — the trial can only proceed to verdict.</p>",
-                unsafe_allow_html=True,
-            )
 
     elif st.session_state.phase in ("post_hitl_approved", "post_hitl_rejected"):
         _render_all()

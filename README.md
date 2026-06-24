@@ -10,7 +10,7 @@
 
 **Pain point:** Single-prompt LLMs give one-sided, ungrounded answers and routinely hallucinate Indian statute numbers — which is dangerous in a legal context. There is no accessible tool that (a) argues both sides rigorously, (b) grounds every claim in real statutory text, (c) applies the correct code regime (BNS vs IPC based on offence date), and (d) delivers a judge-adjudicated verdict with a citation-integrity guarantee.
 
-**Solution:** A multi-agent moot court: two opposing advocate agents debate across up to 5 rounds, each retrieving real statute sections from a local RAG corpus. An independent Judge agent scores each round (1–10 per side), maintains a deterministic running **win probability**, and controls the loop — proceeding to verdict early when the case becomes decisively one-sided. A Citation Auditor deterministically validates every cited section against the corpus and surfaces any hallucinated citations to the human reviewer, who must approve before the verdict is finalised.
+**Solution:** A multi-agent moot court: two opposing advocate agents debate across up to 3 rounds, each retrieving real statute sections from a local RAG corpus. An independent Judge agent scores each round (1–10 per side), maintains a deterministic running **win probability**, and controls the loop — proceeding to verdict early when the case becomes decisively one-sided. A Citation Auditor deterministically validates every cited section against the corpus and surfaces any hallucinated citations to the human reviewer, who must approve before the verdict is finalised — and may send the advocates back for further rounds beyond the cap.
 
 ---
 
@@ -58,7 +58,7 @@ Fact Scenario
 | Branch | Trigger | Options |
 |--------|---------|---------|
 | Code regime | Clerk extracts offence date | BNS (≥ Jul 2024) or IPC (< Jul 2024) |
-| Judge routing | After each round | `another_round` (loop) or `proceed_to_verdict` — forced to proceed when win probability reaches ≥ 80 / ≤ 20, or at the `MAX_ROUNDS` cap |
+| Judge routing | After each round | `another_round` (loop) or `proceed_to_verdict` — forced to proceed when win probability reaches ≥ 70 / ≤ 30, or at the `MAX_ROUNDS` cap (default 3) |
 | Auditor routing | After citation audit | Always routes to `hitl`, attaching the audit result (verified + hallucinated citations) for the human reviewer to act on |
 
 ---
@@ -85,7 +85,7 @@ Fact Scenario
 | Advocacy (Prosecution/Defence) | **AI** | Requires legal reasoning, argument construction, rebuttal |
 | Round scoring (Judge) | **AI** | Scores each side's **case strength on the merits** (who is winning, dispositive points weighted heavily) — not rhetorical polish |
 | Win probability | **Deterministic** | `50 + (mean prosecution_strength − mean defence_strength) × 7`, clamped to [5, 95] — the running *balance* of the case, computed in Python, never by the LLM |
-| Early-exit decision | **Deterministic** | Trial proceeds to verdict once win probability reaches ≥ 80 / ≤ 20, or at the `MAX_ROUNDS` cap |
+| Early-exit decision | **Deterministic** | Trial proceeds to verdict once win probability reaches ≥ 70 / ≤ 30, or at the `MAX_ROUNDS` cap |
 | Citation validation (Auditor) | **Deterministic** | Exact metadata lookup in Chroma — no LLM involved |
 | Verdict rendering | **AI** | Requires synthesis of all rounds into a reasoned conclusion |
 | Verdict confidence | **Deterministic** | Derived from the average per-round strength margin `abs(p_avg − d_avg)`, not the LLM's self-reported confidence |
@@ -100,7 +100,7 @@ The trial's quantitative signals are **deliberately deterministic** — the LLM 
 - **Win probability** is the running **balance** of the case, not a cumulative tally:
   `win_probability = 50 + (mean prosecution_strength − mean defence_strength) × 7`, clamped to `[5, 95]`.
   Using the *average* margin (rather than summing every round) means a steady modest edge reads as a lean (~60–65%) instead of ballooning to 95% over many rounds — so the headline figure matches the confidence and the verdict's own tone.
-- **Early exit:** once win probability reaches **≥ 80 or ≤ 20** (an average margin of ~4.3+), the case is decisively one-sided and the Judge proceeds straight to verdict — no further rounds. `MAX_ROUNDS` is the hard upper bound.
+- **Early exit:** once win probability reaches **≥ 70 or ≤ 30** (an average margin of ~2.9+, i.e. a clear ~3-point lead), the case is decisively one-sided and the Judge proceeds straight to verdict — no further rounds. `MAX_ROUNDS` (default 3) caps the *automatic* loop; at the human gate the reviewer can still request further rounds beyond it.
 - **Verdict confidence** reflects *how decisive* the win was, scaled from the same **average per-round strength margin** (`abs(p_avg − d_avg)`): roughly 1-point margin → low, 2 → moderate, 3 → high, 4+ → overwhelming. Because both win probability and confidence derive from the average margin, a contested case shows a moderate probability *and* moderate confidence, while a dispositive one shows an extreme probability *and* high confidence.
 - **Ruling consistency:** the final verdict is given the running win probability and instructed to rule in the direction it indicates (departures must be justified in the dissent), so the ruling, the probability, and the confidence never contradict one another.
 
@@ -195,7 +195,7 @@ python -m eval.evaluate
 - **Mandatory disclaimer** on every `Verdict` object — cannot be suppressed
 - **HITL gate** — LangGraph `interrupt()` suspends graph; human must type `approve` before verdict is finalised
 - **Citation validator** — deterministic Chroma metadata lookup, not LLM — cannot hallucinate; every cited section is checked against the corpus and any hallucinations are flagged to the human reviewer at the HITL gate before approval
-- **Max rounds cap** — controlled by `MOOT_COURT_MAX_ROUNDS` env var (default 5)
+- **Max rounds cap** — controlled by `MOOT_COURT_MAX_ROUNDS` env var (default 3); caps the automatic loop, while the human reviewer may still request additional rounds at the gate
 - **Refusal** — Clerk system prompt rejects personal legal advice requests framed as "my case"
 
 ---
