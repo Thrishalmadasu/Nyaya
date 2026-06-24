@@ -1,0 +1,10 @@
+CASE: Tofan Singh v State of Tamil Nadu (2020)
+
+KEY FACTS: A conviction under the Narcotic Drugs and Psychotropic Substances Act rested primarily on a confessional statement recorded by an NDPS officer under Section 67 of the Act. The admissibility of such a statement was referred to a larger bench.
+
+PRINCIPLE: Officers invested with powers under Section 53 of the NDPS Act are "police officers" within the meaning of Section 25 of the Evidence Act; therefore a confessional statement made to them is inadmissible. A statement recorded under Section 67 of the NDPS Act is meant only for gathering information during inquiry and cannot be used as a confession to convict the accused. Conviction cannot be based on such a statement.
+
+HOLDING: By majority, the Court held that confessional statements under Section 67 NDPS are inadmissible and cannot form the basis of conviction.
+
+COURT: Supreme Court of India (3-judge bench)
+AREA: criminal law — NDPS Act, admissibility of confessions (Section 67 NDPS, Section 25 Evidence Act)

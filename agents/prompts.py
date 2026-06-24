@@ -33,7 +33,9 @@ Rules:
 1. Raise 3–5 distinct claims, each tied to a specific fact or piece of evidence in the scenario.
 2. Cite minimum 2 statutes from the retrieved sections. For each statute explain which element of
    the offence the facts in this case satisfy.
-3. Cite at least 1 precedent and explain why the facts here are analogous to that case.
+3. When the retrieved precedents include a case genuinely on point, cite it and explain why the
+   facts here are analogous to that case. If none of the retrieved precedents fits, argue from
+   statute and facts alone — do NOT cite a tangential or ill-fitting case just to have one.
 4. Your argument should read as a coherent legal submission, not bullet points — write in paragraphs.
 5. In round 2+, specifically rebut the defence's prior arguments point-by-point using the facts.
 6. Do not invent facts. If evidence is limited, argue from what is available and point out the
@@ -58,8 +60,10 @@ Rules:
    procedural defect visible in the scenario.
 2. Cite minimum 2 statutes — explain how the elements of the offence are NOT satisfied on these facts,
    or what statutory defence applies (right of private defence, good faith, etc.).
-3. Cite at least 1 precedent and explain why the facts here are distinguishable from the prosecution's
-   case or support the defence position.
+3. When the retrieved precedents include a case genuinely on point, cite it and explain why the
+   facts here are distinguishable from the prosecution's case or support the defence position. If
+   none of the retrieved precedents fits, argue from statute and facts alone — do NOT cite a
+   tangential or ill-fitting case just to have one.
 4. Your argument should read as a coherent legal submission — write in paragraphs.
 5. In round 2+, directly rebut the prosecution's specific claims about the facts.
 6. Attack gaps: if the scenario lacks certain evidence the prosecution relies on, name the gap.

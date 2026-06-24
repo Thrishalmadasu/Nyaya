@@ -188,7 +188,12 @@ def _parse_precedent_header(text: str, fallback_name: str) -> tuple[str, int]:
 
 
 def chunk_precedent_file(txt_path: Path) -> list[TextChunk]:
-    """Chunk a precedent text file into ~1000-char overlapping chunks."""
+    """Chunk a precedent text file into ~1000-char overlapping chunks.
+
+    Legacy path, retained for callers that still chunk raw judgments. The corpus
+    builder now embeds one concise overview per case via :func:`overview_to_chunk`
+    instead — see ``ingestion/precedent_overview.py`` for why.
+    """
     text = txt_path.read_text(encoding="utf-8", errors="ignore")
     fallback_name = txt_path.stem.replace("_", " ").title()
     case_name, year = _parse_precedent_header(text, fallback_name)
@@ -215,3 +220,28 @@ def chunk_precedent_file(txt_path: Path) -> list[TextChunk]:
         )
 
     return chunks
+
+
+def overview_to_chunk(txt_path: Path) -> TextChunk:
+    """Embed a per-case overview file as a single PRECEDENT document.
+
+    One document per case (vs the 24 windows the raw-judgment chunker produced),
+    so retrieval surfaces distinct cases rather than several fragments of the
+    same one, and each hit carries the legal principle instead of citation
+    boilerplate. Trusts the ``CASE:`` header (via :func:`_parse_precedent_header`)
+    for the authoritative title and year, exactly like the raw judgments.
+    """
+    text = txt_path.read_text(encoding="utf-8", errors="ignore")
+    fallback_name = txt_path.stem.replace("_", " ").title()
+    case_name, year = _parse_precedent_header(text, fallback_name)
+
+    return TextChunk(
+        text=text.strip(),
+        metadata={
+            "source_act": "Precedent",
+            "section_id": "Overview",
+            "section_title": case_name,
+            "code_regime": "PRECEDENT",
+            "year": year,
+        },
+    )

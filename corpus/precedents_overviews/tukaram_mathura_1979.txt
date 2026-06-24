@@ -1,0 +1,10 @@
+CASE: Tukaram v State of Maharashtra — Mathura (1979)
+
+KEY FACTS: A young girl, Mathura, alleged that she was raped by two policemen at a police station at night while her relatives waited outside. The trial court acquitted; the High Court convicted; the accused appealed to the Supreme Court. No injury marks were found on her body.
+
+PRINCIPLE: To establish rape under Section 375 IPC the prosecution must affirmatively prove the absence of consent, and that burden never shifts. Where consent is said to be vitiated by fear under clause "Thirdly", it must be shown that the consent was given under fear of death or hurt; passive submission, without proof of such fear, is not the same as consent obtained by fear. Circumstantial evidence of non-consent must exclude every reasonable inference other than guilt.
+
+HOLDING: The Supreme Court acquitted the accused, finding consent not disproved. The widely criticised decision led to the Criminal Law (Amendment) Act, 1983, which introduced presumptions in custodial-rape cases (Section 114A Evidence Act).
+
+COURT: Supreme Court of India
+AREA: criminal law — rape, consent (Section 375 IPC)

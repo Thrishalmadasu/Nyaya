@@ -43,7 +43,7 @@ def main(force: bool = False) -> None:
 
     # Step 3: Chunk everything
     print("\n[3/4] Chunking statutes and precedents...")
-    from ingestion.chunker import chunk_statute_pdf, chunk_precedent_file
+    from ingestion.chunker import chunk_statute_pdf, overview_to_chunk
     from ingestion.download_statutes import STATUTE_SOURCES
 
     all_chunks = []
@@ -73,14 +73,17 @@ def main(force: bool = False) -> None:
         all_chunks.extend(chunks)
         print(f"  {entry['name']}: {len(chunks)} chunks")
 
-    # Chunk precedent text files
-    precedents_dir = Path(__file__).parent.parent / "corpus" / "precedents"
-    precedent_files = list(precedents_dir.glob("*.txt"))
-    for txt_path in precedent_files:
-        chunks = chunk_precedent_file(txt_path)
-        all_chunks.extend(chunks)
+    # Embed one concise overview document per precedent case (not 24 windows of
+    # the raw judgment) — see ingestion/precedent_overview.py for the rationale.
+    overviews_dir = Path(__file__).parent.parent / "corpus" / "precedents_overviews"
+    overview_files = sorted(overviews_dir.glob("*.txt")) if overviews_dir.exists() else []
+    if not overview_files:
+        print("  ⚠ No precedent overviews found in corpus/precedents_overviews/ — "
+              "run `python -m ingestion.precedent_overview` first. Skipping precedents.")
+    for txt_path in overview_files:
+        all_chunks.append(overview_to_chunk(txt_path))
 
-    print(f"  Precedents ({len(precedent_files)} files): {sum(1 for c in all_chunks if c.metadata.get('code_regime') == 'PRECEDENT')} chunks")
+    print(f"  Precedents ({len(overview_files)} overviews): {sum(1 for c in all_chunks if c.metadata.get('code_regime') == 'PRECEDENT')} documents")
     print(f"      → Total chunks: {len(all_chunks)}")
 
     # Step 4: Embed and upsert

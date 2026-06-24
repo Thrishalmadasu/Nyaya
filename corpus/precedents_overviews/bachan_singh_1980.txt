@@ -1,0 +1,10 @@
+CASE: Bachan Singh v State of Punjab (1980)
+
+KEY FACTS: Convicted of murder and sentenced to death under Section 302 IPC, the appellant challenged the constitutional validity of the death penalty for murder and of the sentencing procedure in Section 354(3) CrPC, 1973.
+
+PRINCIPLE: The death penalty for murder is constitutional and does not violate Articles 14, 19 or 21. However, life imprisonment is the rule and death the exception: a death sentence may be imposed only in the "rarest of rare cases", when the alternative of life imprisonment is unquestionably foreclosed. The sentencing court must weigh aggravating against mitigating circumstances relating to both the crime and the criminal.
+
+HOLDING: Section 302 IPC and Section 354(3) CrPC were upheld; the "rarest of rare" doctrine was established as the governing standard for capital sentencing.
+
+COURT: Supreme Court of India (Constitution Bench)
+AREA: constitutional and criminal law — death penalty, capital sentencing

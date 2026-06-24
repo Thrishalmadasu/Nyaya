@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import os
+import re
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -140,32 +141,73 @@ def retrieve_precedents(query: str, top_k: int = 3) -> list[Chunk]:
     return chunks
 
 
-def section_exists(citation: str) -> bool:
+# Maps the code word in a citation to the EXACT act it names in the corpus.
+# This matters because a section number can exist in several acts at once — e.g.
+# "Section 378" is theft in IPC 1860 and a procedural section in BNSS 2023, but
+# is NOT a section of the BNS 2023 at all (the BNS has only 358 sections, and
+# theft there is Section 303). So "BNS Section 378" must be verified against the
+# BNS 2023 specifically, not against "any act that happens to have a 378".
+# Note: the corpus tags BNS 2023, BNSS 2023 and BSA 2023 all with code_regime
+# "BNS", so filtering by code_regime is too coarse — we key on source_act.
+_ACT_BY_CODE = {
+    "BNS": "BNS 2023",
+    "BNSS": "BNSS 2023",
+    "BSA": "BSA 2023",
+    "IPC": "IPC 1860",
+    "CONST": "Constitution of India",
+    "CONSTITUTION": "Constitution of India",
+}
+
+
+def _act_from_citation(citation: str, expected_regime: str | None) -> str | None:
+    """Resolve the source_act a citation names, or fall back to the case regime.
+
+    Returns ``None`` only when neither the citation nor ``expected_regime`` names
+    a known act, in which case the lookup stays act-agnostic (legacy behaviour).
+    """
+    upper = citation.upper()
+    # Longest codes first so "BNSS" isn't shadowed by the "BNS" substring.
+    for token in ("BNSS", "BNS", "BSA", "IPC", "CONSTITUTION", "CONST"):
+        if re.search(rf"\b{token}\b", upper):
+            return _ACT_BY_CODE[token]
+    if expected_regime:
+        return _ACT_BY_CODE.get(expected_regime.upper())
+    return None
+
+
+def section_exists(citation: str, expected_regime: str | None = None) -> bool:
     """Deterministically check if a citation exists in the corpus by metadata lookup.
 
-    citation: e.g. "BNS Section 103" or "IPC Section 302"
+    citation: e.g. "BNS Section 103" or "IPC Section 302".
+
+    The citation is verified against the SPECIFIC act it names (e.g. "BNS Section
+    378" is checked against the BNS 2023, where it does not exist, rather than
+    against any act with a Section 378). When the citation carries no code word,
+    ``expected_regime`` (the case's code regime) is used as the act. If neither
+    resolves an act, the lookup falls back to the act-agnostic check.
     """
     collection = _get_collection()
     if collection.count() == 0:
         return False
 
-    # Normalise the citation string to extract section_id
-    import re
-
-    match = re.search(r"[Ss]ection\s+(\d+[A-Za-z]*)", citation)
-    if not match:
-        # Try Article (for Constitution)
-        match = re.search(r"[Aa]rticle\s+(\d+[A-Za-z]*)", citation)
+    article_match = re.search(r"[Aa]rticle\s+(\d+[A-Za-z]*)", citation)
+    if article_match:
+        section_id = f"Article {article_match.group(1)}"
+        # Articles live only in the Constitution, so pin the act directly.
+        act = "Constitution of India"
+    else:
+        match = re.search(r"[Ss]ection\s+(\d+[A-Za-z]*)", citation)
         if not match:
             return False
-        section_id = f"Article {match.group(1)}"
-    else:
         section_id = f"Section {match.group(1)}"
+        act = _act_from_citation(citation, expected_regime)
 
-    results = collection.get(
-        where={"section_id": section_id},
-        limit=1,
-    )
+    if act:
+        where: dict = {"$and": [{"section_id": section_id}, {"source_act": act}]}
+    else:
+        where = {"section_id": section_id}
+
+    results = collection.get(where=where, limit=1)
     return len(results.get("ids", [])) > 0
 
 

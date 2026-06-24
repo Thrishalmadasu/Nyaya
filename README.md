@@ -68,7 +68,7 @@ Fact Scenario
 | Agent | Role | Tools | Output Type |
 |-------|------|-------|-------------|
 | **Clerk** | Parses facts → structured CaseFile; sets code regime deterministically | None | `CaseFile` |
-| **Prosecution Advocate** | Argues liability; must cite ≥2 statutes + 1 precedent | statute retrieval, precedent retrieval (local corpus → Tavily fallback) | `Argument` |
+| **Prosecution Advocate** | Argues liability; must cite ≥2 statutes; a precedent when one is on point | statute retrieval, precedent retrieval (local corpus → Tavily fallback) | `Argument` |
 | **Defence Advocate** | Argues exculpation; same citation requirements | statute retrieval, precedent retrieval (local corpus → Tavily fallback) | `Argument` |
 | **Judge** | Scores each side's round strength (1–10), decides loop vs proceed; win probability is then computed deterministically from those scores | None | `JudgeScore` |
 | **Auditor** | Validates every cited statute against corpus; blocks hallucinations | `citation_validator_tool` | `CitationAuditResult` |

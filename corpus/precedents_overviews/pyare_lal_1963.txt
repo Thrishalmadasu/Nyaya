@@ -1,0 +1,10 @@
+CASE: Pyare Lal Bhargava v State of Rajasthan (1963)
+
+KEY FACTS: The appellant, a superintendent in a government office, got an official file removed from the Secretariat through a clerk, took it home overnight, made it available to a friend who substituted certain documents, and returned the file the next day. He was convicted of theft under Section 379 IPC.
+
+PRINCIPLE: Theft under Section 378 IPC does not require an intention to permanently deprive the owner of property; a temporary removal of property with intent to cause wrongful loss or wrongful gain, even for a short period and even if the property is later returned, amounts to theft. The dishonest moving of property out of the owner's possession without consent completes the offence.
+
+HOLDING: The conviction under Section 379 IPC was upheld; temporary deprivation sufficed to constitute theft.
+
+COURT: Supreme Court of India
+AREA: criminal law — theft (Sections 378, 379 IPC)

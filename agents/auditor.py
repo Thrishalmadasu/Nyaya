@@ -35,13 +35,21 @@ def _collect_precedents(transcript: list[dict]) -> list[str]:
 def auditor_node(state: GraphState) -> dict:
     """LangGraph node: deterministically validate all citations against the corpus."""
     transcript = state.get("round_transcript", [])
+    case_file = state.get("case_file")
+    # The case's code regime is the act a bare "Section 303" defaults to; an
+    # explicit code word in the citation (e.g. "IPC Section 378") still wins.
+    if isinstance(case_file, dict):
+        expected_regime = case_file.get("code_regime")
+    else:
+        expected_regime = getattr(case_file, "code_regime", None)
 
-    # ── Statutes: exact corpus lookup ──────────────────────────────────────
+    # ── Statutes: exact corpus lookup, against the act the citation names ───
     all_statutes = _collect_statutes(transcript)
     verified_statutes: list[str] = []
     hallucinated_statutes: list[str] = []
     for citation in all_statutes:
-        (verified_statutes if section_exists(citation) else hallucinated_statutes).append(citation)
+        ok = section_exists(citation, expected_regime=expected_regime)
+        (verified_statutes if ok else hallucinated_statutes).append(citation)
 
     # ── Precedents: local corpus, then Tavily fallback ─────────────────────
     all_precedents = _collect_precedents(transcript)

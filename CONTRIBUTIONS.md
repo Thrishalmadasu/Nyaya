@@ -73,9 +73,14 @@ Each member owns roughly equal portions of: core logic, RAG/tooling, UI, testing
 - `agents/defence.py` — Defence advocate node: acquittal-focused RAG retrieval, prosecution rebuttal injection, judge-hint context
 
 **RAG & Corpus**
-- `rag/precedent_search.py` — Precedent retrieval: local embedded-corpus first, Tavily internet search as fallback; formatted for LLM consumption
+- `rag/precedent_search.py` — Precedent retrieval: local embedded-corpus first, Tavily internet search as fallback; formatted for LLM consumption; higher content cap for curated local overviews
 - `ingestion/scrape_kanoon.py` — Scrapes landmark cases from Indian Kanoon with content validation (rejects mismatched/stale doc IDs) and a corpus health check
+- `ingestion/precedent_overview.py` — Distils each raw judgment into a concise, faithful per-case overview (key facts, ratio, holding) via the LLM; committed as the seed corpus so the build stays deterministic. Standing flow for future precedents (skip-if-exists, `--force`)
 - `corpus/precedents/` — 23 verified landmark Indian case text files (Kesavananda Bharati, Maneka Gandhi, D.K. Basu, Puttaswamy, etc.)
+- `corpus/precedents_overviews/` — 23 dense per-case overviews embedded one-document-per-case (replaces 24 noisy chunks/case, so retrieval surfaces distinct, on-point precedents)
+
+**Tools**
+- `tools/precedent_tool.py` — LangChain Tool wrapping `get_precedents` (local corpus → Tavily fallback), mirroring the statute/validator tools; ready for an agentic tool-calling advocate
 
 **App — Case Display & Argument Cards**
 - `app.py` (case file HTML, argument cards, round headers, pending pulse, audit display, trial progress tracker, conclusion summary panel)
