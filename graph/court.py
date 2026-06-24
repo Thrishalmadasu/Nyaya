@@ -26,7 +26,8 @@ def _hitl_node(state: GraphState) -> dict:
         "=" * 60 + "\n"
         f"Audit passed: {state.get('audit_passed')}\n"
         f"Audit notes: {audit.get('audit_notes', '') if audit else ''}\n"
-        f"Hallucinated citations: {audit.get('hallucinated_citations', []) if audit else []}\n\n"
+        f"Hallucinated statutes: {audit.get('hallucinated_citations', []) if audit else []}\n"
+        f"Unverified cases: {audit.get('unverified_precedents', []) if audit else []}\n\n"
         "Type 'approve' to accept the verdict, or 'reject' to hear another round of argument.\n"
     )
 

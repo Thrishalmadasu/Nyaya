@@ -1,44 +1,91 @@
-"""Bias & Citation Integrity Auditor — validates every statutory citation deterministically."""
+"""Bias & Citation Integrity Auditor — validates every citation deterministically.
+
+Statutes are checked by exact metadata lookup against the corpus. Case citations
+(precedents) are checked by name-token match against the local precedent corpus
+first; anything not matched there is put to a Tavily web check so a real case the
+small local corpus doesn't hold isn't wrongly branded a fabrication.
+"""
 from __future__ import annotations
 
 from graph.state import CitationAuditResult, GraphState
-from rag.retriever import section_exists
+from rag.precedent_search import verify_precedent_online
+from rag.retriever import precedent_exists, section_exists
 
 
-def _collect_all_citations(transcript: list[dict]) -> list[str]:
+def _collect_statutes(transcript: list[dict]) -> list[str]:
     """Extract every unique statute citation from the trial transcript."""
     cited: set[str] = set()
     for argument in transcript:
         for s in argument.get("statutes_cited", []):
-            cited.add(s.strip())
+            if s and s.strip():
+                cited.add(s.strip())
+    return list(cited)
+
+
+def _collect_precedents(transcript: list[dict]) -> list[str]:
+    """Extract every unique case (precedent) citation from the transcript."""
+    cited: set[str] = set()
+    for argument in transcript:
+        for p in argument.get("precedents_cited", []):
+            if p and p.strip():
+                cited.add(p.strip())
     return list(cited)
 
 
 def auditor_node(state: GraphState) -> dict:
     """LangGraph node: deterministically validate all citations against the corpus."""
     transcript = state.get("round_transcript", [])
-    all_citations = _collect_all_citations(transcript)
 
-    verified: list[str] = []
-    hallucinated: list[str] = []
+    # ── Statutes: exact corpus lookup ──────────────────────────────────────
+    all_statutes = _collect_statutes(transcript)
+    verified_statutes: list[str] = []
+    hallucinated_statutes: list[str] = []
+    for citation in all_statutes:
+        (verified_statutes if section_exists(citation) else hallucinated_statutes).append(citation)
 
-    for citation in all_citations:
-        if section_exists(citation):
-            verified.append(citation)
+    # ── Precedents: local corpus, then Tavily fallback ─────────────────────
+    all_precedents = _collect_precedents(transcript)
+    verified_precedents: list[str] = []
+    unverified_precedents: list[str] = []
+    refuted_precedents: list[str] = []   # web check ran and found nothing → suspected fabrication
+    for citation in all_precedents:
+        if precedent_exists(citation):
+            verified_precedents.append(citation)
+            continue
+        web = verify_precedent_online(citation)
+        if web is True:
+            verified_precedents.append(citation)
         else:
-            hallucinated.append(citation)
+            unverified_precedents.append(citation)
+            if web is False:  # actively searched and not found (None = couldn't check)
+                refuted_precedents.append(citation)
 
-    passed = len(hallucinated) == 0
+    # A fabricated case is as damaging as a fabricated statute, so a refuted
+    # precedent fails the audit. Cases merely unchecked (no Tavily key / API
+    # error) do NOT fail it — we surface them for the human rather than guess.
+    passed = not hallucinated_statutes and not refuted_precedents
+
     notes = (
-        f"Checked {len(all_citations)} citations. "
-        f"{len(verified)} verified, {len(hallucinated)} not found in corpus."
+        f"Checked {len(all_statutes)} statute citation(s): "
+        f"{len(verified_statutes)} verified, {len(hallucinated_statutes)} not found in corpus. "
+        f"Checked {len(all_precedents)} case citation(s): "
+        f"{len(verified_precedents)} verified, {len(unverified_precedents)} unverified."
     )
-    if hallucinated:
-        notes += f" Suspected hallucinations: {hallucinated}"
+    if hallucinated_statutes:
+        notes += f" Suspected hallucinated statutes: {hallucinated_statutes}."
+    if refuted_precedents:
+        notes += f" Cases not found in corpus or online (likely fabricated): {refuted_precedents}."
+    unchecked = [p for p in unverified_precedents if p not in refuted_precedents]
+    if unchecked:
+        notes += (
+            f" Cases not in local corpus and not web-verified — reviewer should confirm: {unchecked}."
+        )
 
     audit = CitationAuditResult(
-        hallucinated_citations=hallucinated,
-        verified_citations=verified,
+        hallucinated_citations=hallucinated_statutes,
+        verified_citations=verified_statutes,
+        verified_precedents=verified_precedents,
+        unverified_precedents=unverified_precedents,
         audit_passed=passed,
         audit_notes=notes,
     )

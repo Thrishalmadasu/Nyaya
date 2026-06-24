@@ -126,6 +126,84 @@ def get_precedents(query: str, max_results: int = 5) -> list[dict]:
 search_precedents = get_precedents
 
 
+def _citation_party_tokens(citation: str) -> list[str]:
+    """Distinctive party surnames from a full-form citation, for match-checking.
+
+    Drops the '(Year)', the 'v/vs' separator and generic state/role words so the
+    tokens that remain actually identify the case — the same idea as the
+    scraper's content validator, kept local to avoid a dependency on ingestion.
+    """
+    core = re.sub(r"\(\d{4}\)", "", citation)
+    stop = {
+        "state", "of", "union", "india", "the", "and", "ors", "anr", "others",
+        "public", "prosecutor", "cbi", "secretary", "home", "govt", "government",
+        "versus", "vs", "v",
+    }
+    return [
+        w for w in re.split(r"[^A-Za-z0-9]+", core)
+        if len(w) >= 4 and w.lower() not in stop
+    ]
+
+
+def verify_precedent_online(citation: str) -> bool | None:
+    """Best-effort web check that a cited case actually exists.
+
+    Returns ``True`` when Tavily results plausibly describe the cited case,
+    ``False`` when a search ran but nothing matched (suspected fabrication), and
+    ``None`` when no check could be made (no ``TAVILY_API_KEY`` or an API error)
+    — so callers can tell 'refuted' apart from 'unchecked'.
+
+    A match requires a single result whose **title** carries a distinctive
+    party surname and whose text carries the citation's year (when it has one).
+    Matching on the result title — not body text — is what keeps a generic word
+    in a fabricated name ("Totally Fake v Nobody") from latching onto unrelated
+    judgments: court-result titles reliably read "X vs Y on <date>", so a real
+    party name surfaces there while a noise word does not.
+    """
+    api_key = os.getenv("TAVILY_API_KEY", "")
+    if not api_key:
+        return None
+
+    party_tokens = _citation_party_tokens(citation)
+    if not party_tokens:
+        # Nothing distinctive to confirm against — don't claim a verdict.
+        return None
+
+    year_m = re.search(r"\((\d{4})\)|\b(\d{4})\b", citation)
+    year = next((g for g in (year_m.groups() if year_m else []) if g), None)
+
+    safe_query = _sanitize_query(citation)
+    try:
+        from tavily import TavilyClient
+
+        client = TavilyClient(api_key=api_key)
+        results = client.search(
+            query=(
+                f"Indian court case {safe_query} "
+                "site:indiankanoon.org OR site:main.sci.gov.in"
+            ),
+            max_results=5,
+            search_depth="advanced",
+        )
+    except Exception as exc:
+        logger.warning("Tavily precedent verification failed for %r: %s", citation, exc)
+        return None
+
+    hits = results.get("results", [])
+    if not hits:
+        return False
+
+    tokens_low = [t.lower() for t in party_tokens]
+    for r in hits:
+        title = r.get("title", "").lower()
+        full = f"{title} {r.get('content', '')}".lower()
+        surname_ok = any(tok in title for tok in tokens_low)
+        year_ok = year is None or year in full
+        if surname_ok and year_ok:
+            return True
+    return False
+
+
 def format_precedents_for_llm(results: list[dict]) -> str:
     if not results:
         return "No precedents found."

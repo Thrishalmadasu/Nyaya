@@ -205,9 +205,20 @@ class JudgeScore(BaseModel):
 class CitationAuditResult(BaseModel):
     hallucinated_citations: list[str] = Field(
         default_factory=list,
-        description="Citations that do not exist in the corpus",
+        description="Statute citations that do not exist in the corpus",
     )
     verified_citations: list[str] = Field(default_factory=list)
+    verified_precedents: list[str] = Field(
+        default_factory=list,
+        description="Cited cases confirmed in the local corpus or via web search",
+    )
+    unverified_precedents: list[str] = Field(
+        default_factory=list,
+        description=(
+            "Cited cases neither found in the local corpus nor confirmable "
+            "online — the human reviewer should treat these with caution"
+        ),
+    )
     audit_passed: bool = True
     audit_notes: str = ""
 

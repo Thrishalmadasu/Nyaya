@@ -167,3 +167,68 @@ def section_exists(citation: str) -> bool:
         limit=1,
     )
     return len(results.get("ids", [])) > 0
+
+
+# Generic words stripped from case titles before token matching, so a shared
+# place/role word (e.g. "State", "Union of India") can never be one of the two
+# tokens that make a precedent match.
+_PRECEDENT_STOPWORDS = frozenset({
+    "state", "of", "union", "india", "the", "and", "ors", "anr", "others",
+    "public", "prosecutor", "cbi", "secretary", "home", "govt", "government",
+    "versus", "vs",
+})
+
+# Distinctive name tokens for each PRECEDENT title in the corpus, cached on
+# first use. The corpus stores short slug titles ("Kesavananda Bharati 1973");
+# advocates cite full-form names ("Kesavananda Bharati v. State of Kerala
+# (1973)"), so a metadata equality lookup like section_exists cannot work here.
+_precedent_title_tokens: list[frozenset[str]] | None = None
+
+
+def _precedent_name_tokens(text: str) -> frozenset[str]:
+    """Lowercased name tokens of a case title — years, punctuation and generic
+    words removed. Tokens shorter than 3 chars are dropped so initials like
+    'A.K.' don't become noise (the distinctive surname carries the match)."""
+    import re
+
+    cleaned = re.sub(r"[^a-z0-9]+", " ", text.lower())
+    return frozenset(
+        tok
+        for tok in cleaned.split()
+        if len(tok) >= 3 and not tok.isdigit() and tok not in _PRECEDENT_STOPWORDS
+    )
+
+
+def precedent_exists(citation: str) -> bool:
+    """True if a cited case plausibly matches a precedent in the local corpus.
+
+    Match rule (deliberately high-precision): a citation matches a corpus case
+    when either every name token of the corpus slug is present in the citation
+    (covers single-surname slugs like 'Nanavati'), or the two share at least two
+    name tokens (covers full-name slugs while making a chance collision on a
+    common surname like 'Singh'/'Kumar' alone insufficient).
+
+    Recall is intentionally traded for precision: real cases the local corpus
+    doesn't hold (or names it as a slug the citation doesn't fully overlap) fall
+    through to the Tavily web check in rag.precedent_search.verify_precedent_online.
+    """
+    collection = _get_collection()
+    if collection.count() == 0:
+        return False
+
+    global _precedent_title_tokens
+    if _precedent_title_tokens is None:
+        res = collection.get(where={"code_regime": "PRECEDENT"}, include=["metadatas"])
+        titles = {m.get("section_title", "") for m in res.get("metadatas", [])}
+        _precedent_title_tokens = [
+            toks for toks in (_precedent_name_tokens(t) for t in titles) if toks
+        ]
+
+    cite_tokens = _precedent_name_tokens(citation)
+    if not cite_tokens:
+        return False
+
+    for title_tokens in _precedent_title_tokens:
+        if title_tokens <= cite_tokens or len(title_tokens & cite_tokens) >= 2:
+            return True
+    return False
