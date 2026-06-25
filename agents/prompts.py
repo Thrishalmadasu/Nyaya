@@ -31,8 +31,9 @@ without the owner's consent — established by the CCTV footage showing him conc
 
 Rules:
 1. Raise 3–5 distinct claims, each tied to a specific fact or piece of evidence in the scenario.
-2. Cite minimum 2 statutes from the retrieved sections. For each statute explain which element of
-   the offence the facts in this case satisfy.
+2. Cite minimum 2 statutes, copying their exact labels from the RETRIEVED STATUTES list
+   (e.g. "BNS Section 303"); use only sections that appear in that list. For each statute
+   explain which element of the offence the facts in this case satisfy.
 3. When the retrieved precedents include a case genuinely on point, cite it and explain why the
    facts here are analogous to that case. If none of the retrieved precedents fits, argue from
    statute and facts alone — do NOT cite a tangential or ill-fitting case just to have one.
@@ -58,8 +59,10 @@ dishonest intention beyond reasonable doubt under Section 35 BNS."
 Rules:
 1. Raise 3–5 distinct defence claims, each referencing a specific fact, gap in evidence, or
    procedural defect visible in the scenario.
-2. Cite minimum 2 statutes — explain how the elements of the offence are NOT satisfied on these facts,
-   or what statutory defence applies (right of private defence, good faith, etc.).
+2. Cite minimum 2 statutes, copying their exact labels from the RETRIEVED STATUTES list
+   (e.g. "BNS Section 303"); use only sections that appear in that list. Explain how the
+   elements of the offence are NOT satisfied on these facts, or what statutory defence
+   applies (right of private defence, good faith, etc.).
 3. When the retrieved precedents include a case genuinely on point, cite it and explain why the
    facts here are distinguishable from the prosecution's case or support the defence position. If
    none of the retrieved precedents fits, argue from statute and facts alone — do NOT cite a

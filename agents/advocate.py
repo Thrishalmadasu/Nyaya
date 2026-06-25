@@ -28,6 +28,27 @@ _CONSTITUTIONAL_TERMS = (
 _OPPONENT = {"prosecution": "defence", "defence": "prosecution"}
 _STRENGTH_FIELD = {"prosecution": "prosecution_strength", "defence": "defence_strength"}
 
+# The short code an advocate cites a section by, keyed on source_act. Derived
+# from source_act (NOT code_regime) because BNS 2023, BNSS 2023 and BSA 2023 all
+# share code_regime "BNS" — labelling a BNSS section "BNS Section 378" would be
+# the very wrong-regime citation the audit now rejects.
+_CITE_PREFIX = {
+    "BNS 2023": "BNS",
+    "BNSS 2023": "BNSS",
+    "BSA 2023": "BSA",
+    "IPC 1860": "IPC",
+    "Constitution of India": "Constitution",
+}
+
+
+def _citation_label(chunk) -> str:
+    """Exact label an advocate must cite a retrieved chunk by (e.g. 'BNS Section
+    303'). Constitution articles are cited as the bare 'Article N'."""
+    if chunk.section_id.lower().startswith("article"):
+        return chunk.section_id
+    prefix = _CITE_PREFIX.get(chunk.source_act, chunk.code_regime)
+    return f"{prefix} {chunk.section_id}"
+
 
 def retrieve_context(case_file, query_extra: str = "") -> str:
     """Retrieve the statutes and precedents both advocates argue from.
@@ -52,9 +73,13 @@ def retrieve_context(case_file, query_extra: str = "") -> str:
     # constitutional question, so ordinary crimes don't get Article-20 noise.
     case_text = f"{case_file.offence_type} {' '.join(case_file.legal_questions or [])}".lower()
     include_const = any(t in case_text for t in _CONSTITUTIONAL_TERMS)
-    chunks = retrieve(base_query, code_regime=regime, top_k=3, include_constitution=include_const)
+    # top_k=6 (not 3): the on-point definitional section can rank a few places
+    # below near-synonym sections (e.g. for "theft", BNS 305/307 outrank the
+    # bare 303 "Theft"), so a tight top_k would omit the section the advocate
+    # actually needs and force it to fall back on a remembered (wrong) number.
+    chunks = retrieve(base_query, code_regime=regime, top_k=6, include_constitution=include_const)
     statute_text = "\n\n".join(
-        f"[{c.source_act} — {c.section_id}]\n{c.text[:400]}" for c in chunks
+        f"{_citation_label(c)} — {c.section_title}:\n{c.text[:300]}" for c in chunks
     ) or "No statutes retrieved."
 
     # Query precedents by the legal issue, not the doubled offence string —
@@ -83,7 +108,12 @@ def retrieve_context(case_file, query_extra: str = "") -> str:
         f"- {p.get('title', 'Unknown')}: {p.get('content', '')}" for p in distinct
     ) or "No precedents retrieved."
 
-    return f"RETRIEVED STATUTES:\n{statute_text}\n\nRELEVANT PRECEDENTS:\n{prec_text}"
+    return (
+        "RETRIEVED STATUTES — cite statutes ONLY from this list, using the exact "
+        "label shown before each em-dash (e.g. 'BNS Section 303'):\n"
+        f"{statute_text}\n\n"
+        f"RELEVANT PRECEDENTS:\n{prec_text}"
+    )
 
 
 def build_context(state: GraphState, side: str, rag_context: str) -> str:
@@ -153,8 +183,9 @@ def run_advocate(state: GraphState, *, side: str, system_prompt: str, next_phase
                 f"Prepare your Round {round_num} {side} argument.\n\n"
                 f"{context}\n\n"
                 f"Return ONLY a valid JSON object with exactly this structure:\n{_schema}\n"
-                f"statutes_cited must be plain strings like 'BNS Section 303'. "
-                f"claims must be a list of strings."
+                f"statutes_cited MUST contain at least 2 section labels copied exactly "
+                f"from the RETRIEVED STATUTES list above (each looks like 'BNS Section 303'); "
+                f"use only labels that appear in that list. claims must be a list of strings."
             )
         ),
     ]
