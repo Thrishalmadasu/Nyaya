@@ -9,7 +9,22 @@ from __future__ import annotations
 
 from graph.state import CitationAuditResult, GraphState
 from rag.precedent_search import verify_precedent_online
-from rag.retriever import precedent_exists, section_exists
+from rag.retriever import precedent_exists
+from tools.citation_validator import citation_validator_tool
+
+
+def _statute_is_valid(citation: str, expected_regime: str | None) -> bool:
+    """Validate one statute citation via the citation_validator_tool.
+
+    Routes through the @tool wrapper (the same mechanism a tool-calling LLM would
+    invoke) rather than calling rag.section_exists directly. The tool returns a
+    sentence beginning "FOUND" / "NOT FOUND"; parsing it here keeps the
+    string→bool boundary in one tested place.
+    """
+    result = citation_validator_tool.invoke(
+        {"citation": citation, "expected_regime": expected_regime}
+    )
+    return result.startswith("FOUND")
 
 
 def _collect_statutes(transcript: list[dict]) -> list[str]:
@@ -48,7 +63,7 @@ def auditor_node(state: GraphState) -> dict:
     verified_statutes: list[str] = []
     hallucinated_statutes: list[str] = []
     for citation in all_statutes:
-        ok = section_exists(citation, expected_regime=expected_regime)
+        ok = _statute_is_valid(citation, expected_regime)
         (verified_statutes if ok else hallucinated_statutes).append(citation)
 
     # ── Precedents: local corpus, then Tavily fallback ─────────────────────
